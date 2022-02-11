@@ -205,10 +205,10 @@ insert into niveauetude (`IDNiveauEtude`, `libelleNiveauEtude`, `diplomeObtenu`)
 insert into offre (`IDOffre`, `titreOffre`, `descOffre`, `datePubOffre`, `remuneration`,`dateDebutContrat`,`dureeContrat`, `statutOffre`, `IDTypeOffre`, `numeroSiret`,`IDNiveauEtude`)
  values
 (null, 'Stage developpeur', 'Offre de stage developpeur ', '2022/02/01', '600.59', '2022/03/01', '6 mois', 'en attente de publication', 6, 1234, 9),
-(null, 'Support systeme en alternance', 'Recherche profil supprot systeme ', '2021/02/01', '1200.0','2021/03/05', '1 ans', 'expiree', 7, 2234, 10),
-(null , 'Administrateur de base de données', 'Recherche DBA confirmé', '2022/02/01', '3200','2022/04/05', '1 ans', 'publiee', 10, 3234, 8),
+(null, 'Support systeme en alternance', 'Recherche profil support systeme ', '2021/02/01', '1200.0','2021/03/05', '1 ans', 'expiree', 7, 2234, 10),
+(null , 'Administrateur de base de donnees', 'Recherche DBA confirme', '2022/02/01', '3200','2022/04/05', '1 ans', 'publiee', 10, 3234, 8),
 (null ,  'Devops junior', 'Devenez Devops junior', '2020/02/01', '3000','2021/02/05', '6 mois', 'expiree', 8, 4234, 7),
-(null , 'Ingenieur Sécurité', 'Offre ingenieur sécurité', '2021/02/01', '5000','2021/03/05', 'null', 'expiree', 9, 5234, 6);
+(null , 'Ingenieur Securite', 'Offre ingenieur sécurite', '2021/02/01', '5000','2021/03/05', 'null', 'expiree', 9, 5234, 6);
 
 
 
