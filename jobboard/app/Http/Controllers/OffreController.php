@@ -10,7 +10,7 @@ class OffreController extends Controller
 {
     public function index(){
 
-        dd(App\Models\Offre::get());
+        dd(Offre::get());
       return 0;
     }
 }
