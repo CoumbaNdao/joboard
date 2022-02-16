@@ -269,7 +269,41 @@ values (12, 10) ,
         (11, 6);
 
 
+        
+
+
+create table avis (
+	IDavis int(5) not null auto_increment, 
+   nomUser varchar(50) not null,
+   prenomUser varchar(50) not null,
+	descAvis varchar (250) not null, 
+   imageAvis varchar(250),
+	primary key(IDAvis)
+)engine=innodb;
+
+
+insert into avis 
+values (null,'Paco', 'Jo', 'jai trouver facilement un emploi', 'C:\Users\MameCoumbaNDAO\Desktop\jobsearch\jobboard\public\images\man3'),
+values (null, 'Thenang','Anne','Contente de mon experience sur jobage', 'C:\Users\MameCoumbaNDAO\Desktop\jobsearch\jobboard\public\images\woman2'),
+values (null, 'Chiche', 'Mehdi', 'Je recommande', 'C:\Users\MameCoumbaNDAO\Desktop\jobsearch\jobboard\public\images\man2'),
+values (null,'YU', 'Kelly', 'Bravo Jobage', 'C:\Users\MameCoumbaNDAO\Desktop\jobsearch\jobboard\public\images\woman3')
+values (null,'Bregger', 'Amandine', 'Belle experience', 'C:\Users\MameCoumbaNDAO\Desktop\jobsearch\jobboard\public\images\woman1');
+
+
+
+ALTER TABLE candidat
+ADD telephoneCandidat CHAR(10);
+
+
+ALTER TABLE candidat
+ADD emailCandidat varchar(50);
 
 
 
 
+ALTER TABLE niveauetude
+ADD dateObtentionDiplome date;
+
+
+ALTER TABLE candidat
+ADD CVCandidat varchar(250);
