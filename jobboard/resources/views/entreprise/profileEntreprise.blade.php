@@ -24,7 +24,7 @@
     <div class="container">
         <div class="row">
             <div class="col-10 emplacementForminsc">
-                <h6 class="text-uppercase mb-4 font-weight-bold titreInsc">Inscription</h6>
+                <h6 class="text-uppercase mb-4 font-weight-bold titreInsc">Profil</h6>
 
                 <form class="Inscform" method="post" action="{{route('entreprise.update')}}" enctype="multipart/form-data">
 

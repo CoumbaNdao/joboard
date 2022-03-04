@@ -33,11 +33,11 @@
                         <form class="Inscform" method="post" action="{{route('create')}}" enctype="multipart/form-data">
                            @csrf
                             <div class="rating">
-                                <input type="radio" name="rate" value="5" id="5"><label for="5">☆</label> <input
-                                    type="radio" name="rating" value="4" id="4"><label for="4">☆</label> <input
-                                    type="radio" name="rating" value="3" id="3"><label for="3">☆</label> <input
-                                    type="radio" name="rating" value="2" id="2"><label for="2">☆</label> <input
-                                    type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+                                <input type="radio" name="rate" value="5" id="5"><label for="5">☆</label>
+                                <input type="radio" name="rate" value="4" id="4"><label for="4">☆</label>
+                                <input type="radio" name="rate" value="3" id="3"><label for="3">☆</label>
+                                <input type="radio" name="rate" value="2" id="2"><label for="2">☆</label>
+                                <input type="radio" name="rate" value="1" id="1"><label for="1">☆</label>
                             </div>
                             <div class="form-group row champAvisPlacement ">
                                 <div class="col-sm-12">
@@ -52,9 +52,16 @@
                                 </div>
                             </div>
 
-                            <div class="form-group mt-3">
-                                <label class="mr-4">Joindre profil</label>
+                            <!--div class="form-group  row champAvisPlacement">
+                                <label class="col-sm-12">Joindre profil</label>
                                 <input type="file" name="imageAvis">
+                            </div-->
+
+                            <div class="form-group row champAvisPlacement">
+                                <div class="col-sm-12">
+                                    <input type="file" name="imageAvis" class="form-control" id="DimChampMessage"
+                                           id="inputAvis" required="required" placeholder="Profil">
+                                </div>
                             </div>
 
                             <div class="form-group row champAvisPlacement">

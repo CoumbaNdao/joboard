@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Webpage Title -->
-    <title>Inscription</title>
+    <title>Postuler à une offre</title>
     <!-- Styles -->
     <link href="{{asset('css/bootstrap.css')}}" rel="stylesheet">
     <link href="{{asset('css/fontawesome-all.css')}}" rel="stylesheet">
@@ -53,16 +53,16 @@
                     </div>
 
                     <div class="form-group">
-                        <input class="form-control" name="libelleCompetence" disabled value=" Compétences pour ce poste"  id="example-tel-input">
+                        <input class="form-control" name="libelleCompetence" disabled value="{{$candidat->competences()}}"  id="example-tel-input">
                     </div>
 
                     <div class="form-group">
-                        <input class="form-control" name="niveauEtudeDiplome" disabled value=" Dernier diplôme obtenu"  id="example-tel-input">
+                        <input class="form-control" name="niveauEtudeDiplome" disabled value=" {{$candidat->niveauetude->diplomeObtenu}}"  id="example-tel-input">
                     </div>
 
                     <div class="form-group">
                         <label for="example-date-input" class="col-3 col-form-label">Disponible à partir de :</label>
-                        <input class="form-control" name="starting_date" type="text" disabled value="25/10/2025" id="example-date-input">
+                        <input class="form-control" name="starting_date" type="date"  value="25/10/2025" id="example-date-input">
                     </div>
                     <div class="form-group mt-3">
                         <label class="mr-4">Joindre votre CV:</label>

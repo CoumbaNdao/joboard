@@ -15,11 +15,48 @@
     <link rel="icon" href="{{asset('images/CoumbAnneFavicon.png')}}">
 </head>
 
-<body id="header" class="bodyOffre">
-<a class="navbar-brand logo-image" href="index.html"><img class="dimLogo" src="{{asset('images/logo.png')}}"
-                                                          style="background-color: cadetblue;" alt="alternative"></a>
-<a class="nav-link page-scroll" href="{{route('entreprise.edit')}}">Profil</a>
-<a class="nav-link page-scroll" href="{{route('entreprise.deconnexion')}}">Déconnexion</a>
+<body id="header" class="bodyOffre" data-spy="scroll" data-target=".fixed-top">
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+
+        <!-- Image Logo -->
+        <a class="navbar-brand logo-image" href="{{route('index')}}"><img src="{{asset('images/logo.png')}}"
+                                                                          alt="alternative"></a>
+
+        <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link page-scroll" href="{{route('entreprise.edit')}}">Profil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link page-scroll" href="{{route('entreprise.deconnexion')}}">Déconnexion</a>
+                </li>
+
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Header -->
+<header id="header" class="header2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="text-container">
+                    <p class="headerPresentation">JobAge par CoumbAnne</p>
+                    <h1 class="titlePresentation">Bienvenue dans votre espace!</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
 
 <!-- Offres -->
 <div class="container">
@@ -83,7 +120,7 @@
                             </tr>
                             <tr>
                                 <td><label for="dureeContrat"> Duree du contrat</label></td>
-                                <td><input class="form-control" id="dureeContrat" type="text" required
+                                <td><input class="form-control" id="dureeContrat" type="text"
                                            name="dureeContrat"></td>
                             </tr>
 
@@ -236,6 +273,15 @@
                                                 @foreach($offre->requerirs as $competence)
                                                     {{$competence->competences->libelleCompetence}}
                                                 @endforeach
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><label for="IDTypeOffre2">type d'offre</label></td>
+                                            <td><input type="text" name="libelleTypeOffre"
+                                                       value="{{$offre->type_offre->libelleTypeOffre}}"
+                                                       id="typeOffre2" class="form-control">
+
                                             </td>
                                         </tr>
                                     </table>
@@ -405,14 +451,11 @@
                     <!-- Grid column -->
                     <div class="col-md-5 col-lg-4 ml-lg-0 text-center text-md-end">
                         <!-- Facebook -->
-                        <a
-                            class="btn btn-outline-light btn-floating m-1"
-                            class="text-white"
-                            role="button"
-                            href="https://www.facebook.com/"
-                            target="_blank"
-                        ><i class="fab fa-facebook-f"></i
-                            ></a>
+                        <a class="btn btn-outline-light btn-floating m-1"
+                           class="text-white"
+                           role="button"
+                           href="https://www.facebook.com/"
+                           target="_blank"><i class="fab fa-facebook-f"></i></a>
 
                         <!-- Twitter -->
                         <a
@@ -420,9 +463,7 @@
                             class="text-white"
                             role="button"
                             href="https://www.twitter.com/"
-                            target="_blank"
-                        ><i class="fab fa-twitter"></i
-                            ></a>
+                            target="_blank"><i class="fab fa-twitter"></i></a>
 
                         <!-- Linkedin -->
                         <a
@@ -430,9 +471,7 @@
                             class="text-white"
                             role="button"
                             href="https://www.linkedin.com/"
-                            target="_blank"
-                        ><i class="fab fa-linkedin-in"></i
-                            ></a>
+                            target="_blank"><i class="fab fa-linkedin-in"></i></a>
 
                         <!-- Instagram -->
                         <a
@@ -440,9 +479,7 @@
                             class="text-white"
                             role="button"
                             href="https://www.instagram.com/"
-                            target="_blank"
-                        ><i class="fab fa-instagram"></i
-                            ></a>
+                            target="_blank"><i class="fab fa-instagram"></i></a>
                     </div>
                     <!-- Grid column -->
                 </div>

@@ -43,6 +43,8 @@ Route::prefix('/')->name('')->group(static function() {
     Route::get('', [AccueilControlleur::class, 'index'])->name('index');
     Route::get('show', [AccueilControlleur::class, 'show'])->name('show');
     Route::post('create', [AccueilControlleur::class, 'create'])->name('create');
+    Route::post('contact', [AccueilControlleur::class, 'contact'])->name('contact');
+
 });
 
 
@@ -74,6 +76,8 @@ Route::prefix('/admin')->name('admin.')->group(static function() {
     Route::post('/competence/{competence}', [AdminControlleur::class, 'competence'])->name('competence');
     Route::post('/region/{region}', [AdminControlleur::class, 'region'])->name('region');
     Route::post('/lien', [AdminControlleur::class, 'lien'])->name('lien');
+    Route::post('/creerpartenaire', [AdminControlleur::class, 'creerPartenaire'])->name('creerPartenaire');
+    Route::post('/partenaire/{partenaire}', [AdminControlleur::class, 'partenaire'])->name('partenaire');
     Route::get('show', [AdminControlleur::class, 'show'])->name('show');
 
 });

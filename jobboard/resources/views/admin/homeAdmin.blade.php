@@ -140,6 +140,85 @@
         </table>
     </div>
 
+    <div class="row d-flex justify-content-center mb-5 mt-5">
+        <h2> Gestion Région </h2>
+
+        <table class="table table-striped table-warning" aria-describedby="table">
+            <tr>
+                <th> Libellé</th>
+                <th> Nb entreprises</th>
+                <th> Nb candidats</th>
+
+
+            </tr>
+            @foreach($regions as $region)
+                <tr>
+                    <td>
+                        {{$region->nomRegion}}
+                    </td>
+                    <td>{{count($region->entreprises)}}</td>
+                    <td>{{count($region->candidats)}}</td>
+                </tr>
+            @endforeach
+        </table>
+    </div>
+
+    <div class="row d-flex justify-content-center mb-5 mt-5">
+        <h2> Gestion Compétence/offre </h2>
+
+        <table class="table table-striped table-secondary" aria-describedby="competence">
+            <tr>
+                <th> Libellé</th>
+                <th> NB offre</th>
+                <th> NB candidat</th>
+
+
+            </tr>
+
+            @foreach($competences as $competence)
+                <tr>
+                    <td>
+                        {{$competence->libelleCompetence}}
+                    </td>
+                    <td>
+                        {{$competence->nbOffres()}}
+                    </td>
+                    <td>
+                        {{$competence->nbCandidats()}}
+                    </td>
+                </tr>
+            @endforeach
+
+        </table>
+    </div>
+
+    <div class="row d-flex justify-content-center mb-5 mt-5">
+        <h2> Gestion Niveau d'étude/offre </h2>
+
+        <table class="table table-striped table-secondary" aria-describedby="etude">
+            <tr>
+                <th> Libellé</th>
+                <th> Nb Offre</th>
+                <th> Nb Candidat</th>
+            </tr>
+            @foreach($niveauEtudes as $niveauEtude)
+                <tr>
+                    <td>
+                        {{$niveauEtude->libelleNiveauEtude}}
+                    </td>
+                    <td>
+                        {{count($niveauEtude->offres)}}
+                    </td>
+
+
+                    <td>
+                        {{count($niveauEtude->candidats)}}
+                    </td>
+                </tr>
+            @endforeach
+        </table>
+    </div>
+
 </div>
 
 </body>

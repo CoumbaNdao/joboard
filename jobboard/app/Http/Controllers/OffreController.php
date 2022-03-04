@@ -89,8 +89,9 @@ class OffreController extends Controller
             $a = $a + ($tab > 0);
         }
 
-        if ($a === 0)
+        if ($a === 0) {
             $table = null;
+        }
 
 
         $offres = Offre::

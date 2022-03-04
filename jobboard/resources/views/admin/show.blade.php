@@ -41,16 +41,126 @@
                 <th> NB TypeCompétence</th>
                 <th> NB Compétence</th>
                 <th> NB Région</th>
+                <th> NB Partenaire</th>
             </tr>
             <tr>
                 <td>{{count($typeOffres)}}</td>
                 <td>{{count($typeCompetences)}}</td>
                 <td>{{count($competences)}}</td>
-                <td>{{count($competences)}}</td>
+                <td>{{count($regions)}}</td>
+                <td>{{count($partenaires)}}</td>
 
             </tr>
         </table>
     </div>
+
+
+    <div class="row d-flex justify-content-center mb-5 mt-5">
+        <h2>Gestion des Partenaire</h2>
+
+        <table class="table col-12 table-striped table-info">
+            <thead>
+            <tr>
+                <th> Siret</th>
+                <th> Raison Sociale</th>
+                <th> Siège</th>
+                <th> Code postal</th>
+                <th> ville</th>
+                <th> contact</th>
+                <th> Date debut partenariat</th>
+                <th> logo</th>
+                <th>Action</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($partenaires as $partenaire)
+                <form method="post" action="{{route('admin.partenaire', [$partenaire->SiretPartenaire])}}">
+                    @csrf
+                    <tr>
+                        <td><input type="text" name="SiretPartenaire" placeholder="Numero Siret"
+                                   class="form-control" value="{{$partenaire->SiretPartenaire}}">
+                        </td>
+                        <td> <input type="text" name="RaisonSocialePartenaire" placeholder="Raison Sociale"
+                                    class="form-control" value="{{$partenaire->RaisonSocialePartenaire}}">
+                        </td>
+
+                        <td> <input type="text" name="siegePartenaire" placeholder="Siege social"
+                                    class="form-control" value="{{$partenaire->siegePartenaire}}">
+
+                        </td>
+
+                        <td> <input type="text" name="cpPartenaire" placeholder="Code postal"
+                                    class="form-control" value="{{$partenaire->cpPartenaire}}">
+                        </td>
+                        <td><input type="text" name="villePartenaire" placeholder="Ville"
+                                   class="form-control" value="{{$partenaire->villePartenaire}}">
+                        </td>
+
+                        <td> <input type="email" name="contactPartenaire" placeholder="Contact"
+                                    class="form-control" value="{{$partenaire->contactPartenaire}}">
+                        </td>
+
+                        <td> <input type="date" name="dateDebutPartenariat" placeholder="Date début partenariat"
+                                    class="form-control" value="{{$partenaire->dateDebutPartenariat}}">
+                        </td>
+
+                        <td>...
+                        </td>
+
+
+                        <td>
+                            <input type="submit" name="Supprimer" value="Supprimer" class="btn btn-danger">
+                            <input type="submit" name="Valider" value="Valider" class="btn btn-success">
+                        </td>
+                    </tr>
+                </form>
+
+            @endforeach
+
+            <form method="post" action="{{route('admin.creerPartenaire')}}" enctype="multipart/form-data">
+                @csrf
+                <tr>
+                    <td><input type="text" name="SiretPartenaire" placeholder="Numero Siret"
+                               class="form-control">
+                    </td>
+                    <td><input type="text" name="RaisonSocialePartenaire" placeholder="Raison Sociale"
+                               class="form-control">
+                    </td>
+
+                    <td><input type="text" name="siegePartenaire" placeholder="Siege social"
+                               class="form-control">
+                    </td>
+
+                    <td><input type="text" name="cpPartenaire" placeholder="Code postal"
+                               class="form-control">
+                    </td>
+
+
+                    <td><input type="text" name="villePartenaire" placeholder="Ville"
+                               class="form-control">
+                    </td>
+
+                    <td><input type="email" name="contactPartenaire" placeholder="Contact"
+                               class="form-control">
+                    </td>
+
+                    <td><input type="date" name="dateDebutPartenariat" placeholder="Date début partenariat"
+                               class="form-control">
+                    </td>
+
+                    <td><input type="file" name="logoPartenaire" placeholder="Logo"
+                               class="form-control">
+                    </td>
+                    <td>
+                        <input type="submit" name="Creer" value="Créer" class="btn btn-success">
+                    </td>
+                </tr>
+            </form>
+            </tbody>
+        </table>
+    </div>
+
 
 
     <div class="row d-flex justify-content-center mb-5 mt-5">
@@ -60,6 +170,7 @@
             <tr>
                 <th> Libellé</th>
                 <th>Action</th>
+
             </tr>
             @foreach($typeOffres as $typeOffre)
                 <form method="post" action="{{route('admin.typeOffre', [$typeOffre->IDTypeOffre])}}">
@@ -90,6 +201,10 @@
         </table>
     </div>
 
+
+
+
+
     <div class="row d-flex justify-content-center mb-5 mt-5">
         <h2>Gestion Type Compétence</h2>
 
@@ -97,6 +212,7 @@
             <tr>
                 <th> Libellé</th>
                 <th>Action</th>
+
             </tr>
             @foreach($typeCompetences as $typeCompetence)
 
@@ -135,6 +251,7 @@
             <tr>
                 <th> Libellé</th>
                 <th>Action</th>
+
             </tr>
             @foreach($competences as $competence)
 
@@ -173,6 +290,7 @@
             <tr>
                 <th> Libellé</th>
                 <th>Action</th>
+
             </tr>
             @foreach($regions as $region)
 
@@ -209,9 +327,9 @@
     <div class="row d-flex justify-content-center mb-5 mt-5">
         <h2> Gestion Type Compétence</h2>
 
-            <table class="table table-striped table-danger">
-                <form method="post" action="{{route('admin.lien', [$region->codePostalRegion])}}">
-                    @csrf
+        <table class="table table-striped table-danger">
+            <form method="post" action="{{route('admin.lien', [$region->codePostalRegion])}}">
+                @csrf
                 <tr>
 
                     <th>
@@ -252,8 +370,8 @@
                         <input type="submit" name="Creer" value="Créer" class="btn btn-success">
                     </td>
                 </tr>
-                </form>
-            </table>
+            </form>
+        </table>
 
     </div>
 

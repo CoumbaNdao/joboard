@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Webpage Title -->
-    <title>Inscription</title>
+    <title>Inscription candidat</title>
     <!-- Styles -->
     <link href="{{asset('css/bootstrap.css')}}" rel="stylesheet">
     <link href="{{asset('css/fontawesome-all.css')}}" rel="stylesheet">
@@ -24,7 +24,8 @@
         <div class="row ">
             <div class="col-10 emplacementForminsc">
                 <h6 class="text-uppercase mb-4 font-weight-bold titreInsc">Inscription</h6>
-                <form class="Inscform" method="post" action="{{route('candidat.create')}}">
+                <form class="Inscform" method="post" id="candidatInscriptionForm"
+                      action="{{route('candidat.create')}} ">
                     @csrf
                     <div class="form-group row champPlacement ">
                         <div class="col-sm-12">
@@ -123,17 +124,22 @@
 
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
-                            <input type="password" class="form-control" name="mdpCandidat" minlength="8" maxlength="10" id="inputMotDePasse" required="required" placeholder="Mot de passe">
+                            <p id="text" class="text-danger"></p>
+                            <input type="password" class="form-control"
+                                   data-name="tet" name="mdpCandidat" minlength="8" maxlength="12" id="mdpCandidat" onkeydown="sec()"
+                                   required="required" placeholder="Mot de passe">
+                            <span id="msg"></span>
                         </div>
                     </div>
 
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
-                            <input type="password" class="form-control" minlength="8" maxlength="10" name="validationMdp" id="inputMotDePasse" required="required" placeholder="Confirmer le mot de passe">
+                            <input type="password" class="form-control  minlength=8" maxlength="12" name="validationMdp"
+                                   id="inputMotDePasse" required="required" placeholder="Confirmer le mot de passe">
                         </div>
                     </div>
 
-                   <input class="inscpBouton" type="submit" value="S'inscrire">
+                    <input class="inscpBouton btn btn-primary" onclick="validateMdp()" value="S'inscrire">
                 </form>
                 <br>
                 <br>
@@ -144,9 +150,75 @@
 
 
 <!-- Scripts -->
-<script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
-<script src="js/bootstrap.min.js"></script> <!-- Bootstrap framework -->
-<script src="js/jquery.easing.min.js"></script> <!-- jQuery Easing for smooth scrolling between anchors -->
-<script src="js/scripts.js"></script> <!-- Custom scripts -->
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script>
+
+
+    function sec() {
+
+
+        let mdp = document.getElementById('mdpCandidat').value
+        let msg = "";
+
+        console.log(this);
+
+
+        if (mdp.length > 12) {
+            msg = msg + "<li class='text-danger'> mot de pass trop long"
+        }
+
+        if (mdp.length < 8) {
+            msg = msg + "<li class='text-danger'> mot de pass trop court"
+        }
+
+        if (!mdp.match(/[0-9]/g)) {
+            msg = msg + "<li class='text-danger'> mot de pass doit contenir un chiffre"
+        }
+
+
+        if (!mdp.match(/[a-z]/g)) {
+            msg = msg + "<li class='text-danger'> mot de pass doit contenir un caractère en minuscule"
+        }
+
+
+        if (!mdp.match(/[A-Z]/g)) {
+            msg = msg + "<li class='text-danger'> mot de pass doit contenir un caractère en Majuscule"
+        }
+
+        if (!mdp.match(/[^a-zA-z\d]/g)) {
+            msg = msg + "<li class='text-danger'> mot de pass doit contenir un caractère spécial"
+        }
+
+        document.getElementById('msg').innerHTML = msg
+    }
+
+
+    function validateMdp() {
+        let mdp = document.getElementById('mdpCandidat').value;
+
+        if (
+
+            mdp.match(/[0-9]/g) &&
+            mdp.match(/[a-z]/g) &&
+            mdp.match(/[A-Z]/g) &&
+            mdp.match(/[^a-zA-z\d]/g) &&
+            mdp.length <= 12 &&
+            mdp.length >= 8
+        ) {
+            document.getElementById("candidatInscriptionForm").submit();
+        } else {
+            alert('Votre mot de passe doit respecter les critères suivants : Compris entre 8 et 12 caractères, au moins un chiffre, une lettre majuscule et miniscule et un caractère spécial' + mdp);
+        }
+
+
+    }
+
+</script>
+
+
+<script src="{{asset('js/jquery.min.js')}}"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
+<script src="{{asset('js/bootstrap.min.js')}}"></script> <!-- Bootstrap framework -->
+<script src="{{asset('js/jquery.easing.min.js')}}"></script> <!-- jQuery Easing for smooth scrolling between anchors -->
+<script src="{{asset('js/scripts.js')}}"></script> <!-- Custom scripts -->
 </body>
 </html>

@@ -174,4 +174,37 @@ class EntrepriseController extends Controller
 
 
     }
+
+    public function recoverPassword(Request $request)
+    {
+
+
+        if ($request->loginEntreprise) {
+
+            if (!$request->loginEntreprise) {
+                return redirect()->route('offre.show');
+            }
+            $entreprise = Entreprise::where('loginEntreprise', '=', $request->loginEntreprise)->get()->first();
+           // dd($entreprise, $request->all());
+
+            if ($request->mdpEntreprise == $request->validationMdp) {
+                try {
+                    $entreprise->update([
+                        'mdpEntreprise' => $request->mdpEntreprise ?? $entreprise->mdpEntreprise
+                    ]);
+
+                    Cache::delete('entreprise');
+                    return redirect()->route('entreprise.index');
+                } catch (Exception $e) {
+                    return back()->withInput();
+                }
+            }
+
+            return back()->withInput();
+        }
+
+        return view('entreprise.reinitialisermdpE');
+
+
+    }
 }

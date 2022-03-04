@@ -76,7 +76,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-2">
-                            <img src="https://logo-marque.com/wp-content/uploads/2020/09/Microsoft-Logo.png"
+                            <img src="{{asset('images/iconProfile.png')}}"
                                  style="height: 30px;"/>
                         </div>
                         <div class="col-sm-12">
@@ -215,7 +215,7 @@
                                     <div class="row d-flex">
                                         <div class="col-sm-2">
                                             <img
-                                                src="https://logo-marque.com/wp-content/uploads/2020/09/Microsoft-Logo.png"
+                                                src="{{asset($offre->entreprise->logoEntreprise)}}"
                                                 style="height: 30px;"/>
                                         </div>
                                         <div class="col-sm-10">
@@ -258,8 +258,7 @@
                             JobAge
                         </h6>
                         <p>
-                            Une platforme de recherche d'emploi et de stage pour
-                            les grands et les petits.
+                         Plateforme de recherche d'emploi !
                         </p>
                     </div>
                     <!-- Grid column -->

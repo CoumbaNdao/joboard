@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Webpage Title -->
-    <title>Connexion</title>
+    <title>Accès candidat</title>
     <!-- Styles -->
     <link href="{{asset('css/bootstrap.css')}}" rel="stylesheet">
     <link href="{{asset('css/fontawesome-all.css')}}" rel="stylesheet">
@@ -20,7 +20,7 @@
 <!-- Header -->
 <!-- Image Logo -->
 <header id="header" class="bodyConnexion">
-    <a class="navbar-brand logo-image" href="index.html"><img class="dimLogo" src="images/logo.png" alt="alternative"></a>
+    <a class="navbar-brand logo-image" href="{{route('index')}}"><img class="dimLogo" src="{{asset('images/logo.png')}}" alt="alternative"></a>
     <div class="container">
         <div class="row">
             <div class="col-5 emplacementForm">
@@ -40,7 +40,7 @@
                     <a href="offre.html"><input type="submit" value="Se connecter"></a>
                 </form>
                 <br>
-                <p><a class=" font-weight-bold lienInscription " href="motdepasse.html">Mot de passe oublié ?</a></p>
+                <p><a class="font-weight-bold lienInscription" href="{{route('candidat.recoverPassword')}}">Mot de passe oublié ?</a></p>
                 <p>Pas encore de compte ? <a class=" font-weight-bold lienInscription " href="{{route('candidat.inscription')}}">Inscription</a></p>
                 <br>
             </div>

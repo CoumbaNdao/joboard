@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Avis;
+use App\Models\Contact;
+use App\Models\Partenaire;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Mockery\Exception;
@@ -41,6 +43,7 @@ class AccueilControlleur extends Controller
                 'nomUser' => $request->nomUser ?? '',
                 'prenomUser' => $request->prenomUser ?? '',
                 'descAvis' => $request->descAvis ?? '',
+                'rate' => $request->rate ?? '',
                 'imageAvis' => $image
             ]);
         }catch(Exception $e){
@@ -48,5 +51,22 @@ class AccueilControlleur extends Controller
         }
 
         return redirect()->route('index');
+    }
+
+    public function contact(Request $request)
+    {
+        try {
+            Contact::create([
+                'nomContact' => $request->nomContact ?? '',
+                'prenomContact' => $request->prenomContact ?? '',
+                'emailContact' => $request->emailContact ?? '',
+                'objetContact' => $request->objetContact ?? '',
+                'messageContact' => $request->messageContact ?? ''
+
+            ]);
+        } catch (Exception $e) {
+            return back() ->withInput();
+        }
+return 'Votre message a bien été envoyé !';
     }
 }

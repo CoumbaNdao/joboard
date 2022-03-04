@@ -32,7 +32,7 @@
         <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="{{route('candidat.index')}}">Accès étudiant</a>
+                    <a class="nav-link page-scroll" href="{{route('candidat.index')}}">Accès candidat</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link page-scroll" href="{{route('entreprise.index')}}">Accès entreprise</a>
@@ -100,108 +100,389 @@
         <br><br>
         <h1 class="titleService">Tout à notre âge</h1>
         <div class="row align-items-end">
-            <div class="logo">
-                <a href="#">
-                    <img class="logodim" src="images/ovhcloud.png"/>
-                </a>
-            </div>
-            <div class="logo">
-                <a href="#">
-                    <img class="logodim" src="images/outscale.jpg"/>
-                </a>
-            </div>
-            <div class="logo">
-                <a href="#">
-                    <img class="logodim" src="images/ovhcloud.png"/>
-                </a>
-            </div>
-            <div class="logo">
-                <a href="#">
-                    <img class="logodim" src="images/outscale.jpg"/>
-                </a>
-            </div>
-            <div class="logo">
-                <a href="#">
-                    <img class="logodim" src="images/ovhcloud.png"/>
-                </a>
-            </div>
-            <div class="logo">
-                <a href="#">
-                    <img class="logodim" src="images/outscale.jpg"/>
-                </a>
-            </div>
-            <div class="logo">
-                <a href="#">
-                    <img class="logodim" src="images/ovhcloud.png"/>
-                </a>
-            </div>
-            <div class="logo">
-                <a href="#">
-                    <img class="logodim" src="images/outscale.jpg"/>
-                </a>
-            </div>
-            <div class="logo">
-                <a href="#">
-                    <img class="logodim" src="images/ovhcloud.png"/>
-                </a>
-            </div>
+            @foreach($partenaires as $partenaire)
+                <div class="logo">
+                    <a href="#">
+                        <img class="logodim" src="{{asset($partenaire->logoPartenaire)}}"/>
+                    </a>
+                </div>
+            @endforeach
+
         </div>
     </div>
     <br><br>
 </div>
 
 
-<!--Company Presentation-->
+<!--Section carousselle des avis-->
 <div class="basic-1 colorPresentationSection">
     <div class="container">
         <br><br>
-        <h1 class="titleService">Quelques avis :</h1>
+        <h1 class="titleService">Parlez-nous de votre expérience</h1>
         <div class="card-deck">
-            @foreach($avis_s as $avis)
-                <div class="card col-4"  style="height:50%">
 
-                    <div id="carouselExampleIndicatorsd{{$avis->IDAvis}}" style="max-height:50%" class="carousel slide row" data-ride="carousel">
-                        <ol class="carousel-indicators">
-                            <li data-target="#carouselExampleIndicators{{$avis->IDAvis}}" data-slide-to="0" class="active"></li>
-                            <li data-target="#carouselExampleIndicators{{$avis->IDAvis}}" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleIndicators{{$avis->IDAvis}}" data-slide-to="2"></li>
-                        </ol>
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="{{asset($avis->imageAvis)}}" style="height:50%" class="d-block w-100">
+
+            <!----carousselle 1 ---->
+            <div class="card">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        @foreach($avis_s as $key => $avis)
+                            <li data-target="#carouselExampleIndicators{{$avis->IDAvis}}" data-slide-to="{{$key}}"
+                                @if($key == 0) class="active" @endif></li>
+                        @endforeach
+                    </ol>
+                    <div class="carousel-inner">
+                        @foreach($avis_s as $key => $avis)
+                            <div class="carousel-item @if($key == 0) active @endif">
+                                <img src="{{asset($avis->imageAvis)}}" class="d-block w-100">
                                 <div class="carousel-caption ">
-                                    <h5  class="text-dark"> {{$avis->prenomUser . ' ' . $avis->nomUser}}</h5>
-                                    <p class="text-dark">{{$avis->descAvis}}</p>
+                                    <div class="rating">
+
+
+                                        @if($avis->rate === 5)
+
+                                            <input
+                                                type="radio" name="rate5"
+                                                id="5"  checked="true">
+                                            <label
+                                                for="5">☆</label>
+                                            <input
+                                                type="radio" name="rate4"
+                                                id="4"  checked="true">
+                                            <label
+                                                for="4">☆</label>
+                                            <input
+                                                type="radio" name="rate3" id="3" checked="true">
+                                            <label
+                                                for="3">☆</label>
+
+                                            <input
+                                                type="radio" name="rate2"
+                                                id="2" checked="true"><label
+                                                for="2">☆</label>
+
+                                            <input
+                                                type="radio" name="rate1"
+                                                id="1" checked="true"><label
+                                                for="1">☆</label>
+
+                                        @elseif($avis->rate === 4)
+
+                                            <input
+                                                type="radio" name="rate4"
+                                                id="4"  checked="true">
+                                            <label
+                                                for="4">☆</label>
+                                            <input
+                                                type="radio" name="rate3" id="3" checked="true">
+                                            <label
+                                                for="3">☆</label>
+
+                                            <input
+                                                type="radio" name="rate2"
+                                                id="2" checked="true"><label
+                                                for="2">☆</label>
+
+                                            <input
+                                                type="radio" name="rate1"
+                                                id="1" checked="true"><label
+                                                for="1">☆</label>
+                                        @elseif($avis->rate === 3)
+
+
+                                            <input
+                                                type="radio" name="rate3" id="3" checked="true">
+                                            <label
+                                                for="3">☆</label>
+
+                                            <input
+                                                type="radio" name="rate2"
+                                                id="2" checked="true"><label
+                                                for="2">☆</label>
+
+                                            <input
+                                                type="radio" name="rate1"
+                                                id="1" checked="true"><label
+                                                for="1">☆</label>
+                                        @elseif($avis->rate ===  2)
+
+
+
+                                            <input
+                                                type="radio" name="rate2"
+                                                id="2" checked="true"><label
+                                                for="2">☆</label>
+
+                                            <input
+                                                type="radio" name="rate1"
+                                                id="1" checked="true"><label
+                                                for="1">☆</label>
+                                        @elseif($avis->rate === 1)
+
+                                            <input
+                                                type="radio" name="rate1"
+                                                id="1" checked="true"><label
+                                                for="1">☆</label>
+                                        @endif
+
+
+                                    </div>
+                                    <h5>{{$avis->prenomUser . ' ' . $avis->nomUser}}</h5>
+                                    <p>{{$avis->descAvis}}</p>
                                 </div>
                             </div>
-
-                            {{--
-                            <div class="carousel-item bg-primary">`
-                                <div class="d-block w-100"
-                                     style="max-width:100%; max-height:100%; min-height:100%; min-width:100%"></div>
-                                <div class="carousel-caption ">
-                                    <h5>{{$avis->prenomUser}} a dit:</h5>
+                        @endforeach
 
 
-
-                            <p>{{$avis->descAvis}}</p>
-                        </div>
-                    </div>
-                    --}}
-                        </div>
                     </div>
                 </div>
+            </div>
 
-            @endforeach
+
+
+            <div class="card">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        @foreach($avis_s1 as $key => $avis)
+                            <li data-target="#carouselExampleIndicators{{$avis->IDAvis}}" data-slide-to="{{$key}}"
+                                @if($key == 0) class="active" @endif></li>
+                        @endforeach
+                    </ol>
+                    <div class="carousel-inner">
+                        @foreach($avis_s1 as $key => $avis)
+                            <div class="carousel-item @if($key == 0) active @endif">
+                                <img src="{{asset($avis->imageAvis)}}" class="d-block w-100">
+                                <div class="carousel-caption ">
+                                    <div class="rating">
+
+
+                                        @if($avis->rate === 5)
+
+                                            <input
+                                                type="radio" name="rate5"
+                                                id="5" checked="true">
+                                            <label
+                                                for="5">☆</label>
+                                            <input
+                                                type="radio" name="rate4"
+                                                id="4" checked="true">
+                                            <label
+                                                for="4">☆</label>
+                                            <input
+                                                type="radio" name="rate3" id="3" checked="true">
+                                            <label
+                                                for="3">☆</label>
+
+                                            <input
+                                                type="radio" name="rate2"
+                                                id="2" checked="true"><label
+                                                for="2">☆</label>
+
+                                            <input
+                                                type="radio" name="rate1"
+                                                id="1" checked="true"><label
+                                                for="1">☆</label>
+
+                                        @elseif($avis->rate === 4)
+
+
+                                            <input
+                                                type="radio" name="rate4"
+                                                id="4"  checked="true">
+                                            <label
+                                                for="4">☆</label>
+                                            <input
+                                                type="radio" name="rate3" id="3" checked="true">
+                                            <label
+                                                for="3">☆</label>
+
+                                            <input
+                                                type="radio" name="rate2"
+                                                id="2" checked="true"><label
+                                                for="2">☆</label>
+
+                                            <input
+                                                type="radio" name="rate1"
+                                                id="1" checked="true"><label
+                                                for="1">☆</label>
+                                        @elseif($avis->rate === 3)
+
+
+                                            <input
+                                                type="radio" name="rate3" id="3" checked="true">
+                                            <label
+                                                for="3">☆</label>
+
+                                            <input
+                                                type="radio" name="rate2"
+                                                id="2" checked="true"><label
+                                                for="2">☆</label>
+
+                                            <input
+                                                type="radio" name="rate1"
+                                                id="1" checked="true"><label
+                                                for="1">☆</label>
+                                        @elseif($avis->rate ===  2)
+
+                                            <input
+                                                type="radio" name="rate2"
+                                                id="2" checked="true"><label
+                                                for="2">☆</label>
+
+                                            <input
+                                                type="radio" name="rate1"
+                                                id="1" checked="true"><label
+                                                for="1">☆</label>
+                                        @elseif($avis->rate === 1)
+
+                                            <input
+                                                type="radio" name="rate1"
+                                                id="1" checked="true"><label
+                                                for="1">☆</label>
+                                        @endif
+
+
+                                    </div>
+                                    <h5>{{$avis->prenomUser . ' ' . $avis->nomUser}}</h5>
+                                    <p>{{$avis->descAvis}}</p>
+                                </div>
+                            </div>
+                        @endforeach
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="card">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        @foreach($avis_s as $key => $avis)
+                            <li data-target="#carouselExampleIndicators{{$avis->IDAvis}}" data-slide-to="{{$key}}"
+                                @if($key == 0) class="active" @endif></li>
+                        @endforeach
+                    </ol>
+                    <div class="carousel-inner">
+                        @foreach($avis_s as $key => $avis)
+                            <div class="carousel-item @if($key == 0) active @endif">
+                                <img src="{{asset($avis->imageAvis)}}" class="d-block w-100">
+                                <div class="carousel-caption ">
+                                    <div class="rating">
+
+
+                                        @if($avis->rate === 5)
+
+                                            <input
+                                                type="radio" name="rate5"
+                                                id="5"  checked="true">
+                                            <label
+                                                for="5">☆</label>
+                                            <input
+                                                type="radio" name="rate4"
+                                                id="4"  checked="true">
+                                            <label
+                                                for="4">☆</label>
+                                            <input
+                                                type="radio" name="rate3" id="3" checked="true">
+                                            <label
+                                                for="3">☆</label>
+
+                                            <input
+                                                type="radio" name="rate2"
+                                                id="2" checked="true"><label
+                                                for="2">☆</label>
+
+                                            <input
+                                                type="radio" name="rate1"
+                                                id="1" checked="true"><label
+                                                for="1">☆</label>
+
+                                        @elseif($avis->rate === 4)
+
+
+                                            <input
+                                                type="radio" name="rate4"
+                                                id="4"  checked="true">
+                                            <label
+                                                for="4">☆</label>
+                                            <input
+                                                type="radio" name="rate3" id="3" checked="true">
+                                            <label
+                                                for="3">☆</label>
+
+                                            <input
+                                                type="radio" name="rate2"
+                                                id="2" checked="true"><label
+                                                for="2">☆</label>
+
+                                            <input
+                                                type="radio" name="rate1"
+                                                id="1" checked="true"><label
+                                                for="1">☆</label>
+                                        @elseif($avis->rate === 3)
+
+
+                                            <input
+                                                type="radio" name="rate3" id="3" checked="true">
+                                            <label
+                                                for="3">☆</label>
+
+                                            <input
+                                                type="radio" name="rate2"
+                                                id="2" checked="true"><label
+                                                for="2">☆</label>
+
+                                            <input
+                                                type="radio" name="rate1"
+                                                id="1" checked="true"><label
+                                                for="1">☆</label>
+                                        @elseif($avis->rate ===  2)
+
+
+                                            <input
+                                                type="radio" name="rate2"
+                                                id="2" checked="true"><label
+                                                for="2">☆</label>
+
+                                            <input
+                                                type="radio" name="rate1"
+                                                id="1" checked="true"><label
+                                                for="1">☆</label>
+                                        @elseif($avis->rate === 1)
+
+
+
+                                            <input
+                                                type="radio" name="rate1"
+                                                id="1" checked="true"><label
+                                                for="1">☆</label>
+                                        @endif
+
+
+                                    </div>
+                                    <h5>{{$avis->prenomUser . ' ' . $avis->nomUser}}</h5>
+                                    <p>{{$avis->descAvis}}</p>
+                                </div>
+                            </div>
+                        @endforeach
+
+                    </div>
+                </div>
+            </div>
         </div>
         <br>
-        <p class="mettreUnAvis">Votre avis compte !</p>
+        <p class="mettreUnAvis">Votre avis compte!</p>
         <a href="{{route('show')}}">
-            <button class="mettreUnAvisBoutton">Notez-nous !</button>
+
+            <button class="mettreUnAvisBoutton">Ecrire un commentaire </button>
         </a>
         <br><br>
     </div>
 </div>
+
 
 <!--articles-->
 <div class="basic-1">
@@ -223,9 +504,8 @@
                                                          src="https://images.unsplash.com/photo-1532781914607-2031eca2f00d?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=7c625ea379640da3ef2e24f20df7ce8d">
                                                 </a>
                                                 <div class="card-body">
-                                                    <h4 class="card-title">Special title treatment</h4>
-                                                    <p class="card-text">With supporting text below as a natural lead-in
-                                                        to additional content.</p>
+                                                    <h4 class="card-title"></h4>
+                                                    <p class="card-text"></p>
                                                     <a href="#">
                                                         <p class="articleLink"><i class="far fa-newspaper"></i>Lire
                                                             l'article </p>
@@ -241,9 +521,8 @@
                                                          src="https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=42b2d9ae6feb9c4ff98b9133addfb698">
                                                 </a>
                                                 <div class="card-body">
-                                                    <h4 class="card-title">Special title treatment</h4>
-                                                    <p class="card-text">With supporting text below as a natural lead-in
-                                                        to additional content.</p>
+                                                    <h4 class="card-title"></h4>
+                                                    <p class="card-text"></p>
                                                     <a href="#">
                                                         <p class="articleLink">Lire l'article</p>
                                                     </a>
@@ -257,9 +536,8 @@
                                                          src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=3d2e8a2039c06dd26db977fe6ac6186a">
                                                 </a>
                                                 <div class="card-body">
-                                                    <h4 class="card-title">Special title treatment</h4>
-                                                    <p class="card-text">With supporting text below as a natural lead-in
-                                                        to additional content.</p>
+                                                    <h4 class="card-title"></h4>
+                                                    <p class="card-text"></p>
                                                     <a href="#">
                                                         <p class="articleLink">Lire l'article</p>
                                                     </a>
@@ -279,9 +557,8 @@
                                                          src="https://images.unsplash.com/photo-1532771098148-525cefe10c23?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=3f317c1f7a16116dec454fbc267dd8e4">
                                                 </a>
                                                 <div class="card-body">
-                                                    <h4 class="card-title">Special title treatment</h4>
-                                                    <p class="card-text">With supporting text below as a natural lead-in
-                                                        to additional content.</p>
+                                                    <h4 class="card-title"></h4>
+                                                    <p class="card-text"></p>
                                                     <a href="#">
                                                         <p class="articleLink">Lire l'article</p>
                                                     </a>
@@ -296,9 +573,8 @@
                                                          src="https://images.unsplash.com/photo-1532715088550-62f09305f765?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=ebadb044b374504ef8e81bdec4d0e840">
                                                 </a>
                                                 <div class="card-body">
-                                                    <h4 class="card-title">Special title treatment</h4>
-                                                    <p class="card-text">With supporting text below as a natural lead-in
-                                                        to additional content.</p>
+                                                    <h4 class="card-title"></h4>
+                                                    <p class="card-text"></p>
                                                     <a href="#">
                                                         <p class="articleLink">Lire l'article</p>
                                                     </a>
@@ -312,9 +588,8 @@
                                                          src="https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=0754ab085804ae8a3b562548e6b4aa2e">
                                                 </a>
                                                 <div class="card-body">
-                                                    <h4 class="card-title">Special title treatment</h4>
-                                                    <p class="card-text">With supporting text below as a natural lead-in
-                                                        to additional content.</p>
+                                                    <h4 class="card-title"></h4>
+                                                    <p class="card-text"></p>
                                                     <a href="#">
                                                         <p class="articleLink">Lire l'article</p>
                                                     </a>
@@ -334,9 +609,8 @@
                                                          src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=ee8417f0ea2a50d53a12665820b54e23">
                                                 </a>
                                                 <div class="card-body">
-                                                    <h4 class="card-title">Special title treatment</h4>
-                                                    <p class="card-text">With supporting text below as a natural lead-in
-                                                        to additional content.</p>
+                                                    <h4 class="card-title"></h4>
+                                                    <p class="card-text"></p>
                                                     <a href="#">
                                                         <p class="articleLink">Lire l'article</p>
                                                     </a>
@@ -351,9 +625,8 @@
                                                          src="https://images.unsplash.com/photo-1532777946373-b6783242f211?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=8ac55cf3a68785643998730839663129">
                                                 </a>
                                                 <div class="card-body">
-                                                    <h4 class="card-title">Special title treatment</h4>
-                                                    <p class="card-text">With supporting text below as a natural lead-in
-                                                        to additional content.</p>
+                                                    <h4 class="card-title"></h4>
+                                                    <p class="card-text"></p>
                                                     <a href="#">
                                                         <p class="articleLink">Lire l'article</p>
                                                     </a>
@@ -367,9 +640,8 @@
                                                          src="https://images.unsplash.com/photo-1532763303805-529d595877c5?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=5ee4fd5d19b40f93eadb21871757eda6">
                                                 </a>
                                                 <div class="card-body">
-                                                    <h4 class="card-title">Special title treatment</h4>
-                                                    <p class="card-text">With supporting text below as a natural lead-in
-                                                        to additional content.</p>
+                                                    <h4 class="card-title"></h4>
+                                                    <p class="card-text"></p>
                                                     <a href="#">
                                                         <p class="articleLink">Lire l'article</p>
                                                     </a>
@@ -403,8 +675,8 @@
             </div>
             <div class="col" style="overflow:hidden;">
                 <h1 class="titleApp">
-                    Retrouvez nous bientôt
-                    sur vos téléphone !
+                    Retrouvez-nous bientôt
+                    sur vos téléphones !
                 </h1>
                 <button type="button" class="btn buttonApp"><i class="fas fa-mobile-alt"></i> Android</button>
                 <button type="button" class="btn buttonApp"><i class="fas fa-mobile-alt"></i> Apple</button>
@@ -429,8 +701,7 @@
                             JobAge
                         </h6>
                         <p>
-                            Une platforme de recherche d'emploi et de stage pour
-                            les grands et les petits.
+                            Plateforme de recherche d'emploi et de recrutement!
                         </p>
                     </div>
                     <!-- Grid column -->
@@ -457,34 +728,41 @@
                     <!-- Grid column -->
                     <div class="col-md-4 col-lg-6 col-xl-6 mx-auto mt-3">
                         <h6 class="text-uppercase mb-4 font-weight-bold">Contactez nous</h6>
-                        <form>
+                        <form method="post" action="{{route('contact')}}">
+                            @csrf
                             <div class="form-group row">
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputNom" placeholder="Nom">
+                                    <input type="text" name="nomContact" class="form-control" id="inputNom"
+                                           required="required" placeholder="Nom">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputNomentreprise"
+                                    <input type="text" name="prenomContact" class="form-control" id="inputNomentreprise"
+                                           required="required"
                                            placeholder="Nom entreprise">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-10">
-                                    <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                                    <input type="email" name="emailContact" class="form-control" id="inputEmail"
+                                           required="required" placeholder="Email">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-10">
-                                    <input type="sujet" class="form-control" id="inputSujet" placeholder="Sujet">
+                                    <input type="sujet" name="objetContact" class="form-control" id="inputSujet"
+                                           required="required" placeholder="Sujet">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-10">
-                                    <input type="message" class="form-control dimchamp" id="inputMessage"
+                                    <input type="message" name="messageContact" class="form-control dimchamp"
+                                           id="inputMessage" required="required"
                                            placeholder="Message">
                                 </div>
                             </div>
+                            <button type="submit" class="btn btn-primary">Envoyer</button>
                         </form>
                     </div>
                     <!-- Grid column -->

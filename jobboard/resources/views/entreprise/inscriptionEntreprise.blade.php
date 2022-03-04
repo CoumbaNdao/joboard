@@ -137,9 +137,10 @@
 
                                 <p class="text-danger"> {{$message}}</p>
 
-                            <input type="password" maxlength="10"  minlength="8" class="form-control" id="inputMotDePasse" name="mdpEntreprise"
+                            <input type="password" maxlength="12"  minlength="8"  class="form-control" id="inputMotDePasse" name="mdpEntreprise"
                                   required="required"
                                    placeholder="Mot de passe">
+
                         </div>
                     </div>
 

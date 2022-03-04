@@ -69,12 +69,15 @@ class CandidatControlleur extends Controller
     public function create(Request $request)
     {
 
+        $request->validate([
+            'mdpCandidat' => 'required|min:8'
+        ]);
+
+
         if ($request->validationMdp !== $request->mdpCandidat) {
             Cache::set('message', "Veuillez saisir le meme mot de passe !");
             return redirect()->route('candidat.inscription');
         }
-
-
 
 
         try {
@@ -264,6 +267,40 @@ class CandidatControlleur extends Controller
         }
 
         return back()->withInput();
+
+    }
+
+
+    public function recoverPassword(Request $request)
+    {
+
+
+        if ($request->loginCandidat) {
+
+            if (!$request->loginCandidat) {
+                return redirect()->route('offre.show');
+            }
+            $candidat = Candidat::where('loginCandidat', '=', $request->loginCandidat)->get()->first();
+            // dd($entreprise, $request->all());
+
+            if ($request->mdpCandidat == $request->validationMdp) {
+                try {
+                    $candidat->update([
+                        'mdpCandidat' => $request->mdpCandidat ?? $candidat->mdpCandidat
+                    ]);
+
+                    Cache::delete('candidat');
+                    return redirect()->route('candidat.index');
+                } catch (Exception $e) {
+                    return back()->withInput();
+                }
+            }
+
+            return back()->withInput();
+        }
+
+        return view('candidat.reinitialisermdpC');
+
 
     }
 }

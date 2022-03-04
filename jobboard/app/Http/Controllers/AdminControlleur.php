@@ -7,7 +7,9 @@ use App\Models\Competence;
 use App\Models\Concerner;
 use App\Models\Disposer;
 use App\Models\Entreprise;
+use App\Models\NiveauEtude;
 use App\Models\Offre;
+use App\Models\Partenaire;
 use App\Models\Region;
 use App\Models\Requerir;
 use App\Models\TypeCompetence;
@@ -22,11 +24,17 @@ class AdminControlleur extends Controller
         $candidats = Candidat::all();
         $entreprises = Entreprise::all();
         $offres = Offre::all();
+        $regions = Region::all();
+        $competences = Competence::all();
+        $niveauEtudes = NiveauEtude::all()->unique('libelleNiveauEtude');
 
         return view('admin.homeAdmin', [
             'candidats' => $candidats,
             'entreprises' => $entreprises,
-            'offres' => $offres
+            'offres' => $offres,
+            'regions' => $regions,
+            'competences' => $competences,
+            'niveauEtudes' => $niveauEtudes
         ]);
     }
 
@@ -51,6 +59,7 @@ class AdminControlleur extends Controller
     }
 
     public function entreprise(Entreprise $entreprise)
+
     {
 
         Requerir::whereIn('IDOffre', $entreprise->offres->pluck('IDOffre'))->delete();
@@ -68,15 +77,18 @@ class AdminControlleur extends Controller
         $typeCompetences = TypeCompetence::all();
         $regions = Region::all();
         $competences = Competence::all();
-
+        $partenaires = Partenaire::all();
 
         return view('admin.show', [
             'typeOffres' => $typeOffres,
             'typeCompetences' => $typeCompetences,
             'regions' => $regions,
-            'competences' => $competences
+            'competences' => $competences,
+            'partenaires' => $partenaires
         ]);
     }
+
+
 
     public function typeOffre(Request $request, TypeOffre $typeOffre)
     {
@@ -92,8 +104,7 @@ class AdminControlleur extends Controller
         if ($request->Supprimer) {
 
             $offre = Offre::where('IDTypeOffre', '=', $typeOffre->IDTypeOffre)
-            ->get();
-
+                ->get();
 
 
             Requerir::whereIn('IDOffre', $offre->pluck('IDOffre'))
@@ -106,8 +117,7 @@ class AdminControlleur extends Controller
         }
 
 
-        if ($request->Creer)
-        {
+        if ($request->Creer) {
             TypeOffre::create([
                 'libelleTypeOffre' => $request->libelleTypeOffre
             ]);
@@ -115,6 +125,8 @@ class AdminControlleur extends Controller
 
         return redirect()->route('admin.show');
     }
+
+
 
     public function TypeCompetence(Request $request, TypeCompetence $typeCompetence)
     {
@@ -131,8 +143,7 @@ class AdminControlleur extends Controller
         }
 
 
-        if ($request->Creer)
-        {
+        if ($request->Creer) {
             typeCompetence::create([
                 'libelleTypeCompetence' => $request->libelleTypeCompetence
             ]);
@@ -156,8 +167,7 @@ class AdminControlleur extends Controller
         }
 
 
-        if ($request->Creer)
-        {
+        if ($request->Creer) {
             Competence::create([
                 'libelleCompetence' => $request->libelleCompetence
             ]);
@@ -180,16 +190,14 @@ class AdminControlleur extends Controller
         if ($request->Supprimer) {
             try {
                 $region->delete();
-            }
-            catch (\Exception $e) {
+            } catch (\Exception $e) {
                 return back()->withInput();
             }
 
         }
 
 
-        if ($request->Creer)
-        {
+        if ($request->Creer) {
             Region::create([
                 'nomRegion' => $request->nomRegion
             ]);
@@ -207,9 +215,7 @@ class AdminControlleur extends Controller
                 'IDTypeCompetence' => $request->IDTypeCompetence,
                 'IDCompetence' => $request->IDCompetence
             ]);
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             return back()->withInput();
         }
 
@@ -217,5 +223,56 @@ class AdminControlleur extends Controller
         return redirect()->route('admin.show');
     }
 
+    public function creerPartenaire(Request $request)
+    {
 
+
+        $cv = $request->file('logoPartenaire');
+
+
+        $cv->move('C:\Users\MameCoumbaNDAO\Desktop\jobsearch\jobboard\public\images\logo\\', $cv->getClientOriginalName());
+
+
+        $logo = 'images\logo\\' . $cv->getClientOriginalName();
+        try {
+            Partenaire::create([
+                'SiretPartenaire' => $request->SiretPartenaire,
+                'RaisonSocialePartenaire' => $request->RaisonSocialePartenaire,
+                'siegePartenaire' => $request->siegePartenaire,
+                'cpPartenaire' => $request->cpPartenaire,
+                'villePartenaire' => $request->villePartenaire,
+                'contactPartenaire' => $request->contactPartenaire,
+                'dateDebutPartenariat' => $request->dateDebutPartenariat,
+                'logoPartenaire' => $logo
+            ]);
+        } catch (Exception $e) {
+            return back()->withInput();
+        }
+        return redirect()->route('admin.show');
+    }
+
+    public function partenaire(Request $request, Partenaire $partenaire)
+    {
+        if ($request->Valider) {
+            try {
+                $partenaire->update([
+                    'SiretPartenaire' => $request->SiretPartenaire,
+                    'RaisonSocialePartenaire' => $request->RaisonSocialePartenaire,
+                    'siegePartenaire' => $request->siegePartenaire,
+                    'cpPartenaire' => $request->cpPartenaire,
+                    'villePartenaire' => $request->villePartenaire,
+                    'contactPartenaire' => $request->contactPartenaire,
+                    'dateDebutPartenariat' => $request->dateDebutPartenariat,
+
+                ]);
+            } catch (Exception $e) {
+                return back()->withInput();
+            }
+        }elseif($request->Supprimer)
+        {
+            $partenaire->delete();
+        }
+
+        return redirect()->route('admin.show');
+    }
 }

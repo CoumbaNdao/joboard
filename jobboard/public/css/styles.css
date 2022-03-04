@@ -124,6 +124,16 @@ html {
     text-align: center;
 }
 
+.header2 {
+    padding-top:40rem;
+    padding-bottom: 5.5rem;
+
+    background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url('../images/entreprise.png') center center no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    text-align: center;
+}
+
 .header .titlePresentation {
     margin-bottom: 1.75rem;
     color: #F5F5EF;
@@ -381,7 +391,7 @@ html {
 /**********************/
 .emplacementFormPost {
     margin-top: 20px;
-    height: 550px;
+    height: 90vh;
     z-index: 1;
     border-radius: 10px;
     background-color: rgba(245, 245, 239, 0.5);
