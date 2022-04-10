@@ -16,6 +16,7 @@ use App\Models\TypeOffre;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use mysql_xdevapi\Exception;
 use function GuzzleHttp\Promise\all;
 
@@ -33,7 +34,6 @@ class OffreController extends Controller
 
             $candidat = Candidat::find(Cache::get('candidat'));
             $candidatures = Offre::join('postuler', 'offre.IDOffre', '=', 'postuler.IDOffre')
-
                 ->where('IDCandidat', '=', $candidat->IDCandidat)
                 ->orderBy('offre.created_at')
                 ->get();
@@ -52,7 +52,7 @@ class OffreController extends Controller
         $regions = Region::all();
 
         return view('offre.offre', [
-            'offres' => $offres,
+            'offres' => $offres ?? [],
             'regions' => $regions,
             'candidat' => $candidat ?? null,
             'candidatures' => $candidatures ?? null
@@ -168,6 +168,7 @@ class OffreController extends Controller
         ->join('postuler', 'offre.IDOffre', '=', 'postuler.IDOffre')
             ->join('candidat', 'candidat.IDCandidat', '=', 'postuler.IDCandidat')
             ->where('numeroSiret', '=', $entreprise->numeroSiret)
+            ->groupBy('candidat.IDCandidat', 'offre.IDOffre')
             ->get();
 
 
@@ -183,21 +184,31 @@ class OffreController extends Controller
 
     public function valider(Candidat $candidat, Offre $offre, $etat)
     {
-        $p = Postuler::where('IDOffre', '=', $offre->IDOffre)
-            ->where('IDCandidat', '=', $candidat->IDCandidat)
-            ->get()->first();
 
-        if ($etat == 1)
-        {
-            $p->update([
-                'statutPostuler' => 1
+
+        if ($etat == 1) {
+
+
+
+            $p = DB::table('postuler')
+                ->where('IDOffre', '=', $offre->IDOffre)
+                ->where('IDCandidat', '=', $candidat->IDCandidat)
+                ->update([
+                    'statutPostuler' => 1
+                ]);
+
+        } else {
+            $p = DB::table('postuler')
+                ->where('IDOffre', '=', $offre->IDOffre)
+                ->where('IDCandidat', '=', $candidat->IDCandidat)
+                ->update([
+                    'statutPostuler' => 3
+                ]);
+            $offre->update([
+                'statutOffre' => 'expiree'
             ]);
         }
-        else{
-            $p->update([
-                'statutPostuler' => 3
-            ]);
-        }
+
 
         return redirect()->route('offre.show');
     }

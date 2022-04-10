@@ -23,7 +23,7 @@ class CandidatControlleur extends Controller
     {
         return view('candidat.connexionCandidat');
     }
-
+// CONNEXION
     public function login(Request $request)
     {
 
@@ -38,14 +38,13 @@ class CandidatControlleur extends Controller
         }
         return back()->withInput();
     }
-
+// DECONNEXION
     public function deconnexion()
     {
         Cache::delete('candidat');
         return redirect()->route('candidat.index');
     }
-
-
+ //INSCRIPTION
     public function inscription()
     {
 
@@ -105,11 +104,6 @@ class CandidatControlleur extends Controller
                 'IDCompetence' => $IDCompetence
             ]);
 
-
-
-
-
-
         } catch (\Exception $e) {
             return back()->withInput();
         }
@@ -122,7 +116,7 @@ class CandidatControlleur extends Controller
 
         return redirect()->route('offre.index');
     }
-
+//CANDIDATURE
     public function postuler(Offre $offre)
     {
 
@@ -202,7 +196,7 @@ class CandidatControlleur extends Controller
 
         return redirect()->route('offre.index');
     }
-
+//GESTION DU PROFIL
     public function edit()
     {
         $regions = Region::all();
@@ -271,11 +265,11 @@ class CandidatControlleur extends Controller
     }
 
 
-    public function recoverPassword(Request $request)
+    public function recoverPassword(Request $request, $loginCandidat=null)
     {
 
 
-        if ($request->loginCandidat) {
+        if ($request->loginCandidat &&  !isset($loginCandidat)) {
 
             if (!$request->loginCandidat) {
                 return redirect()->route('offre.show');
@@ -299,7 +293,7 @@ class CandidatControlleur extends Controller
             return back()->withInput();
         }
 
-        return view('candidat.reinitialisermdpC');
+        return view('candidat.reinitialisermdpC', ['mail' => $loginCandidat]);
 
 
     }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminControlleur;
 use App\Http\Controllers\CandidatControlleur;
+use App\Http\Controllers\PasswordManagerController;
 use App\Http\Controllers\TestControlleur;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OffreController;
@@ -59,10 +60,7 @@ Route::prefix('/candidat')->name('candidat.')->group(static function() {
     Route::get('/cancel/{offre}', [CandidatControlleur::class, 'cancel'])->name('cancel');
     Route::get('/edit', [CandidatControlleur::class, 'edit'])->name('edit');
     Route::post('update', [CandidatControlleur::class, 'update'])->name('update');
-
-
-
-
+    Route::match(['get', 'post'],'/recoverpassword/{loginCandidat?}', [CandidatControlleur::class, 'recoverPassword'])->name('recoverPassword');
 });
 
 
@@ -83,6 +81,9 @@ Route::prefix('/admin')->name('admin.')->group(static function() {
 });
 
 Route::get('/test', [TestControlleur::class, 'test'])->name('test');
+
+Route::match(['get', 'post'], '/reset-pass-word', [PasswordManagerController::class, 'ressetPassWordE'])->name('ressetPassWord');
+Route::match(['get', 'post'], '/reset-pass-word', [PasswordManagerController::class, 'ressetPassWordC'])->name('ressetPassWordC');
 
 
 require __DIR__.'/auth.php';

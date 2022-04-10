@@ -1,4 +1,4 @@
-Priorité :  Réinitialisation de mot de passe par envoi de mail
+Priorité :  Réinitialisation de mot de passe par envoi de mail FAIT
 
 Entreprise : 
 -  Séparer entreprise publique et privée
@@ -8,3 +8,5 @@ Entreprise :
 BDD : 
 - Modification des contraintes on delete cascade et on update cascade (il faut les ajouter que sur les tables nécessaires)
 - Hashage des mdp 
+- Gérer les offres expirées
+

@@ -215,7 +215,7 @@
                                     <div class="row d-flex">
                                         <div class="col-sm-2">
                                             <img
-                                                src="{{asset($offre->entreprise->logoEntreprise)}}"
+                                                src="{{asset($candidature->entreprise->logoEntreprise)}}"
                                                 style="height: 30px;"/>
                                         </div>
                                         <div class="col-sm-10">

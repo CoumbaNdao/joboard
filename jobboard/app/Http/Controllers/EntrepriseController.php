@@ -6,6 +6,7 @@ use App\Models\Entreprise;
 use App\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Hash;
 use Mockery\Exception;
 
 class EntrepriseController extends Controller
@@ -61,7 +62,7 @@ class EntrepriseController extends Controller
                 'loginEntreprise' => $request->loginEntreprise ?? $request->emailEntreprise,
                 'urlEntreprise' => $request->url,
                 'mdpEntreprise' => $request->mdpEntreprise,
-                'codePostalRegion' => $request->codePostalRegion,
+                'codePostalRegion' => Hash::make($request->codePostalRegion),
                 'logoEntreprise' => $logo
             ]);
         } catch (\Exception $e) {
@@ -78,7 +79,7 @@ class EntrepriseController extends Controller
 
         return redirect()->route('offre.show');
     }
-
+//CONNEXION
     public function login(Request $request)
     {
 
@@ -93,13 +94,13 @@ class EntrepriseController extends Controller
         }
         return back()->withInput();
     }
-
+//DECONNEXION
     public function deconnexion()
     {
         Cache::delete('entreprise');
         return redirect()->route('entreprise.index');
     }
-
+//GESTION DU PROFIL
     public function edit()
     {
         $entreprise = Entreprise::find(Cache::get('entreprise'));
@@ -175,18 +176,15 @@ class EntrepriseController extends Controller
 
     }
 
-    public function recoverPassword(Request $request)
+    public function recoverPassword(Request $request, $loginEntreprise=null)
     {
 
-
-        if ($request->loginEntreprise) {
-
+        if ($request->loginEntreprise && !isset($loginEntreprise)) {
             if (!$request->loginEntreprise) {
                 return redirect()->route('offre.show');
             }
             $entreprise = Entreprise::where('loginEntreprise', '=', $request->loginEntreprise)->get()->first();
            // dd($entreprise, $request->all());
-
             if ($request->mdpEntreprise == $request->validationMdp) {
                 try {
                     $entreprise->update([
@@ -202,9 +200,7 @@ class EntrepriseController extends Controller
 
             return back()->withInput();
         }
-
-        return view('entreprise.reinitialisermdpE');
-
+        return view('entreprise.reinitialisermdpE', ['mail'=>$loginEntreprise]);
 
     }
 }

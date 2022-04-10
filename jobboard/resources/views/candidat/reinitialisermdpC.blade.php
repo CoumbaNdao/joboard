@@ -26,6 +26,7 @@
         <div class="row">
             <div class="col-5 emplacementForm">
                 <h6 class="text-uppercase mb-4 font-weight-bold titreCo">Réinitialisation de mot de passe </h6>
+                @if(isset($mail))
                 <form method="post" action="{{route('candidat.recoverPassword')}}">
                     @csrf
                     <div class="form-group row champPlacement">
@@ -48,7 +49,18 @@
                     </div>
                     <input type="submit" value="Envoyer"> <!---REDIRIGER VERS LA PAGE DE CONNEXION-->
                 </form>
-
+                @else
+                    <form method="post" action="{{route('ressetPassWordC')}}">
+                        @csrf
+                        <div class="form-group row champPlacement">
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" id="inputMotDePasse" required="required"
+                                       name="loginCandidat" placeholder="Login">
+                            </div>
+                        </div>
+                        <input type="submit" value="Envoyer"> <!---REDIRIGER VERS LA PAGE DE CONNEXION-->
+                    </form>
+                @endif
             </div>
         </div>
     </div>

@@ -124,6 +124,8 @@
                 <th>État</th>
                 <th>Action</th>
             </tr>
+
+
             @foreach($offres as $offre)
                 <tr>
                     <td >{{$offre->titreOffre}}</td>
@@ -135,6 +137,38 @@
                     <td>{{ $offre->statutOffre}}</td>
 
                     <td> <a class="btn btn-danger" href="{{route('admin.offre', [$offre->IDOffre])}}">Supprimer</a></td>
+                </tr>
+            @endforeach
+        </table>
+    </div>
+
+    <div class="row d-flex justify-content-center mb-5 mt-5">
+        <h2> Gestion Expiré Offre </h2>
+
+        <table class="table table-striped table-secondary">
+            <tr>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Entreprise</th>
+                <th>Rémunération</th>
+                <th>Debut Contrat</th>
+                <th>Durée Contrat</th>
+                <th>État</th>
+                <th>Action</th>
+            </tr>
+
+
+            @foreach($offresExpire as $offre)
+                <tr>
+                    <td>{{$offre->titreOffre}}</td>
+                    <td>{{$offre->descOffre}}</td>
+                    <td>{{$offre->entreprise->raisonSociale}}</td>
+                    <td>{{number_format($offre->remuneration, 2, ',', ' ')}} €</td>
+                    <td>{{ $offre->dateDebutContrat}}</td>
+                    <td>{{ $offre->dureeContrat}}</td>
+                    <td>{{ $offre->statutOffre}}</td>
+
+                    <td><a class="btn btn-danger" href="{{route('admin.offre', [$offre->IDOffre])}}">Supprimer</a></td>
                 </tr>
             @endforeach
         </table>

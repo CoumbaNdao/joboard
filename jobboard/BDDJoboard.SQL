@@ -3,7 +3,7 @@ drop database if exists testjoboard;
 create database  testjoboard;
 use testjoboard;
 
-
+// ===================================TABLE COMPETENCE======================================
 create table typecompetence
  (
    IDTypeCompetence int(5) NOT NULL  auto_increment,
@@ -13,11 +13,7 @@ create table typecompetence
 alter table `typecompetence` add column `updated_at` Datetime;
 alter table `typecompetence` add column `created_at` Datetime;
 
-
-
-
-
-
+// ===================================TABLE COMPETENCE======================================
 create table competence
  (
    IDCompetence int(5) NOT NULL  auto_increment,
@@ -29,11 +25,7 @@ alter table `competence` add column `updated_at` Datetime;
 alter table `competence` add column `created_at` Datetime;
 
 
-
-
-
-
-
+// ===================================TABLE CONCERNER======================================
 create table concerner
 (
 	IDTypeCompetence int(5) not null,
@@ -51,11 +43,7 @@ create table concerner
 alter table `concerner` add column `updated_at` Datetime;
 alter table `concerner` add column `created_at` Datetime;
 
-
-
-
-
-
+// ===================================TABLE REGION======================================
 create table region
  (
    codePostalRegion int(5) NOT NULL  auto_increment,
@@ -66,10 +54,7 @@ create table region
 alter table `region` add column `updated_at` Datetime;
 alter table `region` add column `created_at` Datetime;
 
-
-
-
-
+// ===================================TABLE TYPEOFFRE======================================
 create table typeOffre
  (
    IDTypeOffre int(5) NOT NULL  auto_increment,
@@ -77,12 +62,10 @@ create table typeOffre
     primary key (IDTypeOffre)
  )engine=innodb;
 
-
 alter table `typeOffre` add column `updated_at` Datetime;
 alter table `typeOffre` add column `created_at` Datetime;
 
-
-
+// ===================================TABLE ENTREPRISE======================================
 
 create table entreprise (
 	numeroSiret int(5) not null auto_increment,
@@ -104,10 +87,11 @@ create table entreprise (
 
 )engine=innodb;
 
-
 alter table `entreprise` add column `updated_at` Datetime;
 alter table `entreprise` add column `created_at` Datetime;
+alter table `entreprise` modify mdpEntreprise varchar (255) not null;
 
+// ===================================TABLE NIVEAUETUDE======================================
 
  create table niveauetude
  (
@@ -121,6 +105,7 @@ alter table `entreprise` add column `created_at` Datetime;
 alter table `niveauetude` add column `updated_at` Datetime;
 alter table `niveauetude` add column `created_at` Datetime;
 
+// ===================================TABLE OFFRE======================================
 
 create table offre (
 	IDOffre int(5) not null auto_increment,
@@ -148,6 +133,7 @@ create table offre (
 alter table `offre` add column `updated_at` Datetime;
 alter table `offre` add column `created_at` Datetime;
 
+// ===================================TABLE CANDIDAT======================================
 
 create table candidat (
 	IDCandidat int(5) not null auto_increment,
@@ -172,9 +158,11 @@ create table candidat (
 alter table `candidat` add column `updated_at` Datetime;
 alter table `candidat` add column `created_at` Datetime;
 
+alter table `candidat` modify mdpCandidat varchar (255) not null;
 
+// ===================================TABLE POSTULER======================================
 
-create table postuler
+/*create table postuler
 (
 	IDOffre int(5) not null,
 	IDCandidat int(5) not null,
@@ -183,15 +171,26 @@ create table postuler
 	foreign key(IDCandidat) references candidat(IDCandidat)
  	ON DELETE CASCADE
     ON UPDATE CASCADE
+)engine=innodb;
 
+alter table `postuler` add column `updated_at` Datetime;
+alter table `postuler` add column `created_at` Datetime;*/
+
+drop table postuler;
+
+create table postuler
+(
+	IDOffre int(5) not null,
+	IDCandidat int(5) not null,
+	primary key (IDOffre,IDCandidat),
+	foreign key(IDOffre) references offre(IDOffre),
+	foreign key(IDCandidat) references candidat(IDCandidat)
 )engine=innodb;
 
 alter table `postuler` add column `updated_at` Datetime;
 alter table `postuler` add column `created_at` Datetime;
 
-
-
-
+// ===================================TABLE DISPOSER======================================
 create table disposer
 (
 	IDCandidat int(5) not null,
@@ -205,11 +204,10 @@ create table disposer
 
 )engine=innodb;
 
-
 alter table `disposer` add column `updated_at` Datetime;
 alter table `disposer` add column `created_at` Datetime;
 
-
+// ===================================TABLE REQUERIR======================================
 create table requerir
 (
 	IDOffre int(5) not null,
@@ -223,67 +221,12 @@ create table requerir
 
 )engine=innodb;
 
-
 alter table `requerir` add column `updated_at` Datetime;
 alter table `requerir` add column `created_at` Datetime;
 
 
 
-create table avis (
-	IDavis int(5) not null auto_increment,
-	rate int(5) not null,
-   nomUser varchar(50) not null,
-   prenomUser varchar(50) not null,
-	descAvis varchar (250) not null,
-   imageAvis varchar(250),
-	primary key(IDAvis)
-)engine=innodb;
-
-alter table `avis` add column `updated_at` Datetime;
-alter table `avis` add column `created_at` Datetime;
-
-
-
-
-ALTER TABLE candidat
-ADD telephoneCandidat CHAR(10);
-
-ALTER TABLE candidat
-ADD emailCandidat varchar(50);
-
-ALTER TABLE niveauetude
-ADD dateObtentionDiplome date;
-
-
-create table contact (
-	IDContact int(5) not null auto_increment,
-   nomContact varchar(50) not null,
-   prenomContact varchar(50) not null,
-   emailContact varchar(50) not null,
-	objetContact varchar (50) not null,
-   messageContact varchar(500) not null,
-	primary key(IDContact)
-)engine=innodb;
-
-alter table `contact` add column `updated_at` Datetime;
-alter table `contact` add column `created_at` Datetime;
-
-
-create table partenaire (
-	SiretPartenaire int(5) not null auto_increment,
-   RaisonSocialePartenaire varchar(50) not null,
-   siegePartenaire varchar(50) not null,
-   cpPartenaire char(5) not null,
-   villePartenaire varchar(50) not null,
-   contactPartenaire varchar(50) not null,
-	dateDebutPartenariat varchar (50) not null,
-   logoPartenaire varchar(500) not null,
-	primary key(SiretPartenaire)
-)engine=innodb;
-
-alter table `partenaire` add column `updated_at` Datetime;
-alter table `partenaire` add column `created_at` Datetime;
-
+// ===================================TABLE CV======================================
 
 CREATE TABLE cvcandidat
 (
@@ -304,8 +247,7 @@ CREATE TABLE cvcandidat
 ) ENGINE=InnoDB;
 
 
-
-
+// ===================================INSERTION======================================
 
 insert into region (codePostalRegion, nomRegion) values
 (null, 'ile de france');
@@ -314,8 +256,6 @@ insert into region (codePostalRegion, nomRegion) values
 (null, 'haut de france'),
 (null, 'Guyane'),
 (null, 'Martinique');
-
-
 
 insert into typeoffre (`IDTypeOffre`, `libelleTypeOffre`) values
 (null, 'stage');
@@ -412,16 +352,21 @@ values (1, 1) ;
 insert into concerner (`IDTypeCompetence`, `IDCompetence`)
 values (1, 1);
 
+// ===================================TABLE AVIS======================================
 
 
 create table avis (
 	IDavis int(5) not null auto_increment,
+	rate int(5) not null,
    nomUser varchar(50) not null,
    prenomUser varchar(50) not null,
 	descAvis varchar (250) not null,
    imageAvis varchar(250),
 	primary key(IDAvis)
 )engine=innodb;
+
+alter table `avis` add column `updated_at` Datetime;
+alter table `avis` add column `created_at` Datetime;
 
 
 
@@ -443,15 +388,10 @@ ALTER TABLE candidat
 ADD emailCandidat varchar(50);
 
 
-
-
 ALTER TABLE niveauetude
 ADD dateObtentionDiplome date;
 
-
-ALTER TABLE candidat
-ADD CVCandidat varchar(250);
-
+// ===================================TABLE CONTACT======================================
 create table contact (
 	IDContact int(5) not null auto_increment,
    nomContact varchar(50) not null,
@@ -462,7 +402,9 @@ create table contact (
 	primary key(IDContact)
 )engine=innodb;
 
-select * from candidat;
+alter table `contact` add column `updated_at` Datetime;
+alter table `contact` add column `created_at` Datetime;
+// ===================================creation table partenaire======================================
 
 create table partenaire (
 	SiretPartenaire int(5) not null auto_increment,
@@ -477,14 +419,11 @@ create table partenaire (
 )engine=innodb;
 
 
-
-
-
-
 alter table `partenaire` add column `updated_at` Datetime;
 alter table `partenaire` add column `created_at` Datetime;
 
 
+// ===================================TRIGGER saisie date debut de contrat correcte======================================
 
 DELIMITER //
 DROP TRIGGER IF EXISTS insertdatedebutcontrat;
@@ -544,7 +483,7 @@ create index IDNiveauEtude
 create index codePostalRegion
     on candidat (codePostalRegion);
 
-
+// ===================================creation de la table des offre traitee======================================
 
 create table offre_traitee (
     idoffretraitee int(5) not null auto_increment,
@@ -565,7 +504,7 @@ create table offre_traitee (
 
 )engine=innodb;
 
-
+// ===================================TRIGGER archivage offre expiree/traitee======================================
 
 drop trigger if exists archive_offre;
 delimiter //
@@ -584,3 +523,55 @@ begin
 
     end //
 delimiter ;
+
+// ===================================TRIGGER insertion pour hashage de mdp/CANDIDAT======================================
+
+drop trigger if exists hashagedemdpcandidat;
+delimiter //
+create trigger hashagedemdpcandidat
+	before insert on candidat
+	for each row
+	begin
+	set new.mdpCandidat= password(new.mdpCandidat);
+	end //
+delimiter ;
+
+
+// ===================================TRIGGER update pour hashage de mdp/CANDIDAT======================================
+
+drop trigger if exists hashagedemdpcandidatup;
+delimiter //
+create trigger hashagedemdpcandidatup
+	before update on candidat
+	for each row
+	begin
+	set new.mdpCandidat= password(new.mdpCandidat);
+	end //
+	delimiter ;
+
+// ===================================TRIGGER insertion pour hashage de mdp/ENTREPRISE======================================
+
+drop trigger if exists hashagedemdpcandidat;
+delimiter //
+create trigger hashagedemdpcandidat
+	before insert on candidat
+	for each row
+	begin
+	set new.mdpCandidat= password(new.mdpCandidat);
+	end //
+delimiter ;
+
+
+// ===================================TRIGGER update pour hashage de mdp/ENTREPRISE======================================
+
+drop trigger if exists hashagedemdpcandidatup;
+delimiter //
+create trigger hashagedemdpcandidatup
+	before update on candidat
+	for each row
+	begin
+	set new.mdpCandidat= password(new.mdpCandidat);
+	end //
+	delimiter ;
+
+

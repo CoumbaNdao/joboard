@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendMail;
 use App\Models\Avis;
 use App\Models\Contact;
 use App\Models\Partenaire;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Mail;
 use Mockery\Exception;
 
 class AccueilControlleur extends Controller

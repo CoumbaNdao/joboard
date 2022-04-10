@@ -125,16 +125,23 @@
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
                             <p id="text" class="text-danger"></p>
-                            <input type="password" class="form-control"
-                                   data-name="tet" name="mdpCandidat" minlength="8" maxlength="12" id="mdpCandidat" onkeydown="sec()"
-                                   required="required" placeholder="Mot de passe">
+                            <input type="password"
+                                   class="form-control"
+                                   data-name="tet"
+                                   name="mdpCandidat"
+                                   minlength="8"
+                                   maxlength="20"
+                                   id="mdpCandidat"
+                                   onkeyup="sec()"
+                                   required="required"
+                                   placeholder="Mot de passe">
                             <span id="msg"></span>
                         </div>
                     </div>
 
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
-                            <input type="password" class="form-control  minlength=8" maxlength="12" name="validationMdp"
+                            <input type="password" class="form-control  minlength=8" maxlength="20" name="validationMdp"
                                    id="inputMotDePasse" required="required" placeholder="Confirmer le mot de passe">
                         </div>
                     </div>
@@ -157,13 +164,13 @@
     function sec() {
 
 
-        let mdp = document.getElementById('mdpCandidat').value
+        let mdp = document.getElementById('mdpCandidat').value;
         let msg = "";
 
         console.log(this);
 
 
-        if (mdp.length > 12) {
+        if (mdp.length > 20) {
             msg = msg + "<li class='text-danger'> mot de pass trop long"
         }
 
@@ -197,12 +204,11 @@
         let mdp = document.getElementById('mdpCandidat').value;
 
         if (
-
             mdp.match(/[0-9]/g) &&
             mdp.match(/[a-z]/g) &&
             mdp.match(/[A-Z]/g) &&
             mdp.match(/[^a-zA-z\d]/g) &&
-            mdp.length <= 12 &&
+            mdp.length <= 20 &&
             mdp.length >= 8
         ) {
             document.getElementById("candidatInscriptionForm").submit();

@@ -26,7 +26,7 @@
             <div class="col-10 emplacementForminsc">
                 <h6 class="text-uppercase mb-4 font-weight-bold titreInsc">Inscription</h6>
 
-                <form class="Inscform" method="post" action="{{route('entreprise.create')}}" enctype="multipart/form-data">
+                <form class="Inscform" id="postE" method="post" action="{{route('entreprise.create')}}" enctype="multipart/form-data">
 
                     @csrf
                     <div class="form-group row champPlacement ">
@@ -131,28 +131,39 @@
                                    placeholder="Login si différent du mail">
                         </div>
                     </div>
+
+
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
-
-
                                 <p class="text-danger"> {{$message}}</p>
-
-                            <input type="password" maxlength="12"  minlength="8"  class="form-control" id="inputMotDePasse" name="mdpEntreprise"
+                            <input type="password"
+                                   maxlength="20"
+                                   minlength="8"
+                                   class="form-control"
+                                   id="inputMotDePasse"
+                                   name="mdpEntreprise"
                                   required="required"
+                                   onkeyup="sec()"
                                    placeholder="Mot de passe">
-
+                            <span id="msg"></span>
                         </div>
                     </div>
 
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
-                            <input type="password" class="form-control" maxlength="10"  minlength="8" name="validationMdp" id="inputMotDePasse" required="required"
+                            <input type="password"
+                                   class="form-control"
+                                   maxlength="20"
+                                   minlength="8"
+                                   name="validationMdp"
+                                   id="inputMotDePasse"
+                                   required="required"
                                    placeholder="Confirmer le mot de passe">
                         </div>
                     </div>
 
 
-                    <a href="publierOffre.html"><input class="inscpBouton" type="submit" value="S'inscrire"> </a>
+                    <input class="inscpBouton btn btn-primary" role="button" type="button" onclick="validateMdp()"  value="S'inscrire">
 
                 </form>
                 <br>
@@ -164,6 +175,69 @@
 
 
 <!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script>
+
+
+    function sec() {
+
+
+        let mdp = document.getElementById('inputMotDePasse').value;
+        let msg = "";
+
+        console.log(this);
+
+
+        if (mdp.length > 20) {
+            msg = msg + "<li class='text-danger'> mot de pass trop long"
+        }
+
+        if (mdp.length < 8) {
+            msg = msg + "<li class='text-danger'> mot de pass trop court"
+        }
+
+        if (!mdp.match(/[0-9]/g)) {
+            msg = msg + "<li class='text-danger'> mot de pass doit contenir un chiffre"
+        }
+
+
+        if (!mdp.match(/[a-z]/g)) {
+            msg = msg + "<li class='text-danger'> mot de pass doit contenir un caractère en minuscule"
+        }
+
+
+        if (!mdp.match(/[A-Z]/g)) {
+            msg = msg + "<li class='text-danger'> mot de pass doit contenir un caractère en Majuscule"
+        }
+
+        if (!mdp.match(/[^a-zA-z\d]/g)) {
+            msg = msg + "<li class='text-danger'> mot de pass doit contenir un caractère spécial"
+        }
+
+        document.getElementById('msg').innerHTML = msg
+    }
+
+
+    function validateMdp() {
+        let mdp = document.getElementById('inputMotDePasse').value;
+
+        if (
+            mdp.match(/[0-9]/g) &&
+            mdp.match(/[a-z]/g) &&
+            mdp.match(/[A-Z]/g) &&
+            mdp.match(/[^a-zA-z\d]/g) &&
+            mdp.length <= 20 &&
+            mdp.length >= 8
+        ) {
+            document.getElementById("postE").submit();
+        } else {
+            alert('Votre mot de passe doit respecter les critères suivants : Compris entre 8 et 12 caractères, au moins un chiffre, une lettre majuscule et miniscule et un caractère spécial' + mdp);
+        }
+
+
+    }
+
+</script>
 <script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
 <script src="js/bootstrap.min.js"></script> <!-- Bootstrap framework -->
 <script src="js/jquery.easing.min.js"></script> <!-- jQuery Easing for smooth scrolling between anchors -->

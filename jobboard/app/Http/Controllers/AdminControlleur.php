@@ -27,14 +27,18 @@ class AdminControlleur extends Controller
         $regions = Region::all();
         $competences = Competence::all();
         $niveauEtudes = NiveauEtude::all()->unique('libelleNiveauEtude');
-
+        $offresExpire = Offre::join('postuler', 'offre.IDOffre', '=', 'postuler.IDOffre')
+            ->where('statutPostuler', '>', 2)
+            ->groupBy('offre.IDOffre', 'offre.titreOffre')
+            ->get();
         return view('admin.homeAdmin', [
             'candidats' => $candidats,
             'entreprises' => $entreprises,
             'offres' => $offres,
             'regions' => $regions,
             'competences' => $competences,
-            'niveauEtudes' => $niveauEtudes
+            'niveauEtudes' => $niveauEtudes,
+            'offresExpire' => $offresExpire
         ]);
     }
 
