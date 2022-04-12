@@ -162,7 +162,6 @@
     </div>
 
 
-
     <div class="row d-flex justify-content-center mb-5 mt-5">
         <h2>Gestion Type Offre</h2>
 
@@ -173,7 +172,8 @@
 
             </tr>
             @foreach($typeOffres as $typeOffre)
-                <form method="post" action="{{route('admin.typeOffre', [$typeOffre->IDTypeOffre])}}">
+
+                <form method="post" action="{{route('admin.typeOffre', [$typeOffre->IDTypeOffre ])}}">
                     @csrf
                     <tr>
                         <td><input type="text" name="libelleTypeOffre" value="{{$typeOffre->libelleTypeOffre}}"
@@ -187,7 +187,7 @@
 
             @endforeach
 
-            <form method="post" action="{{route('admin.typeOffre', [$typeOffre->IDTypeOffre])}}">
+            <form method="post" action="{{route('admin.typeOffre')}}">
                 @csrf
                 <tr>
                     <td><input type="text" name="libelleTypeOffre" required placeholder="Entre votre type d'offre"
@@ -198,11 +198,9 @@
                     </td>
                 </tr>
             </form>
+
         </table>
     </div>
-
-
-
 
 
     <div class="row d-flex justify-content-center mb-5 mt-5">
@@ -230,7 +228,7 @@
 
             @endforeach
 
-            <form method="post" action="{{route('admin.typeCompetence', [$typeCompetence->IDTypeCompetence])}}">
+            <form method="post" action="{{route('admin.typeCompetence')}}">
                 @csrf
                 <tr>
                     <td><input type="text" name="libelleTypeCompetence" required
@@ -241,6 +239,7 @@
                     </td>
                 </tr>
             </form>
+
         </table>
     </div>
 
@@ -269,7 +268,7 @@
 
             @endforeach
 
-            <form method="post" action="{{route('admin.competence', [$competence->IDCompetence])}}">
+            <form method="post" action="{{route('admin.competence')}}">
                 @csrf
                 <tr>
                     <td><input type="text" name="libelleCompetence" required placeholder="Entre votre competence"
@@ -280,6 +279,7 @@
                     </td>
                 </tr>
             </form>
+
         </table>
     </div>
 
@@ -310,7 +310,7 @@
 
             @endforeach
 
-            <form method="post" action="{{route('admin.region', [$region->codePostalRegion])}}">
+            <form method="post" action="{{route('admin.region')}}">
                 @csrf
                 <tr>
                     <td><input type="text" name="nomRegion" required placeholder="Entre votre region"
@@ -321,6 +321,7 @@
                     </td>
                 </tr>
             </form>
+
         </table>
     </div>
 
@@ -328,7 +329,8 @@
         <h2> Gestion Type Compétence</h2>
 
         <table class="table table-striped table-danger">
-            <form method="post" action="{{route('admin.lien', [$region->codePostalRegion])}}">
+
+            <form method="post" action="{{route('admin.lien')}}">
                 @csrf
                 <tr>
 
@@ -371,6 +373,7 @@
                     </td>
                 </tr>
             </form>
+
         </table>
 
     </div>

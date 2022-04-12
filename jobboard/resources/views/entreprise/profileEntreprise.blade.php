@@ -52,8 +52,7 @@
 
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
-                            <input type="file" class="form-control" name="logoEntreprise" id="logoEntreprise"
-                                   >
+                            <input type="file" class="form-control" name="logoEntreprise" id="logoEntreprise" placeholder="Logo de votre Entreprise">
                         </div>
                     </div>
 
@@ -144,7 +143,7 @@
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
 
-                            <input type="password" maxlength="10"  minlength="8" class="form-control" id="inputMotDePasse"
+                            <input type="password" maxlength="20"  minlength="8" class="form-control" id="inputMotDePasse"
                                    name="mdpEntreprise"
 
                                    placeholder="Nouveau mot de passe">
@@ -153,7 +152,7 @@
 
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
-                            <input type="password" class="form-control" maxlength="10"  minlength="8" name="validationMdp" id="inputMotDePasse"
+                            <input type="password" class="form-control" maxlength="20"  minlength="8" name="validationMdp" id="inputMotDePasse"
                                    placeholder="Confirmer le nouveau mot de passe">
                         </div>
                     </div>

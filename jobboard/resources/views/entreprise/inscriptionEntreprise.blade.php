@@ -63,8 +63,11 @@
 
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
-                            <input type="file" class="form-control" name="logoEntreprise" id="logoEntreprise"
-                                   placeholder="Logo">
+                            <input class="form-control"  id="logoEntreprise"
+                                   placeholder="Logo de votre entreprise">
+                            <div class="fileUpload">
+                                <input id="uploadBtn" name="logoEntreprise" type="file" class="upload" />
+                            </div>
                         </div>
                     </div>
 

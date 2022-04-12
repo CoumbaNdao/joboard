@@ -22,8 +22,6 @@ class Candidat extends Model
         return $this->hasOne(NiveauEtude::class, 'IDNiveauEtude', 'IDNiveauEtude');
     }
 
-
-
     public function competences()
     {
         return Competence::join('disposer', 'competence.IDCompetence', '=', 'disposer.IDCompetence')

@@ -48,7 +48,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="text-container">
-                    <p class="headerPresentation">JobAge par CoumbAnne</p>
+                    <p class="headerPresentation">JobAge</p>
                     <h1 class="titlePresentation">Trouve un Job à ton Age !</h1>
                 </div>
             </div>
@@ -81,11 +81,12 @@
             <div class="col">
                 <h1 class="titlePresentation">Jobage, pourquoi ?</h1>
                 <p class="textPresentation">
-                    Il existe plusieurs platformes de recherche d'emploi
-                    mais pourquoi choisir JobAge? Etant nous même étudiant nous nous
-                    sommes rendus compte qu'il pouvait être compliqué de trouver
-                    un stage ou même un travail adapté à son profil.
-                    C'est pour cette raison que JobAge a été conçu.
+                    Il existe plusieurs plateformes de recrutement,
+                    mais pourquoi choisir JobAge?
+                    </br>
+                    Entreprise, gagnez du temps en gérant vos offres ainsi que les candidatures depuis votre espace !
+                    </br>
+                    Candidat, fini de vous demander si votre candidature a été retenue ou non et les absences de réponses à votre candidature !
                 </p>
                 <br><br><br><br>
             </div>

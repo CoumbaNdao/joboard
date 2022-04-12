@@ -91,14 +91,11 @@
                         </div>
                     </div>
 
-
-
                 <!--    <div class="form-group row champPlacement">
                         <div class="col-sm-12">
                             <input type="date" class="form-control" name="dateDiplomeCandidat" id="inputEmail" required="required" placeholder="Date d'obtention" >
                         </div>
                     </div>-->
-
 
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
@@ -115,13 +112,13 @@
 
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
-                            <input type="password" class="form-control" name="mdpCandidat" minlength="8" maxlength="10" id="inputMotDePasse"  placeholder="Nouveau mot de passe">
+                            <input type="password" class="form-control" name="mdpCandidat" minlength="8" maxlength="20" id="inputMotDePasse"  placeholder="Nouveau mot de passe">
                         </div>
                     </div>
 
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
-                            <input type="password" class="form-control" minlength="8" maxlength="10" name="validationMdp" id="inputMotDePasse"  placeholder="Confirmer le nouveau mot de passe">
+                            <input type="password" class="form-control" minlength="8" maxlength="20" name="validationMdp" id="inputMotDePasse"  placeholder="Confirmer le nouveau mot de passe">
                         </div>
                     </div>
 

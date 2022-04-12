@@ -1,7 +1,6 @@
-drop database if exists testjoboard;
-
-create database  testjoboard;
-use testjoboard;
+drop database if exists jobage;
+create database  jobage;
+use jobage;
 
 // ===================================TABLE COMPETENCE======================================
 create table typecompetence
@@ -25,6 +24,8 @@ alter table `competence` add column `updated_at` Datetime;
 alter table `competence` add column `created_at` Datetime;
 
 
+
+
 // ===================================TABLE CONCERNER======================================
 create table concerner
 (
@@ -37,12 +38,10 @@ create table concerner
 	foreign key(IDCompetence) references competence(IDCompetence)
  	ON DELETE CASCADE
     ON UPDATE CASCADE
-
 )engine=innodb;
 
 alter table `concerner` add column `updated_at` Datetime;
 alter table `concerner` add column `created_at` Datetime;
-
 // ===================================TABLE REGION======================================
 create table region
  (
@@ -61,47 +60,42 @@ create table typeOffre
    libelleTypeOffre varchar (50) not null,
     primary key (IDTypeOffre)
  )engine=innodb;
-
 alter table `typeOffre` add column `updated_at` Datetime;
 alter table `typeOffre` add column `created_at` Datetime;
-
 // ===================================TABLE ENTREPRISE======================================
-
 create table entreprise (
-	numeroSiret int(5) not null auto_increment,
+	numeroSiret int(14) not null unique,
 	raisonSociale varchar (100) not null,
-	descEntreprise varchar (250) not null,
+	descEntreprise varchar (2500) not null,
 	adresseEntreprise varchar(120) not null,
 	cpEntreprise char (5),
 	villeEntreprise varchar (50) not null,
-    telEntreprise char (10) not null,
-    emailEntreprise varchar (50) not null,
-    loginEntreprise varchar (50) not null,
-    mdpEntreprise varchar (10) not null,
-    urlEntreprise varchar (50) not null,
+    telEntreprise char (10) not null unique,
+    emailEntreprise varchar (50) not null unique,
+    loginEntreprise varchar (50) not null unique,
+    mdpEntreprise varchar (255) not null,
+    urlEntreprise varchar (2000) not null,
     codePostalRegion int(5),
 	primary key(numeroSiret),
 	foreign key(codePostalRegion) references region(codePostalRegion)
  	ON DELETE CASCADE
     ON UPDATE CASCADE
-
 )engine=innodb;
 
 alter table `entreprise` add column `updated_at` Datetime;
 alter table `entreprise` add column `created_at` Datetime;
-alter table `entreprise` modify mdpEntreprise varchar (255) not null;
+alter table `entreprise` add column `logoEntreprise` varchar (500);
+
 
 // ===================================TABLE NIVEAUETUDE======================================
-
  create table niveauetude
  (
    IDNiveauEtude int(5) NOT NULL  auto_increment,
    libelleNiveauEtude varchar (50) not null,
       diplomeObtenu varchar (50) not null,
+      dateObtentionDiplome date,
     PRIMARY KEY (IDNiveauEtude)
  )engine=innodb;
-
-
 alter table `niveauetude` add column `updated_at` Datetime;
 alter table `niveauetude` add column `created_at` Datetime;
 
@@ -110,18 +104,18 @@ alter table `niveauetude` add column `created_at` Datetime;
 create table offre (
 	IDOffre int(5) not null auto_increment,
 	titreOffre varchar (100) not null,
-	descOffre varchar (250) not null,
+	descOffre varchar (2500) not null,
 	datePubOffre date not null,
 	remuneration float (10.2),
 	dateDebutContrat date not null,
     dureeContrat varchar (20) not null,
     statutOffre enum('publiee','expiree', 'en attente de publication') not null,
     IDTypeOffre int(5),
-    numeroSiret int(5),
+    numeroSiret int(14),
     IDNiveauEtude int(5),
 	primary key(IDOffre),
 	foreign key(numeroSiret) references entreprise(numeroSiret) 	ON DELETE CASCADE
-                                                                    ON UPDATE CASCADE,
+                                                                 ON UPDATE CASCADE,
 	foreign key(IDTypeOffre) references typeoffre(IDTypeOffre) 	ON DELETE CASCADE
                                                                    ON UPDATE CASCADE,
     foreign key(IDNiveauEtude) references niveauetude(IDNiveauEtude)
@@ -129,7 +123,6 @@ create table offre (
     ON UPDATE CASCADE
 
 )engine=innodb;
-
 alter table `offre` add column `updated_at` Datetime;
 alter table `offre` add column `created_at` Datetime;
 
@@ -139,11 +132,13 @@ create table candidat (
 	IDCandidat int(5) not null auto_increment,
 	nomCandidat varchar (100) not null,
 	prenomCandidat varchar (250) not null,
+	emailCandidat varchar (50) not null unique,
+	telephoneCandidat char (10)  unique,
 	adresseCandidat varchar(120) not null,
 	cpCandidat char (5),
 	villeCandidat varchar (50) not null,
-    loginCandidat varchar (50) not null,
-    mdpCandidat varchar (10) not null,
+    loginCandidat varchar (50) not null unique,
+    mdpCandidat varchar (255) not null,
     codePostalRegion int(5) not null,
     IDNiveauEtude int(5) not null,
 	primary key(IDCandidat),
@@ -158,37 +153,40 @@ create table candidat (
 alter table `candidat` add column `updated_at` Datetime;
 alter table `candidat` add column `created_at` Datetime;
 
-alter table `candidat` modify mdpCandidat varchar (255) not null;
+
+// ===================================TABLE CV======================================
+
+CREATE TABLE cvcandidat
+(
+    IDCv int(5) NOT NULL AUTO_INCREMENT,
+    nomCv varchar(50) NOT NULL,
+    pathCv varchar(255) NOT NULL,
+    primary key (IDCv),
+    updated_at datetime DEFAULT NOW(),
+    created_at datetime DEFAULT NOW()
+) ENGINE=InnoDB;
+
 
 // ===================================TABLE POSTULER======================================
-
-/*create table postuler
-(
-	IDOffre int(5) not null,
-	IDCandidat int(5) not null,
-	primary key (IDOffre,IDCandidat),
-	foreign key(IDOffre) references offre(IDOffre) 	ON DELETE CASCADE ON UPDATE CASCADE,
-	foreign key(IDCandidat) references candidat(IDCandidat)
- 	ON DELETE CASCADE
-    ON UPDATE CASCADE
-)engine=innodb;
-
-alter table `postuler` add column `updated_at` Datetime;
-alter table `postuler` add column `created_at` Datetime;*/
-
-drop table postuler;
 
 create table postuler
 (
 	IDOffre int(5) not null,
 	IDCandidat int(5) not null,
-	primary key (IDOffre,IDCandidat),
-	foreign key(IDOffre) references offre(IDOffre),
+	IDCv int(5) not null,
+	primary key (IDOffre,IDCandidat,IDCv),
+	foreign key(IDOffre) references offre(IDOffre) 	ON DELETE CASCADE ON UPDATE CASCADE,
 	foreign key(IDCandidat) references candidat(IDCandidat)
+ 	ON DELETE CASCADE ON UPDATE CASCADE,
+    foreign key(IDCv) references cvcandidat(IDCv) ON DELETE CASCADE ON UPDATE CASCADE
 )engine=innodb;
 
 alter table `postuler` add column `updated_at` Datetime;
 alter table `postuler` add column `created_at` Datetime;
+
+alter table `postuler` add column `statutPostuler` int(1) default 2;
+
+
 
 // ===================================TABLE DISPOSER======================================
 create table disposer
@@ -226,25 +224,6 @@ alter table `requerir` add column `created_at` Datetime;
 
 
 
-// ===================================TABLE CV======================================
-
-CREATE TABLE cvcandidat
-(
-    IDCv int(5) NOT NULL AUTO_INCREMENT,
-    nomCv varchar(50) NOT NULL,
-    pathCv varchar(255) NOT NULL,
-    updated_at datetime DEFAULT NOW(),
-    created_at datetime DEFAULT NOW(),
-    IDOffre    int(5) NOT NULL,
-    IDCandidat int(5) NOT NULL,
-    PRIMARY KEY (IDCv),
-    FOREIGN KEY (IDOffre) REFERENCES offre (IDOffre)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
-   FOREIGN KEY (IDCandidat) REFERENCES candidat (IDCandidat)
-       ON DELETE CASCADE
-       ON UPDATE CASCADE
-) ENGINE=InnoDB;
 
 
 // ===================================INSERTION======================================
@@ -254,7 +233,7 @@ insert into region (codePostalRegion, nomRegion) values
 
 (null, 'ains'),
 (null, 'haut de france'),
-(null, 'Guyane'),
+(null, 'Guyane')
 (null, 'Martinique');
 
 insert into typeoffre (`IDTypeOffre`, `libelleTypeOffre`) values
@@ -262,7 +241,7 @@ insert into typeoffre (`IDTypeOffre`, `libelleTypeOffre`) values
 
 (null, 'alternance'),
 (null, 'CDI'),
-(null, 'CDD'),
+(null, 'CDD')
 (null, 'interim');
 
 
@@ -271,16 +250,15 @@ insert into entreprise (`numeroSiret`, `raisonSociale`, `descEntreprise`, `adres
 (12345, 'Orange', 'vente de téléphone', '2 avenue de segur', '75007', 'Paris', '0123456789', 'orange@orange.com', 'orange@orange.com', 'orange', 'www.orange.com', 9),
 (22345, 'ODIGO', 'Editeur de logiciel', '40 rue camille desmoulins', '92130', 'Issy-les-moulineaux', '0123456790', 'odigo@odigo.com', 'odigo@odigo.com', 'odigo', 'www.odigo.com', 8),
 (32345, 'Accenture', 'Entreprise de logiciel', '6 rue de segura', '20000', 'Sainte Anne', '0123456779', 'accenture@accenture.com', 'accenture@accenture.com', 'accenture', 'www.accenture.net', 11),
-(42345, 'PrefNord', 'Service  public', '5 boulevar victor', '59000', 'Lille', '0152456789', 'pref@pref.com', 'pref@pref.com', 'pref', 'www.pref.com', 8),
+(42345, 'PrefNord', 'Service  public', '5 boulevar victor', '59000', 'Lille', '0152456789', 'pref@pref.com', 'pref@pref.com', 'pref', 'www.pref.com', 8)
 (52345, 'Arrow', 'Pharmacologie', '5 avenue de la marne', '69007', 'Lyon', '0156456789', 'arrow@arrow.com', 'arrow@arrow.com', 'arrow', 'www.arrow.net', 2);
 
 
 insert into niveauetude (`IDNiveauEtude`, `libelleNiveauEtude`, `diplomeObtenu`) values
-(null, 'Bac+1', 'bac'),
-
+(null, 'Bac+1', 'BAC'),
 (null, 'Bac+2', 'BTS'),
 (null, 'Bac+3', 'Licence'),
-(null, 'Bac+4', 'M1'),
+(null, 'Bac+4', 'M1')
 (null, 'Bac+5', 'M2');
 
 
@@ -290,7 +268,7 @@ insert into offre (`IDOffre`, `titreOffre`, `descOffre`, `datePubOffre`, `remune
 
 (null, 'Support systeme en alternance', 'Recherche profil support systeme ', '2021/02/01', '1200.0','2021/03/05', '1 ans', 'expiree', null, 2234, null),
 (null , 'Administrateur de base de donnees', 'Recherche DBA confirme', '2022/02/01', '3200','2022/04/05', '1 ans', 'publiee', null, 3234, null),
-(null ,  'Devops junior', 'Devenez Devops junior', '2020/02/01', '3000','2021/02/05', '6 mois', 'expiree', null, 4234, null),
+(null ,  'Devops junior', 'Devenez Devops junior', '2020/02/01', '3000','2021/02/05', '6 mois', 'expiree', null, 4234, null)
 (null , 'Ingenieur Securite', 'Offre ingenieur sécurite', '2021/02/01', '5000','2021/03/05', 'null', 'expiree', null, 5234, null);
 
 
@@ -299,7 +277,7 @@ insert into candidat (`IDCandidat`, `nomCandidat`, `prenomCandidat`, `adresseCan
 values (null, 'DIAZ', 'Paco ', '12 rue de la belle feuille', '69500', 'Lyon', 'paco@paco.com', 'paco', 1, 1 , '0650084988', 'paco@gmail.com'),
        (null, 'TOTO', 'Coumba ', '5 avenue de la marne', '59800', 'Lille', 'coumba@coumba.com', 'coumba', 2, 5, '0650078988', 'coumba@gmail.com'),
        (null, 'BEN', 'Ahmed ', '68 rue glaciale', '92130', 'Issy-les-moulineaux', 'ahmed@ahmed.com', 'ahmed', 4, 3, '0659584988', 'ahmed@gmail.com'),
-       (null, 'CHOUAKY', 'Abder ', '12 rue de la belle feuille', '69500', 'Lyon', 'abder@abder.com', 'abder', 3, 1, '0655084988', 'abder@gmail.com'),
+       (null, 'CHOUAKY', 'Abder ', '12 rue de la belle feuille', '69500', 'Lyon', 'abder@abder.com', 'abder', 3, 1, '0655084988', 'abder@gmail.com')
        (null, 'TCHEN', 'Anne', '28 boulevard victor', '92600', 'Asnieres', 'anne@anne.com', 'anne', 1, 2,'0658284988', 'anne@gmail.com' );
 
 
@@ -310,7 +288,7 @@ values (1, 1) ;
 
         (28, 12),
         (29, 13),
-        (30, 14),
+        (30, 14)
         (26, 15);
 
 
@@ -318,7 +296,7 @@ insert into competence (`IDCompetence`, `libelleCompetence`)
 values (null, 'Programmation'),
 (null, 'Support informatique'),
 (null, 'Gestion de donnees'),
-(null, 'Gestion de projet'),
+(null, 'Gestion de projet')
 (null, 'Administration systeme');
 
 
@@ -326,7 +304,7 @@ insert into typecompetence (`IDTypeCompetence`, `libelleTypeCompetence`)
 values (null, 'Technique'),
 (null, 'Fonctionnel'),
 (null, 'Technico_fonctonnel'),
-(null, 'Suivi KPI'),
+(null, 'Suivi KPI')
 (null, 'Solution reseaux');
 
 
@@ -336,7 +314,7 @@ values (1, 1) ;
 
         (13, 7),
         (14, 8),
-        (15, 9),
+        (15, 9)
         (11, 10);
 
 
@@ -346,7 +324,7 @@ values (1, 1) ;
 
         (28, 7),
         (29, 8),
-        (30, 9),
+        (30, 9)
         (26, 10);
 
 insert into concerner (`IDTypeCompetence`, `IDCompetence`)
@@ -412,7 +390,7 @@ create table partenaire (
    siegePartenaire varchar(50) not null,
    cpPartenaire char(5) not null,
    villePartenaire varchar(50) not null,
-   contactPartenaire varchar(50) not null,
+   contactPartenaire varchar(50) not null unique,
 	dateDebutPartenariat varchar (50) not null,
    logoPartenaire varchar(500) not null,
 	primary key(SiretPartenaire)
@@ -536,7 +514,6 @@ create trigger hashagedemdpcandidat
 	end //
 delimiter ;
 
-
 // ===================================TRIGGER update pour hashage de mdp/CANDIDAT======================================
 
 drop trigger if exists hashagedemdpcandidatup;
@@ -548,7 +525,6 @@ create trigger hashagedemdpcandidatup
 	set new.mdpCandidat= password(new.mdpCandidat);
 	end //
 	delimiter ;
-
 // ===================================TRIGGER insertion pour hashage de mdp/ENTREPRISE======================================
 
 drop trigger if exists hashagedemdpcandidat;
@@ -560,8 +536,6 @@ create trigger hashagedemdpcandidat
 	set new.mdpCandidat= password(new.mdpCandidat);
 	end //
 delimiter ;
-
-
 // ===================================TRIGGER update pour hashage de mdp/ENTREPRISE======================================
 
 drop trigger if exists hashagedemdpcandidatup;

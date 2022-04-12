@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Hash;
 use Mockery\Exception;
 
 class CandidatControlleur extends Controller
@@ -28,10 +29,11 @@ class CandidatControlleur extends Controller
     {
 
         $candidat = Candidat::where('loginCandidat', '=', $request->loginCandidat)
-            ->where('mdpCandidat', '=', $request->mdpCandidat)
             ->get()->first();
 
-
+        if (!Hash::check($request->mdpCandidat, $candidat->mdpCandidat)) {
+            $candidat = null;
+        }
         if (isset($candidat)) {
             Cache::set('candidat', $candidat->IDCandidat);
             return redirect()->route('offre.index');
@@ -91,7 +93,7 @@ class CandidatControlleur extends Controller
                 'cpCandidat' => $request->cpCandidat,
                 'villeCandidat' => $request->villeCandidat,
                 'loginCandidat' => $request->loginCandidat ?? $request->emailCandidat,
-                'mdpCandidat' => $request->mdpCandidat,
+                'mdpCandidat' => Hash::make($request->mdpCandidat),
                 'IDNiveauEtude' => $niveau,
                 'telephoneCandidat' => $request->telephoneCandidat,
                 'codePostalRegion' => $request->codePostalRegion,
@@ -123,6 +125,7 @@ class CandidatControlleur extends Controller
         if (!Candidat::find(Cache::get('candidat'))) {
             return redirect()->route('candidat.index');
         }
+
         $candidat = Candidat::find(Cache::get('candidat'));
 
         return view('candidat.postuler', [
@@ -140,9 +143,9 @@ class CandidatControlleur extends Controller
         $pathCandidat = "C:\Users\MameCoumbaNDAO\Desktop\jobsearch\jobboard\public\doc\candidat\\" . $candidat->prenomCandidat . $candidat->nomCandidat;
         $pathCandidatOffre = $pathCandidat . "\\" . $offre->titreOffre;
 
-        $pathEntreprise = "C:\Users\MameCoumbaNDAO\Desktop\jobsearch\jobboard\public\doc\\entreprise\\" . $entreprise->raisonSociale;
+       /* $pathEntreprise = "C:\Users\MameCoumbaNDAO\Desktop\jobsearch\jobboard\public\doc\\entreprise\\" . $entreprise->raisonSociale;
         $pathEntrepriseCandidat = $pathEntreprise . "\\" . $candidat->prenomCandidat . $candidat->nomCandidat;
-        $pathEntrepriseOffre = $pathEntrepriseCandidat . "\\" . $offre->titreOffre;
+        $pathEntrepriseOffre = $pathEntrepriseCandidat . "\\" . $offre->titreOffre;*/
 
         if (!is_dir($pathCandidat)) {
             mkdir($pathCandidat);
@@ -151,32 +154,16 @@ class CandidatControlleur extends Controller
             mkdir($pathCandidatOffre);
         }
 
-        if (!is_dir($pathEntreprise)) {
-            mkdir($pathEntreprise);
-        }
-
-        if (!is_dir($pathEntrepriseCandidat)) {
-            mkdir($pathEntrepriseCandidat);
-        }
-
-        if (!is_dir($pathEntrepriseOffre)) {
-            mkdir($pathEntrepriseOffre);
-        }
-
 
         $cv = $request->file('CVCandidat');
 
 
         $cv->move($pathCandidatOffre, $cv->getClientOriginalName());
 
-        //  $cv->move($pathEntrepriseOffre, $cv->getClientOriginalName());
 
-        copy($pathCandidatOffre . "\\" . $cv->getClientOriginalName(), $pathEntrepriseOffre . "\\_" . $cv->getClientOriginalName());
-        Postuler::create([
-            'IDCandidat' => $candidat->IDCandidat,
-            'IDOffre' => $offre->IDOffre,
-            'statutPostuler' => 2
-        ]);
+
+        // copy($pathCandidatOffre . "\\" . $cv->getClientOriginalName(), $pathEntrepriseOffre . "\\_" . $cv->getClientOriginalName());
+
 
         return redirect()->route('offre.index');
 
@@ -218,8 +205,6 @@ class CandidatControlleur extends Controller
     {
         $candidat = Candidat::find(Cache::get('candidat'));
 
-
-
         try {
             $regions = Region::where('nomRegion', '=' ,  $request->codePostalRegion )->get()->first() ;
             $niveauEtude = NiveauEtude::where('diplomeObtenu', '=', $request->IDNiveauEtude )->get()->first();
@@ -244,12 +229,12 @@ class CandidatControlleur extends Controller
         return redirect()->route('offre.index');
     }
 
-        if (($request->oldPassword == $candidat->mdpCandidat ) && ($request->mdpCandidat == $request->validationMdp))
+        if ((Hash::check($request->oldPassword, $candidat->mdpCandidat)) && ($request->mdpCandidat == $request->validationMdp))
         {
            try {
                $candidat->update([
                    'loginCandidat' => $request->loginCandidat ?? $candidat->loginCandidat,
-                   'mdpCandidat' => $request->mdpCandidat
+                   'mdpCandidat' => Hash::make($request->mdpCandidat)
                ]);
 
                Cache::delete('candidat');
@@ -267,8 +252,6 @@ class CandidatControlleur extends Controller
 
     public function recoverPassword(Request $request, $loginCandidat=null)
     {
-
-
         if ($request->loginCandidat &&  !isset($loginCandidat)) {
 
             if (!$request->loginCandidat) {
@@ -280,7 +263,7 @@ class CandidatControlleur extends Controller
             if ($request->mdpCandidat == $request->validationMdp) {
                 try {
                     $candidat->update([
-                        'mdpCandidat' => $request->mdpCandidat ?? $candidat->mdpCandidat
+                        'mdpCandidat' => Hash::make($request->mdpCandidat) ?? $candidat->mdpCandidat
                     ]);
 
                     Cache::delete('candidat');
@@ -292,10 +275,7 @@ class CandidatControlleur extends Controller
 
             return back()->withInput();
         }
-
         return view('candidat.reinitialisermdpC', ['mail' => $loginCandidat]);
-
-
     }
 }
 

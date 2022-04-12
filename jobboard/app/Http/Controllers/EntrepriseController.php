@@ -35,6 +35,8 @@ class EntrepriseController extends Controller
     public function create(Request $request)
     {
 
+
+
         if ($request->validationMdp !== $request->mdpEntreprise) {
             Cache::set('message', "Veuillez saisir le meme mot de passe !");
             return redirect()->route('entreprise.inscription');
@@ -44,6 +46,7 @@ class EntrepriseController extends Controller
         $pathEntreprise = "images\logo\\";
 
         $cv = $request->file('logoEntreprise');
+
 
         $cv->move($pathEntreprise, $cv->getClientOriginalName());
 
@@ -61,8 +64,8 @@ class EntrepriseController extends Controller
                 'emailEntreprise' => $request->emailEntreprise,
                 'loginEntreprise' => $request->loginEntreprise ?? $request->emailEntreprise,
                 'urlEntreprise' => $request->url,
-                'mdpEntreprise' => $request->mdpEntreprise,
-                'codePostalRegion' => Hash::make($request->codePostalRegion),
+                'mdpEntreprise' => Hash::make($request->mdpEntreprise),
+                'codePostalRegion' => $request->codePostalRegion,
                 'logoEntreprise' => $logo
             ]);
         } catch (\Exception $e) {
@@ -79,13 +82,17 @@ class EntrepriseController extends Controller
 
         return redirect()->route('offre.show');
     }
+
 //CONNEXION
     public function login(Request $request)
     {
 
         $entreprise = Entreprise::where('loginEntreprise', '=', $request->loginEntreprise)
-            ->where('mdpEntreprise', '=', $request->mdpEntreprise)
             ->get()->first();
+
+        if (!Hash::check($request->mdpEntreprise, $entreprise->mdpEntreprise)) {
+            $entreprise = null;
+        }
 
 
         if (isset($entreprise)) {
@@ -94,12 +101,17 @@ class EntrepriseController extends Controller
         }
         return back()->withInput();
     }
-//DECONNEXION
+
+    /**
+     * @method deconnexion() permet la déconnexion d'un utilisateur romain
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function deconnexion()
     {
         Cache::delete('entreprise');
         return redirect()->route('entreprise.index');
     }
+
 //GESTION DU PROFIL
     public function edit()
     {
@@ -139,8 +151,6 @@ class EntrepriseController extends Controller
                 'cpEntreprise' => $request->cpEntreprise ?? $entreprise->cpEntreprise,
                 'telEntreprise' => $request->telEntreprise ?? $entreprise->telEntreprise,
                 'emailEntreprise' => $request->emailEntreprise ?? $entreprise->emailEntreprise,
-                /* 'loginEntreprise' => $request->loginEntreprise ?? $entreprise->loginEntreprise,
-                 'mdpEntreprise' => $request->mdpEntreprise ?? $entreprise->mdpEntreprise,*/
                 'logoEntreprise' => $logo ?? $entreprise->logoEntreprise,
                 'urlEntreprise' => $request->urlEntreprise ?? $entreprise->urlEntreprise,
                 'codePostalRegion' => $region->codePostalRegion ?? $entreprise->codePostalRegion,
@@ -160,7 +170,7 @@ class EntrepriseController extends Controller
             try {
                 $entreprise->update([
                     'loginEntreprise' => $request->loginEntreprise ?? $entreprise->loginEntreprise,
-                    'mdpEntreprise' => $request->mdpEntreprise ?? $entreprise->mdpEntreprise
+                    'mdpEntreprise' => Hash::make($request->mdpEntreprise) ?? $entreprise->mdpEntreprise
                 ]);
 
                 Cache::delete('entreprise');
@@ -176,7 +186,7 @@ class EntrepriseController extends Controller
 
     }
 
-    public function recoverPassword(Request $request, $loginEntreprise=null)
+    public function recoverPassword(Request $request, $loginEntreprise = null)
     {
 
         if ($request->loginEntreprise && !isset($loginEntreprise)) {
@@ -184,11 +194,11 @@ class EntrepriseController extends Controller
                 return redirect()->route('offre.show');
             }
             $entreprise = Entreprise::where('loginEntreprise', '=', $request->loginEntreprise)->get()->first();
-           // dd($entreprise, $request->all());
+            // dd($entreprise, $request->all());
             if ($request->mdpEntreprise == $request->validationMdp) {
                 try {
                     $entreprise->update([
-                        'mdpEntreprise' => $request->mdpEntreprise ?? $entreprise->mdpEntreprise
+                        'mdpEntreprise' => Hash::make($request->mdpEntreprise) ?? $entreprise->mdpEntreprise
                     ]);
 
                     Cache::delete('entreprise');
@@ -200,7 +210,7 @@ class EntrepriseController extends Controller
 
             return back()->withInput();
         }
-        return view('entreprise.reinitialisermdpE', ['mail'=>$loginEntreprise]);
+        return view('entreprise.reinitialisermdpE', ['mail' => $loginEntreprise]);
 
     }
 }

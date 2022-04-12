@@ -123,7 +123,6 @@ class OffreController extends Controller
 
     }
 
-
     public function update(Request $request, Offre $offre)
     {
         $offre->update([
@@ -181,15 +180,11 @@ class OffreController extends Controller
         ]);
     }
 
-
     public function valider(Candidat $candidat, Offre $offre, $etat)
     {
 
 
         if ($etat == 1) {
-
-
-
             $p = DB::table('postuler')
                 ->where('IDOffre', '=', $offre->IDOffre)
                 ->where('IDCandidat', '=', $candidat->IDCandidat)

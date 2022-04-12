@@ -52,7 +52,6 @@
     </div>
 </header>
 
-
 <!-- Scripts -->
 <script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
 <script src="js/bootstrap.min.js"></script> <!-- Bootstrap framework -->

@@ -21,7 +21,6 @@ class Entreprise extends Model
        return $this->hasMany(Offre::class, 'numeroSiret', 'numeroSiret');
    }
 
-
     public function nb_candidat():int
     {
         $nb = $this->offres()->join('postuler', 'offre.IDOffre', '=','postuler.IDOffre')

@@ -16,7 +16,7 @@ class PasswordManagerController extends Controller
         {
             return redirect()->back();
         }
-        $to_email = $entreprise->emailEntreprise;
+        $to_email = $entreprise->loginEntreprise;
         $data = ['loginEntreprise' => $request->loginEntreprise ];
         Mail::send('entreprise.resetMailE', $data, function ($message) use ( $to_email) {
             $message->to($to_email)
@@ -33,7 +33,7 @@ class PasswordManagerController extends Controller
         {
             return redirect()->back();
         }
-        $to_email = $candidat->emailCandidat;
+        $to_email = $candidat->loginCandidat;
         $data = ['loginCandidat' => $request->loginCandidat ];
         Mail::send('candidat.resetMailC', $data, function ($message) use ( $to_email) {
             $message->to($to_email)

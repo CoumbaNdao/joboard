@@ -49,18 +49,42 @@
     <div class="container">
         <div class="row">
             <div class="col-5 emplacementForm">
-                <h6 class="text-uppercase mb-4 font-weight-bold titreMdp">Réinitialiser mon mot de passe</h6>
-                <form>
-                    <div class="form-group row champPlacement">
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="inputEmail" required="required" placeholder="E-mail" >
+                <h6 class="text-uppercase mb-4 font-weight-bold titreCo">Réinitialisation de mot de passe </h6>
+                @if(isset($mail))
+                    <form method="post" action="{{route('entreprise.recoverPassword')}}">
+                        @csrf
+                        <div class="form-group row champPlacement">
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" id="inputMotDePasse" required="required" value="{{$mail}}"
+                                       name="loginEntreprise" placeholder="Login">
+                            </div>
                         </div>
-                    </div>
-                    <input type="submit" value="Envoyer">
-                </form>
-                <br>
-                <p>Retour à la page d' <a class=" font-weight-bold lienInscription " href="espaceEntreprise.html">Authentification</a></p>
-                <br>
+                        <div class="form-group row champPlacement">
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="inputMotDePasse" minlength="8" maxlength="20" required="required"
+                                       name="mdpEntreprise" placeholder="Choisir un nouveau mot de passe">
+                            </div>
+                        </div>
+                        <div class="form-group row champPlacement">
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="inputMotDePasse" required="required"
+                                       name="validationMdp" placeholder="Confirmer le mot de passe">
+                            </div>
+                        </div>
+                        <input type="submit" value="Envoyer"> <!---REDIRIGER VERS LA PAGE DE CONNEXION-->
+                    </form>
+                @else
+                    <form method="post" action="{{route('ressetPassWordE')}}">
+                        @csrf
+                        <div class="form-group row champPlacement">
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" id="inputMotDePasse" required="required"
+                                       name="loginEntreprise" placeholder="Login">
+                            </div>
+                        </div>
+                        <input type="submit" value="Envoyer"> <!---REDIRIGER VERS LA PAGE DE CONNEXION-->
+                    </form>
+                @endif
             </div>
         </div>
     </div>
@@ -68,9 +92,9 @@
 
 
 <!-- Scripts -->
-<script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
-<script src="js/bootstrap.min.js"></script> <!-- Bootstrap framework -->
-<script src="js/jquery.easing.min.js"></script> <!-- jQuery Easing for smooth scrolling between anchors -->
-<script src="js/scripts.js"></script> <!-- Custom scripts -->
+<script src="{{asset('js/jquery.min.js')}}"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
+<script src="{{asset('js/bootstrap.min.js')}}"></script> <!-- Bootstrap framework -->
+<script src="{{asset('js/jquery.easing.min.js')}}"></script> <!-- jQuery Easing for smooth scrolling between anchors -->
+<script src="{{asset('js/scripts.js')}}"></script> <!-- Custom scripts -->
 </body>
 </html>
