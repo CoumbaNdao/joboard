@@ -94,7 +94,7 @@ class AdminControlleur extends Controller
 
 
 
-    public function typeOffre(Request $request, TypeOffre $typeOffre)
+    public function typeOffre(Request $request, TypeOffre $typeOffre=null)
     {
 
 
@@ -132,7 +132,7 @@ class AdminControlleur extends Controller
 
 
 
-    public function TypeCompetence(Request $request, TypeCompetence $typeCompetence)
+    public function TypeCompetence(Request $request, TypeCompetence $typeCompetence=null)
     {
         if ($request->Valider) {
 
@@ -155,7 +155,7 @@ class AdminControlleur extends Controller
         return redirect()->route('admin.show');
     }
 
-    public function Competence(Request $request, Competence $competence)
+    public function Competence(Request $request, Competence $competence=null)
     {
 
         if ($request->Valider) {
@@ -181,7 +181,7 @@ class AdminControlleur extends Controller
     }
 
 
-    public function region(Request $request, Region $region)
+    public function region(Request $request, Region $region=null)
     {
 
         if ($request->Valider) {
@@ -199,7 +199,6 @@ class AdminControlleur extends Controller
             }
 
         }
-
 
         if ($request->Creer) {
             Region::create([

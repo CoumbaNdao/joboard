@@ -90,7 +90,7 @@ class EntrepriseController extends Controller
         $entreprise = Entreprise::where('loginEntreprise', '=', $request->loginEntreprise)
             ->get()->first();
 
-        if (!Hash::check($request->mdpEntreprise, $entreprise->mdpEntreprise)) {
+        if (isset($entreprise) && !Hash::check($request->mdpEntreprise, $entreprise->mdpEntreprise)) {
             $entreprise = null;
         }
 

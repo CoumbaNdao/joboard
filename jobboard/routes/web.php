@@ -19,7 +19,6 @@ use \App\Http\Controllers\AccueilControlleur;
 |
 */
 
-
 Route::prefix('/offre')->name('offre.')->group(static function() {
     Route::get('/', [OffreController::class, 'index'])->name('index');
     Route::get('/search', [OffreController::class, 'search'])->name('search');
@@ -48,7 +47,6 @@ Route::prefix('/')->name('')->group(static function() {
 
 });
 
-
 Route::prefix('/candidat')->name('candidat.')->group(static function() {
     Route::get('/', [CandidatControlleur::class, 'index'])->name('index');
     Route::post('/login', [CandidatControlleur::class, 'login'])->name('login');
@@ -60,19 +58,19 @@ Route::prefix('/candidat')->name('candidat.')->group(static function() {
     Route::get('/cancel/{offre}', [CandidatControlleur::class, 'cancel'])->name('cancel');
     Route::get('/edit', [CandidatControlleur::class, 'edit'])->name('edit');
     Route::post('update', [CandidatControlleur::class, 'update'])->name('update');
-    Route::match(['get', 'post'],'/recoverpassword/{loginCandidat?}', [CandidatControlleur::class, 'recoverPassword'])->name('recoverPassword');
-});
+    Route::match(['get', 'post'],'/ressetPassWordC/{loginCandidat?}', [CandidatControlleur::class, 'recoverPassword'])->name('recoverPassword');
 
+});
 
 Route::prefix('/admin')->name('admin.')->group(static function() {
     Route::get('/', [AdminControlleur::class, 'index'])->name('index');
     Route::get('/offre/{offre}', [AdminControlleur::class, 'offre'])->name('offre');
     Route::get('/entreprise/{entreprise}', [AdminControlleur::class, 'entreprise'])->name('entreprise');
     Route::get('/candidat/{candidat}', [AdminControlleur::class, 'candidat'])->name('candidat');
-    Route::post('/typeoffre/{typeOffre}', [AdminControlleur::class, 'typeOffre'])->name('typeOffre');
-    Route::post('/typecompetence/{typeCompetence}', [AdminControlleur::class, 'typeCompetence'])->name('typeCompetence');
-    Route::post('/competence/{competence}', [AdminControlleur::class, 'competence'])->name('competence');
-    Route::post('/region/{region}', [AdminControlleur::class, 'region'])->name('region');
+    Route::post('/typeoffre/{typeOffre?}', [AdminControlleur::class, 'typeOffre'])->name('typeOffre');
+    Route::post('/typecompetence/{typeCompetence?}', [AdminControlleur::class, 'typeCompetence'])->name('typeCompetence');
+    Route::post('/competence/{competence?}', [AdminControlleur::class, 'competence'])->name('competence');
+    Route::post('/region/{region?}', [AdminControlleur::class, 'region'])->name('region');
     Route::post('/lien', [AdminControlleur::class, 'lien'])->name('lien');
     Route::post('/creerpartenaire', [AdminControlleur::class, 'creerPartenaire'])->name('creerPartenaire');
     Route::post('/partenaire/{partenaire}', [AdminControlleur::class, 'partenaire'])->name('partenaire');
@@ -82,8 +80,10 @@ Route::prefix('/admin')->name('admin.')->group(static function() {
 
 Route::get('/test', [TestControlleur::class, 'test'])->name('test');
 
-Route::match(['get', 'post'], '/reset-pass-word', [PasswordManagerController::class, 'ressetPassWordE'])->name('ressetPassWord');
-Route::match(['get', 'post'], '/reset-pass-word', [PasswordManagerController::class, 'ressetPassWordC'])->name('ressetPassWordC');
-
+Route::match(['get', 'post'], '/reset-pass-word-e', [PasswordManagerController::class, 'ressetPassWordE'])->name('ressetPassWordE');
+Route::match(['get', 'post'], '/reset-pass-word-c', [PasswordManagerController::class, 'ressetPassWordC'])->name('ressetPassWordC');
 
 require __DIR__.'/auth.php';
+
+
+

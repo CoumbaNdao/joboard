@@ -187,6 +187,12 @@
                                     </div>
                                 </div>
                                 <p class="card-text">{{$offre->descOffre}}</p>
+                                <br>
+                                <p class="card-text">Remuneration : {{$offre->remuneration}}€</p>
+
+                                <p class="card-text">Type de contrat : {{$offre->type_offre->libelleTypeOffre}}</p>
+                                <p class="card-text">Date de debut du contrat : {{$offre->dateDebutContrat}}</p>
+                                <p class="card-text">Duree du contrat : {{$offre->dureeContrat}}</p>
                                 <a href="{{route('candidat.postuler', [$offre->IDOffre])}}}" class="btn btn-primary">Postuler</a>
                             </div>
                         </div>

@@ -32,13 +32,13 @@
                     <div class="form-group row champPlacement">
                         <div class="col-sm-10">
                             <input type="email" class="form-control" id="inputMotDePasse" required="required"
-                                   name="loginCandidat" placeholder="Login">
+                                   name="loginCandidat" value="{{$mail}}" placeholder="Login">
                         </div>
                     </div>
                     <div class="form-group row champPlacement">
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="inputMotDePasse" minlength="8" maxlength="10" required="required"
-                                   name="mdpCandidat" placeholder="Choisir un nouveau mot de passe">
+                            <input type="password" class="form-control" id="inputMotDePasse" minlength="8" maxlength="20" required="required"
+                                   name="mdpCandidat"  placeholder="Choisir un nouveau mot de passe">
                         </div>
                     </div>
                     <div class="form-group row champPlacement">

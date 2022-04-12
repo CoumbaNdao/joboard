@@ -31,7 +31,7 @@ class CandidatControlleur extends Controller
         $candidat = Candidat::where('loginCandidat', '=', $request->loginCandidat)
             ->get()->first();
 
-        if (!Hash::check($request->mdpCandidat, $candidat->mdpCandidat)) {
+        if (isset($candidat) && !Hash::check($request->mdpCandidat, $candidat->mdpCandidat)) {
             $candidat = null;
         }
         if (isset($candidat)) {
@@ -107,6 +107,8 @@ class CandidatControlleur extends Controller
             ]);
 
         } catch (\Exception $e) {
+
+            abort(500, "Un erreur est survenue lors de la creation de votre !!!! " . $e);
             return back()->withInput();
         }
 

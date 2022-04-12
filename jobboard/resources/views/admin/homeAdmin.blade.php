@@ -143,7 +143,7 @@
     </div>
 
     <div class="row d-flex justify-content-center mb-5 mt-5">
-        <h2> Gestion Expiré Offre </h2>
+        <h2> Gestion Offre Expirée </h2>
 
         <table class="table table-striped table-secondary">
             <tr>
@@ -156,8 +156,6 @@
                 <th>État</th>
                 <th>Action</th>
             </tr>
-
-
             @foreach($offresExpire as $offre)
                 <tr>
                     <td>{{$offre->titreOffre}}</td>
