@@ -20,7 +20,7 @@
 <!-- Header -->
 <!-- Image Logo -->
 <header id="header" class="bodyConnexion">
-    <a class="navbar-brand logo-image" href="index.html"><img class="dimLogo" src="images/logo.png"
+    <a class="navbar-brand logo-image" href="{{route('index')}}"><img class="dimLogo" src="{{asset('images/logo.png')}}"
                                                               alt="alternative"></a>
     <div class="container">
         <div class="row">
@@ -43,7 +43,7 @@
                     <input type="submit" value="Se connecter">
                 </form>
                 <br>
-                <p><a class=" font-weight-bold lienInscription " href="motdepasse.html">Mot de passe oublié ?</a></p>
+                <p><a class=" font-weight-bold lienInscription " href="{{route('entreprise.recoverPassword')}}">Mot de passe oublié ?</a></p>
                 <p>Pas encore de compte ? <a class=" font-weight-bold lienInscription "
                                              href="{{route('entreprise.inscription')}}">Inscription</a></p>
                 <br>

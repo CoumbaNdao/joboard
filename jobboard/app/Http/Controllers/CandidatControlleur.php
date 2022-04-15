@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Candidat;
 use App\Models\Competence;
+use App\Models\CvCandidat;
 use App\Models\Disposer;
 use App\Models\Entreprise;
 use App\Models\NiveauEtude;
@@ -143,6 +144,7 @@ class CandidatControlleur extends Controller
         $candidat = Candidat::find(Cache::get('candidat'));
 
         $pathCandidat = "C:\Users\MameCoumbaNDAO\Desktop\jobsearch\jobboard\public\doc\candidat\\" . $candidat->prenomCandidat . $candidat->nomCandidat;
+        $pathC = "\doc\candidat\\" . $candidat->prenomCandidat . $candidat->nomCandidat . "\\" . $offre->titreOffre;
         $pathCandidatOffre = $pathCandidat . "\\" . $offre->titreOffre;
 
        /* $pathEntreprise = "C:\Users\MameCoumbaNDAO\Desktop\jobsearch\jobboard\public\doc\\entreprise\\" . $entreprise->raisonSociale;
@@ -166,6 +168,19 @@ class CandidatControlleur extends Controller
 
         // copy($pathCandidatOffre . "\\" . $cv->getClientOriginalName(), $pathEntrepriseOffre . "\\_" . $cv->getClientOriginalName());
 
+
+       $cv =  CvCandidat::create([
+           'nomCv' => $cv->getClientOriginalName(),
+            'pathCv' => $pathC . "\\" . $cv->getClientOriginalName(),
+        ]);
+
+
+        Postuler::create([
+            'IDCandidat' => $candidat->IDCandidat,
+            'IDOffre' => $offre->IDOffre,
+            'statutPostuler' => 2,
+            'IDCv' => $cv->IDCv
+        ]);
 
         return redirect()->route('offre.index');
 

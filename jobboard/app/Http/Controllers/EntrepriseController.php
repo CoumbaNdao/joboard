@@ -16,7 +16,7 @@ class EntrepriseController extends Controller
         return view('entreprise.espaceEntreprise');
     }
 
-
+// INSCRIPTION
     public function inscription()
     {
 
@@ -161,12 +161,11 @@ class EntrepriseController extends Controller
             return back()->withInput();
         }
 
-        if (!$request->mdpEntreprise){
+        if (!$request->mdpEntreprise) {
             return redirect()->route('offre.show');
         }
 
-        if (($request->oldMdp == $entreprise->mdpEntreprise) && ($request->mdpEntreprise == $request->validationMdp))
-        {
+        if (Hash::check($request->oldMdp, $entreprise->mdpEntreprise) && ($request->mdpEntreprise == $request->validationMdp)) {
             try {
                 $entreprise->update([
                     'loginEntreprise' => $request->loginEntreprise ?? $entreprise->loginEntreprise,
@@ -175,8 +174,7 @@ class EntrepriseController extends Controller
 
                 Cache::delete('entreprise');
                 return redirect()->route('entreprise.index');
-            }catch (Exception $e)
-            {
+            } catch (Exception $e) {
                 return back()->withInput();
             }
         }

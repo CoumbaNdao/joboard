@@ -102,7 +102,8 @@
 
                                             <option value="{{null}}">Peu import</option>
                                             @foreach($regions as $region)
-                                                <option value="{{$region->codePostalRegion}}">
+                                                <option value="{{$region->codePostalRegion}}"
+                                                        @if(request('region') == $region->codePostalRegion) selected @endif>
                                                     {{$region->nomRegion}}
                                                 </option>
                                             @endforeach
@@ -113,7 +114,7 @@
                                         <label for="disabledSelect" class="form-label">Type de contrat</label>
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="stage"
-                                                   id="disabledFieldsetCheck"
+                                                   id="disabledFieldsetCheck" @if(request('stage')) value="on" @endif
                                             >
                                             <label class="form-check-label" for="disabledFieldsetCheck">
                                                 Stage
@@ -235,9 +236,11 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <p class="card-text">{{$candidature->descOffre}}</p>
-                                    <a href="{{route('candidat.cancel', [$candidature->IDOffre])}}}"
-                                       class="btn btn-danger end">Annuler</a>
+                                    @if($candidature->statutPostuler === 2)
+                                        <p class="card-text">{{$candidature->descOffre}}</p>
+                                        <a href="{{route('candidat.cancel', [$candidature->IDOffre])}}}"
+                                           class="btn btn-danger end">Annuler</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>

@@ -15,8 +15,23 @@ class AccueilControlleur extends Controller
 {
     public function index()
     {
-        $avis_s = Avis::all();
-        return view('index', ['avis_s' => $avis_s]);
+        $avis_s = Avis::
+        orderBy('created_at', 'asc')
+            ->get();
+
+        $avis_s1 = Avis::
+        orderBy('created_at', 'desc')
+            ->get();
+
+        $partenaires = Partenaire::all();
+
+
+
+        return view('index', [
+            'avis_s' => $avis_s,
+            'avis_s1' => $avis_s1,
+            'partenaires' => $partenaires
+        ]);
     }
 
     public function show()
@@ -36,7 +51,7 @@ class AccueilControlleur extends Controller
             $cv->move($pathEntreprise, $cv->getClientOriginalName());
 
             $image = $pathEntreprise . $cv->getClientOriginalName();
-        }catch(Exception $e){
+        } catch (Exception $e) {
             $image = '';
         }
 
@@ -48,7 +63,7 @@ class AccueilControlleur extends Controller
                 'rate' => $request->rate ?? '',
                 'imageAvis' => $image
             ]);
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return back();
         }
 

@@ -109,7 +109,7 @@ class OffreController extends Controller
                 return $q->whereIn('IDTypeOffre', $table);
             })
             ->where('statutOffre', '=', 'publiee')
-            ->orderBy('created_at')
+            ->orderBy('offre.created_at')
             ->get();
 
         $regions = Region::all();
@@ -149,7 +149,7 @@ class OffreController extends Controller
         return redirect()->route('offre.show', [Cache::get('entreprise')]);
     }
 
-    public function show()
+    public function show(Request $request)
     {
         if (!Cache::get('entreprise')) {
             return redirect()->route('entreprise.index');
@@ -159,19 +159,30 @@ class OffreController extends Controller
 
         $entreprise = Entreprise::find(Cache::get('entreprise'));
 
+        if ($request->mot) {
+            $offres = Offre::where('numeroSiret', '=', $entreprise->numeroSiret)
+                ->where('titreOffre', 'like', '%' . $request->mot . '%')
+                ->get();
+        } else {
+            $offres = Offre::where('numeroSiret', '=', $entreprise->numeroSiret)
+                ->get();
+        }
+
         $niveauetudes = NiveauEtude::all();
 
         $typeOffres = TypeOffre::all();
 
-        $candidatures = Offre::select(['nomCandidat', 'prenomCandidat', 'titreOffre', 'postuler.created_at as date', 'candidat.IDCandidat', 'offre.IDOffre'])
-        ->join('postuler', 'offre.IDOffre', '=', 'postuler.IDOffre')
+        $candidatures = Offre::select(['nomCandidat', 'prenomCandidat', 'titreOffre', 'postuler.created_at as date', 'candidat.IDCandidat', 'offre.IDOffre', 'statutPostuler', 'pathCv', 'nomCv'])
+            ->join('postuler', 'offre.IDOffre', '=', 'postuler.IDOffre')
             ->join('candidat', 'candidat.IDCandidat', '=', 'postuler.IDCandidat')
+            ->join('cvcandidat', 'postuler.IDCv', '=', 'cvcandidat.IDCv')
             ->where('numeroSiret', '=', $entreprise->numeroSiret)
             ->groupBy('candidat.IDCandidat', 'offre.IDOffre')
             ->get();
 
 
         return view('offre.show', [
+            'offres' => $offres ?? [],
             'entreprise' => $entreprise,
             'niveauetudes' => $niveauetudes->unique('libelleNiveauEtude'),
             'typeOffres' => $typeOffres->unique('libelleTypeOffre'),

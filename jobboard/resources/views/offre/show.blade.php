@@ -59,7 +59,7 @@
 </header>
 
 <!-- Offres -->
-<div class="container">
+<div class="container mt-5">
     <div class="row">
         <div class="col-3 col-sm-3">
             <div class="card col-sm-12 colorCard">
@@ -187,13 +187,13 @@
                 </div>
 
                 <div class="col-sm-12 mb-5">
-                    <form method="post">
+                    <form method="get" action="{{route('offre.show')}}">
                         Recherche d'offre: <input type="text" name="mot">
                         <input type="submit" name="Rechercher" value="Rechercher">
                     </form>
                 </div>
 
-                @foreach($entreprise->offres as $offre)
+                @foreach($offres as $offre)
                     <div class="col-sm-6 offremarge">
                         <div class="card colorCard">
                             <div class="card-body">
@@ -315,7 +315,9 @@
                         <th>Nom</th>
                         <th>Prénom</th>
                         <th>Offre</th>
+
                         <th>Date de candidature</th>
+                        <th>Cv</th>
                         <th>Action</th>
                     </tr>
                     @foreach($candidatures as $candidature)
@@ -325,14 +327,16 @@
                             <td>{{$candidature->titreOffre}}</td>
                             <td>{{$candidature->date}}</td>
 
-
+                            <td><a href="{{$candidature->pathCv}}" download target="_blank">{{$candidature->nomCv}}</a>
+                                <em class="fa fa-print btn " data-name="{{$candidature->pathCv}}" role="button"></em>
+                            </td>
                             <td>
-                                @if($candidature === 2)
+                                @if($candidature->statutPostuler === 2)
                                     <a class="btn btn-danger"
                                        href="{{route('offre.valider', [$candidature->IDCandidat, 'offre' => $candidature->IDOffre, 'etat'=>1])}}">Refuser</a>
                                     <a class="btn btn-success"
                                        href="{{route('offre.valider', [$candidature->IDCandidat, 'offre' => $candidature->IDOffre, 'etat' =>2])}}">Recruter</a>
-                                @elseIF($candidature === 3)
+                                @elseif($candidature->statutPostuler === 3)
                                     <p class="text-success">
                                         ACCEPTÉ
                                     </p>
@@ -492,9 +496,28 @@
 
 
 <!-- Scripts -->
-<script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
-<script src="js/bootstrap.min.js"></script> <!-- Bootstrap framework -->
-<script src="js/jquery.easing.min.js"></script> <!-- jQuery Easing for smooth scrolling between anchors -->
-<script src="js/scripts.js"></script> <!-- Custom scripts -->
+<script src="{{asset('js/jquery.min.js')}}"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
+<script src="{{asset('js/bootstrap.min.js')}}"></script> <!-- Bootstrap framework -->
+<script src="{{asset('js/jquery.easing.min.js')}}"></script> <!-- jQuery Easing for smooth scrolling between anchors -->
+<script src="{{asset('js/scripts.js')}}"></script>
+<-- Custom scripts -->
+
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script type="text/javascript">
+    $("em[data-name]").click(function () {
+        let pdf = $(this).data('name');
+        // Créer un IFrame.
+        let iframe = document.createElement('iframe');
+        // Cacher le IFrame.
+        iframe.style.visibility = "hidden";
+        // Définir la source.
+        iframe.src = pdf;
+        // Ajouter le IFrame sur la page Web.
+        document.body.appendChild(iframe);
+        iframe.contentWindow.focus();
+        iframe.contentWindow.print(); // Imprimer.
+    })
+</script>
+
 </body>
 </html>

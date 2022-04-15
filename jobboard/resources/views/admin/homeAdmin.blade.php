@@ -35,19 +35,19 @@
     <div class="row d-flex justify-content-center mb-5 mt-5">
         <h2> Tableau de bord </h2>
 
-    <table class="table table-striped table-primary">
-        <tr>
-            <th> NB Candidat</th>
-            <th> NB Entreprise</th>
-            <th> NB Offre</th>
-        </tr>
-        <tr>
-            <td>{{count($candidats)}}</td>
-            <td>{{count($entreprises)}}</td>
-            <td>{{count($offres)}}</td>
+        <table class="table table-striped table-primary">
+            <tr>
+                <th> NB Candidat</th>
+                <th> NB Entreprise</th>
+                <th> NB Offre</th>
+            </tr>
+            <tr>
+                <td>{{count($candidats)}}</td>
+                <td>{{count($entreprises)}}</td>
+                <td>{{count($offres)}}</td>
 
-        </tr>
-    </table>
+            </tr>
+        </table>
     </div>
 
 
@@ -68,8 +68,8 @@
             </tr>
             @foreach($entreprises as $entreprise)
                 <tr>
-                    <td >{{$entreprise->raisonSociale}}</td>
-                    <td >{{$entreprise->descEntreprise}}</td>
+                    <td>{{$entreprise->raisonSociale}}</td>
+                    <td>{{$entreprise->descEntreprise}}</td>
 
                     <td>{{$entreprise->emailEntreprise}}</td>
                     <td>{{$entreprise->adresseEntreprise}}</td>
@@ -77,7 +77,8 @@
                     <td>{{count($entreprise->offres)}}</td>
                     <td>{{$entreprise->nb_candidat()}}</td>
 
-                    <td> <a class="btn btn-danger" href="{{route('admin.entreprise', [$entreprise->numeroSiret])}}">Supprimer</a></td>
+                    <td><a class="btn btn-danger" href="{{route('admin.entreprise', [$entreprise->numeroSiret])}}">Supprimer</a>
+                    </td>
                 </tr>
             @endforeach
         </table>
@@ -97,16 +98,17 @@
             </tr>
 
             @foreach($candidats as $candidat)
-            <tr>
-                <td >{{$candidat->nomCandidat}}</td>
-                <td>{{$candidat->prenomCandidat}}</td>
-                <td>{{$candidat->emailCandidat}}</td>
-                <td>{{$candidat->adresseCandidat}}</td>
-                <td>{{$candidat->villeCandidat}}</td>
+                <tr>
+                    <td>{{$candidat->nomCandidat}}</td>
+                    <td>{{$candidat->prenomCandidat}}</td>
+                    <td>{{$candidat->emailCandidat}}</td>
+                    <td>{{$candidat->adresseCandidat}}</td>
+                    <td>{{$candidat->villeCandidat}}</td>
 
-                <td> <a class="btn btn-danger" href="{{route('admin.candidat', [$candidat->IDCandidat])}}">Supprimer</a></td>
-            </tr>
-                @endforeach
+                    <td><a class="btn btn-danger"
+                           href="{{route('admin.candidat', [$candidat->IDCandidat])}}">Supprimer</a></td>
+                </tr>
+            @endforeach
         </table>
     </div>
 
@@ -128,15 +130,15 @@
 
             @foreach($offres as $offre)
                 <tr>
-                    <td >{{$offre->titreOffre}}</td>
-                    <td >{{$offre->descOffre}}</td>
-                    <td>{{$offre->entreprise->raisonSocial}}</td>
+                    <td>{{$offre->titreOffre}}</td>
+                    <td>{{$offre->descOffre}}</td>
+                    <td>{{$offre->entreprise->raisonSociale}}</td>
                     <td>{{number_format($offre->remuneration, 2, ',', ' ')}} €</td>
                     <td>{{ $offre->dateDebutContrat}}</td>
                     <td>{{ $offre->dureeContrat}}</td>
                     <td>{{ $offre->statutOffre}}</td>
 
-                    <td> <a class="btn btn-danger" href="{{route('admin.offre', [$offre->IDOffre])}}">Supprimer</a></td>
+                    <td><a class="btn btn-danger" href="{{route('admin.offre', [$offre->IDOffre])}}">Supprimer</a></td>
                 </tr>
             @endforeach
         </table>

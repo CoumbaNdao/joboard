@@ -42,4 +42,10 @@ class Offre extends Model
     {
         return $this->hasMany(Postuler::class, 'IDOffre', 'IDOffre');
     }
+
+    public function type_offre(){
+        return $this->hasOne(TypeOffre::class, 'IDTypeOffre', 'IDTypeOffre');
+    }
+
+
 }

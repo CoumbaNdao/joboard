@@ -37,6 +37,7 @@ Route::prefix('/entreprise')->name('entreprise.')->group(static function() {
     Route::get('/edit', [EntrepriseController::class, 'edit'])->name('edit');
     Route::post('/update', [EntrepriseController::class, 'update'])->name('update');
     Route::post('/create', [EntrepriseController::class, 'create'])->name('create');
+    Route::match(['get', 'post'],'/ressetPassWordE/{loginEntreprise?}', [EntrepriseController::class, 'recoverPassword'])->name('recoverPassword');
 });
 
 Route::prefix('/')->name('')->group(static function() {
