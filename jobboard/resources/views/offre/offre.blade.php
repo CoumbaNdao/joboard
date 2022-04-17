@@ -184,6 +184,9 @@
                                              style="height: 30px;"/>
                                     </div>
                                     <div class="col-sm-10">
+                                        <h5 class="card-title">{{$offre->entreprise->raisonSociale}}</h5>
+                                    </div>
+                                    <div class="col-sm-10">
                                         <h5 class="card-title">{{$offre->titreOffre}}</h5>
                                     </div>
                                 </div>

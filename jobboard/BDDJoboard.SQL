@@ -1,28 +1,31 @@
 drop database if exists jobage;
-create database  jobage;
+create database jobage;
 use jobage;
 
 // ===================================TABLE COMPETENCE======================================
 create table typecompetence
- (
-   IDTypeCompetence int(5) NOT NULL  auto_increment,
-      libelleTypeCompetence varchar (50) not null,
+(
+    IDTypeCompetence      int(5)      NOT NULL auto_increment,
+    libelleTypeCompetence varchar(50) not null,
     primary key (IDTypeCompetence)
- )engine=innodb;
-alter table `typecompetence` add column `updated_at` Datetime;
-alter table `typecompetence` add column `created_at` Datetime;
+) engine = innodb;
+alter table `typecompetence`
+    add column `updated_at` Datetime;
+alter table `typecompetence`
+    add column `created_at` Datetime;
 
 // ===================================TABLE COMPETENCE======================================
 create table competence
- (
-   IDCompetence int(5) NOT NULL  auto_increment,
-      libelleCompetence varchar (50) not null,
-    primary key (idCompetence)
- )engine=innodb;
+(
+    IDCompetence      int(5)      NOT NULL auto_increment,
+    libelleCompetence varchar(50) not null,
+    primary key (IDCompetence)
+) engine = innodb;
 
-alter table `competence` add column `updated_at` Datetime;
-alter table `competence` add column `created_at` Datetime;
-
+alter table `competence`
+    add column `updated_at` Datetime;
+alter table `competence`
+    add column `created_at` Datetime;
 
 
 
@@ -31,84 +34,94 @@ drop table concerner;
 
 create table concerner
 (
-	IDTypeCompetence int(5) not null,
-	IDCompetence int(5) not null,
-	primary key (IDTypeCompetence,IDCompetence),
-	foreign key(IDTypeCompetence) references typecompetence(IDTypeCompetence)
-	ON DELETE SET NULL
-	ON UPDATE CASCADE,
-	foreign key(IDCompetence) references competence(IDCompetence)
- 	ON DELETE SET NULL
-    ON UPDATE CASCADE
-)engine=innodb;
+    IDTypeCompetence int(5) not null,
+    IDCompetence     int(5) not null,
+    primary key (IDTypeCompetence, IDCompetence),
+    foreign key (IDTypeCompetence) references typecompetence (IDTypeCompetence) on delete no action on update cascade,
+    foreign key (IDCompetence) references competence (IDCompetence) on delete no action on update cascade
+) engine = innodb;
 
-alter table `concerner` add column `updated_at` Datetime;
-alter table `concerner` add column `created_at` Datetime;
+
+alter table `concerner`
+    add column `updated_at` Datetime;
+alter table `concerner`
+    add column `created_at` Datetime;
 // ===================================TABLE REGION======================================
 create table region
- (
-   codePostalRegion int(5) NOT NULL  auto_increment,
-      nomRegion varchar (50) not null,
+(
+    codePostalRegion int(5)      NOT NULL auto_increment,
+    nomRegion        varchar(50) not null,
     primary key (codePostalRegion)
- )engine=innodb;
+) engine = innodb;
 
-alter table `region` add column `updated_at` Datetime;
-alter table `region` add column `created_at` Datetime;
+alter table `region`
+    add column `updated_at` Datetime;
+alter table `region`
+    add column `created_at` Datetime;
 
 // ===================================TABLE TYPEOFFRE======================================
 create table typeOffre
- (
-   IDTypeOffre int(5) NOT NULL  auto_increment,
-   libelleTypeOffre varchar (50) not null,
+(
+    IDTypeOffre      int(5)      NOT NULL auto_increment,
+    libelleTypeOffre varchar(50) not null,
     primary key (IDTypeOffre)
- )engine=innodb;
-alter table `typeOffre` add column `updated_at` Datetime;
-alter table `typeOffre` add column `created_at` Datetime;
+) engine = innodb;
+alter table `typeOffre`
+    add column `updated_at` Datetime;
+alter table `typeOffre`
+    add column `created_at` Datetime;
 // ===================================**********TABLE ENTREPRISE======================================
-create table entreprise (
-	numeroSiret int(14) not null unique,
-	raisonSociale varchar (100) not null,
-	descEntreprise varchar (2500) not null,
-	adresseEntreprise varchar(120) not null,
-	cpEntreprise char (5),
-	villeEntreprise varchar (50) not null,
-    telEntreprise char (10) not null unique,
-    emailEntreprise varchar (50) not null unique,
-    loginEntreprise varchar (50) not null unique,
-    mdpEntreprise varchar (255) not null,
-    urlEntreprise varchar (2000) not null,
-    codePostalRegion int(5),
-	primary key(numeroSiret),
-	foreign key(codePostalRegion) references region(codePostalRegion)
- 	ON DELETE SET_NULL
-    ON UPDATE CASCADE
-)engine=innodb;
+create table entreprise
+(
+    numeroSiret       int(14)       not null unique,
+    raisonSociale     varchar(100)  not null,
+    descEntreprise    varchar(2500) not null,
+    adresseEntreprise varchar(120)  not null,
+    cpEntreprise      char(5),
+    villeEntreprise   varchar(50)   not null,
+    telEntreprise     char(10)      not null unique,
+    emailEntreprise   varchar(50)   not null unique,
+    loginEntreprise   varchar(50)   not null unique,
+    mdpEntreprise     varchar(255)  not null,
+    urlEntreprise     varchar(2000) not null,
+    codePostalRegion  int(5),
+    primary key (numeroSiret),
+    foreign key (codePostalRegion) references region (codePostalRegion)
+        ON DELETE no action
+        ON UPDATE CASCADE
+) engine = innodb;
 
-alter table `entreprise` add column `updated_at` Datetime;
-alter table `entreprise` add column `created_at` Datetime;
-alter table `entreprise` add column `logoEntreprise` varchar (500);
+alter table `entreprise`
+    add column `updated_at` Datetime;
+alter table `entreprise`
+    add column `created_at` Datetime;
+alter table `entreprise`
+    add column `logoEntreprise` varchar(500);
 
 
 // ===================================TABLE NIVEAUETUDE======================================
- create table niveauetude
- (
-   IDNiveauEtude int(5) NOT NULL  auto_increment,
-   libelleNiveauEtude varchar (50) not null,
-      diplomeObtenu varchar (50) not null,
-      dateObtentionDiplome date,
+create table niveauetude
+(
+    IDNiveauEtude        int(5)      NOT NULL auto_increment,
+    libelleNiveauEtude   varchar(50) not null,
+    diplomeObtenu        varchar(50) not null,
+    dateObtentionDiplome date,
     PRIMARY KEY (IDNiveauEtude)
- )engine=innodb;
-alter table `niveauetude` add column `updated_at` Datetime;
-alter table `niveauetude` add column `created_at` Datetime;
+) engine = innodb;
+alter table `niveauetude`
+    add column `updated_at` Datetime;
+alter table `niveauetude`
+    add column `created_at` Datetime;
 
 // ===================================*********TABLE OFFRE======================================
 
-create table offre (
-	IDOffre int(5) not null auto_increment,
-	titreOffre varchar (100) not null,
-	descOffre varchar (2500) not null,
-	datePubOffre date not null,
-	remuneration float (10.2),
+create table offre
+(
+    IDOffre      int(5)        not null auto_increment,
+    titreOffre   varchar(100)  not null,
+    descOffre    varchar(2500) not null,
+    datePubOffre date          not null,
+    remuneration float(10,2) ,
 	dateDebutContrat date not null,
     dureeContrat varchar (20) not null,
     statutOffre enum('publiee','expiree', 'en attente de publication') not null,
@@ -116,122 +129,131 @@ create table offre (
     numeroSiret int(14),
     IDNiveauEtude int(5),
 	primary key(IDOffre),
-	foreign key(numeroSiret) references entreprise(numeroSiret) 	ON DELETE SET_NULL
+	foreign key(numeroSiret) references entreprise(numeroSiret) 	ON DELETE no action
                                                                  ON UPDATE CASCADE,
-	foreign key(IDTypeOffre) references typeoffre(IDTypeOffre) 	ON DELETE SET_NULL
+	foreign key(IDTypeOffre) references typeoffre(IDTypeOffre) 	ON DELETE no action
                                                                    ON UPDATE CASCADE,
     foreign key(IDNiveauEtude) references niveauetude(IDNiveauEtude)
- 	ON DELETE SET_NULL
+ 	ON DELETE no action
     ON UPDATE CASCADE
 
-)engine=innodb;
-alter table `offre` add column `updated_at` Datetime;
-alter table `offre` add column `created_at` Datetime;
+)engine = innodb;
+alter table `offre`
+    add column `updated_at` Datetime;
+alter table `offre`
+    add column `created_at` Datetime;
 
 // ===================================**********TABLE CANDIDAT======================================
 
-create table candidat (
-	IDCandidat int(5) not null auto_increment,
-	nomCandidat varchar (100) not null,
-	prenomCandidat varchar (250) not null,
-	emailCandidat varchar (50) not null unique,
-	telephoneCandidat char (10)  unique,
-	adresseCandidat varchar(120) not null,
-	cpCandidat char (5),
-	villeCandidat varchar (50) not null,
-    loginCandidat varchar (50) not null unique,
-    mdpCandidat varchar (255) not null,
-    codePostalRegion int(5) not null,
-    IDNiveauEtude int(5) not null,
-	primary key(IDCandidat),
-	foreign key(codePostalRegion) references region(codePostalRegion) 	ON DELETE SET_NULL
-	ON UPDATE CASCADE,
-    foreign key(IDNiveauEtude) references niveauetude(IDNiveauEtude)
- 	ON DELETE SET_NULL
-    ON UPDATE CASCADE
+create table candidat
+(
+    IDCandidat        int(5)       not null auto_increment,
+    nomCandidat       varchar(100) not null,
+    prenomCandidat    varchar(250) not null,
+    emailCandidat     varchar(50)  not null unique,
+    telephoneCandidat char(10) unique,
+    adresseCandidat   varchar(120) not null,
+    cpCandidat        char(5),
+    villeCandidat     varchar(50)  not null,
+    loginCandidat     varchar(50)  not null unique,
+    mdpCandidat       varchar(255) not null,
+    codePostalRegion  int(5)       not null,
+    IDNiveauEtude     int(5)       not null,
+    primary key (IDCandidat),
+    foreign key (codePostalRegion) references region (codePostalRegion) ON DELETE no action
+        ON UPDATE CASCADE,
+    foreign key (IDNiveauEtude) references niveauetude (IDNiveauEtude)
+        ON DELETE no action
+        ON UPDATE CASCADE
 
-)engine=innodb;
+) engine = innodb;
 
-alter table `candidat` add column `updated_at` Datetime;
-alter table `candidat` add column `created_at` Datetime;
+alter table `candidat`
+    add column `updated_at` Datetime;
+alter table `candidat`
+    add column `created_at` Datetime;
 
 
 // ===================================TABLE CV======================================
 
 CREATE TABLE cvcandidat
 (
-    IDCv int(5) NOT NULL AUTO_INCREMENT,
-    nomCv varchar(50) NOT NULL,
-    pathCv varchar(255) NOT NULL,
+    IDCv       int(5)       NOT NULL AUTO_INCREMENT,
+    nomCv      varchar(50)  NOT NULL,
+    pathCv     varchar(255) NOT NULL,
     primary key (IDCv),
     updated_at datetime DEFAULT NOW(),
     created_at datetime DEFAULT NOW()
-) ENGINE=InnoDB;
+) ENGINE = InnoDB;
 
 
 // ===================================***********TABLE POSTULER======================================
 
 create table postuler
 (
-	IDOffre int(5) not null,
-	IDCandidat int(5) not null,
-	IDCv int(5) not null,
-	primary key (IDOffre,IDCandidat,IDCv),
-	foreign key(IDOffre) references offre(IDOffre) 	ON DELETE SET_NULL ON UPDATE CASCADE,
-	foreign key(IDCandidat) references candidat(IDCandidat)
- 	ON DELETE SET_NULL ON UPDATE CASCADE,
-    foreign key(IDCv) references cvcandidat(IDCv) ON DELETE SET_NULL ON UPDATE CASCADE
-)engine=innodb;
+    IDOffre    int(5) not null,
+    IDCandidat int(5) not null,
+    IDCv       int(5) not null,
+    primary key (IDOffre, IDCandidat, IDCv),
+    foreign key (IDOffre) references offre (IDOffre) ON DELETE no action ON UPDATE CASCADE,
+    foreign key (IDCandidat) references candidat (IDCandidat)
+        ON DELETE no action ON UPDATE CASCADE,
+    foreign key (IDCv) references cvcandidat (IDCv) ON DELETE no action ON UPDATE CASCADE
+) engine = innodb;
 
-alter table `postuler` add column `updated_at` Datetime;
-alter table `postuler` add column `created_at` Datetime;
+alter table `postuler`
+    add column `updated_at` Datetime;
+alter table `postuler`
+    add column `created_at` Datetime;
 
-alter table `postuler` add column `statutPostuler` int(1) default 2;
+alter table `postuler`
+    add column `statutPostuler` int(1) default 2;
 
 
 
 // ===================================************TABLE DISPOSER======================================
 create table disposer
 (
-	IDCandidat int(5) not null,
-	IDCompetence int(5) not null,
-	primary key (IDCandidat,IDCompetence),
-	foreign key(IDCandidat) references candidat(IDCandidat) 	ON DELETE SET_NULL
-                                                                ON UPDATE CASCADE,
-	foreign key(IDCompetence) references competence(IDCompetence)
- 	ON DELETE SET_NULL
-    ON UPDATE CASCADE
+    IDCandidat   int(5) not null,
+    IDCompetence int(5) not null,
+    primary key (IDCandidat, IDCompetence),
+    foreign key (IDCandidat) references candidat (IDCandidat) ON DELETE no action
+        ON UPDATE CASCADE,
+    foreign key (IDCompetence) references competence (IDCompetence)
+        ON DELETE no action
+        ON UPDATE CASCADE
 
-)engine=innodb;
+) engine = innodb;
 
-alter table `disposer` add column `updated_at` Datetime;
-alter table `disposer` add column `created_at` Datetime;
+alter table `disposer`
+    add column `updated_at` Datetime;
+alter table `disposer`
+    add column `created_at` Datetime;
 
 // ===================================***********TABLE REQUERIR======================================
 create table requerir
 (
-	IDOffre int(5) not null,
-	IDCompetence int(5) not null,
-	primary key (IDOffre,IDCompetence),
-	foreign key(IDOffre) references offre(IDOffre) 	ON DELETE SET_NULL
-                                                       ON UPDATE CASCADE,
-	foreign key(IDCompetence) references competence(IDCompetence)
- 	ON DELETE SET_NULL
-    ON UPDATE CASCADE
+    IDOffre      int(5) not null,
+    IDCompetence int(5) not null,
+    primary key (IDOffre, IDCompetence),
+    foreign key (IDOffre) references offre (IDOffre) ON DELETE no action
+        ON UPDATE CASCADE,
+    foreign key (IDCompetence) references competence (IDCompetence)
+        ON DELETE no action
+        ON UPDATE CASCADE
 
-)engine=innodb;
+) engine = innodb;
 
-alter table `requerir` add column `updated_at` Datetime;
-alter table `requerir` add column `created_at` Datetime;
-
-
-
+alter table `requerir`
+    add column `updated_at` Datetime;
+alter table `requerir`
+    add column `created_at` Datetime;
 
 
 // ===================================INSERTION======================================
 
 insert into region (codePostalRegion, nomRegion) values
-(null, 'ile de france');
+(null, 'ile de france'),
 
 (null, 'ains'),
 (null, 'haut de france'),
@@ -239,7 +261,7 @@ insert into region (codePostalRegion, nomRegion) values
 (null, 'Martinique');
 
 insert into typeoffre (`IDTypeOffre`, `libelleTypeOffre`) values
-(null, 'stage');
+(null, 'stage'),
 
 (null, 'alternance'),
 (null, 'CDI'),
@@ -266,7 +288,7 @@ insert into niveauetude ('IDNiveauEtude', 'libelleNiveauEtude', 'diplomeObtenu')
 
 insert into offre (`IDOffre`, `titreOffre`, `descOffre`, `datePubOffre`, `remuneration`,`dateDebutContrat`,`dureeContrat`, `statutOffre`, `IDTypeOffre`, `numeroSiret`,`IDNiveauEtude`)
  values
-(null, 'Stage developpeur', 'Offre de stage developpeur ', '2022/02/01', '600.59', '2022/03/01', '6 mois', 'en attente de publication', 1, 1234, 1);
+(null, 'Stage developpeur', 'Offre de stage developpeur ', '2022/02/01', '600.59', '2022/03/01', '6 mois', 'en attente de publication', 1, 1234, 1),
 
 (null, 'Support systeme en alternance', 'Recherche profil support systeme ', '2021/02/01', '1200.0','2021/03/05', '1 ans', 'expiree', null, 2234, null),
 (null , 'Administrateur de base de donnees', 'Recherche DBA confirme', '2022/02/01', '3200','2022/04/05', '1 ans', 'publiee', null, 3234, null),
@@ -286,7 +308,7 @@ values (null, 'DIAZ', 'Paco ', '12 rue de la belle feuille', '69500', 'Lyon', 'p
 
 
 insert into postuler (`IDCandidat`, `IDOffre`)
-values (1, 1) ;
+values (1, 1) ,
 
         (28, 12),
         (29, 13),
@@ -312,7 +334,7 @@ values (null, 'Technique'),
 
 
 insert into disposer (`IDCandidat`, `IDCompetence`)
-values (1, 1) ;
+values (1, 1) ,
 
         (13, 7),
         (14, 8),
@@ -321,7 +343,7 @@ values (1, 1) ;
 
 
 insert into requerir (`IDOffre`, `IDCompetence`)
-values (1, 1) ;
+values (1, 1) ,
 
 
         (28, 7),
@@ -329,8 +351,6 @@ values (1, 1) ;
         (30, 9)
         (26, 10);
 
-insert into concerner (`IDTypeCompetence`, `IDCompetence`)
-values (1, 1);
 
 // ===================================TABLE AVIS======================================
 
@@ -436,7 +456,7 @@ alter table `archiOffre` add column `created_at` Datetime;
 
 alter table `archiOffre` add column `numrosiret` varchar (20);
 
-// ===================================TRIGGER archivage offre expiree/traitee======================================
+/*// ===================================TRIGGER archivage offre expiree/traitee======================================
 
 drop trigger if exists archive_offre;
 delimiter //
@@ -461,4 +481,4 @@ insert into archiOffre values(
 	(select * from offre where statutOffre='expiree')
 	);
 end //
-delimiter ;
+delimiter ;*/
