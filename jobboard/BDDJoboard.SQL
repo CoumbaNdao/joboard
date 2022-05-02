@@ -5,7 +5,7 @@ use jobage;
 // ===================================TABLE COMPETENCE======================================
 create table typecompetence
 (
-    IDTypeCompetence      int(5)      NOT NULL auto_increment,
+    IDTypeCompetence int(5)  NOT NULL auto_increment,
     libelleTypeCompetence varchar(50) not null,
     primary key (IDTypeCompetence)
 ) engine = innodb;
@@ -40,8 +40,6 @@ create table concerner
     foreign key (IDTypeCompetence) references typecompetence (IDTypeCompetence) on delete no action on update cascade,
     foreign key (IDCompetence) references competence (IDCompetence) on delete no action on update cascade
 ) engine = innodb;
-
-
 alter table `concerner`
     add column `updated_at` Datetime;
 alter table `concerner`
@@ -53,7 +51,6 @@ create table region
     nomRegion        varchar(50) not null,
     primary key (codePostalRegion)
 ) engine = innodb;
-
 alter table `region`
     add column `updated_at` Datetime;
 alter table `region`
@@ -70,6 +67,7 @@ alter table `typeOffre`
     add column `updated_at` Datetime;
 alter table `typeOffre`
     add column `created_at` Datetime;
+
 // ===================================**********TABLE ENTREPRISE======================================
 create table entreprise
 (
@@ -86,9 +84,7 @@ create table entreprise
     urlEntreprise     varchar(2000) not null,
     codePostalRegion  int(5),
     primary key (numeroSiret),
-    foreign key (codePostalRegion) references region (codePostalRegion)
-        ON DELETE no action
-        ON UPDATE CASCADE
+    foreign key (codePostalRegion) references region (codePostalRegion) ON DELETE no action ON UPDATE CASCADE
 ) engine = innodb;
 
 alter table `entreprise`
@@ -129,14 +125,9 @@ create table offre
     numeroSiret int(14),
     IDNiveauEtude int(5),
 	primary key(IDOffre),
-	foreign key(numeroSiret) references entreprise(numeroSiret) 	ON DELETE no action
-                                                                 ON UPDATE CASCADE,
-	foreign key(IDTypeOffre) references typeoffre(IDTypeOffre) 	ON DELETE no action
-                                                                   ON UPDATE CASCADE,
-    foreign key(IDNiveauEtude) references niveauetude(IDNiveauEtude)
- 	ON DELETE no action
-    ON UPDATE CASCADE
-
+	foreign key(numeroSiret) references entreprise(numeroSiret) ON DELETE no action ON UPDATE CASCADE,
+	foreign key(IDTypeOffre) references typeoffre(IDTypeOffre) 	ON DELETE no action ON UPDATE CASCADE,
+    foreign key(IDNiveauEtude) references niveauetude(IDNiveauEtude) ON DELETE no action ON UPDATE CASCADE
 )engine = innodb;
 alter table `offre`
     add column `updated_at` Datetime;
@@ -160,11 +151,8 @@ create table candidat
     codePostalRegion  int(5)       not null,
     IDNiveauEtude     int(5)       not null,
     primary key (IDCandidat),
-    foreign key (codePostalRegion) references region (codePostalRegion) ON DELETE no action
-        ON UPDATE CASCADE,
-    foreign key (IDNiveauEtude) references niveauetude (IDNiveauEtude)
-        ON DELETE no action
-        ON UPDATE CASCADE
+    foreign key (codePostalRegion) references region (codePostalRegion) ON DELETE no action ON UPDATE CASCADE,
+    foreign key (IDNiveauEtude) references niveauetude (IDNiveauEtude) ON DELETE no action ON UPDATE CASCADE
 
 ) engine = innodb;
 
@@ -178,7 +166,7 @@ alter table `candidat`
 
 CREATE TABLE cvcandidat
 (
-    IDCv       int(5)       NOT NULL AUTO_INCREMENT,
+    IDCv  int(5)       NOT NULL AUTO_INCREMENT,
     nomCv      varchar(50)  NOT NULL,
     pathCv     varchar(255) NOT NULL,
     primary key (IDCv),
@@ -196,8 +184,7 @@ create table postuler
     IDCv       int(5) not null,
     primary key (IDOffre, IDCandidat, IDCv),
     foreign key (IDOffre) references offre (IDOffre) ON DELETE no action ON UPDATE CASCADE,
-    foreign key (IDCandidat) references candidat (IDCandidat)
-        ON DELETE no action ON UPDATE CASCADE,
+    foreign key (IDCandidat) references candidat (IDCandidat) ON DELETE no action ON UPDATE CASCADE,
     foreign key (IDCv) references cvcandidat (IDCv) ON DELETE no action ON UPDATE CASCADE
 ) engine = innodb;
 
@@ -217,12 +204,8 @@ create table disposer
     IDCandidat   int(5) not null,
     IDCompetence int(5) not null,
     primary key (IDCandidat, IDCompetence),
-    foreign key (IDCandidat) references candidat (IDCandidat) ON DELETE no action
-        ON UPDATE CASCADE,
-    foreign key (IDCompetence) references competence (IDCompetence)
-        ON DELETE no action
-        ON UPDATE CASCADE
-
+    foreign key (IDCandidat) references candidat (IDCandidat) ON DELETE no action ON UPDATE CASCADE,
+    foreign key (IDCompetence) references competence (IDCompetence) ON DELETE no action ON UPDATE CASCADE
 ) engine = innodb;
 
 alter table `disposer`
@@ -236,12 +219,8 @@ create table requerir
     IDOffre      int(5) not null,
     IDCompetence int(5) not null,
     primary key (IDOffre, IDCompetence),
-    foreign key (IDOffre) references offre (IDOffre) ON DELETE no action
-        ON UPDATE CASCADE,
-    foreign key (IDCompetence) references competence (IDCompetence)
-        ON DELETE no action
-        ON UPDATE CASCADE
-
+    foreign key (IDOffre) references offre (IDOffre) ON DELETE no action ON UPDATE CASCADE,
+    foreign key (IDCompetence) references competence (IDCompetence) ON DELETE no action ON UPDATE CASCADE
 ) engine = innodb;
 
 alter table `requerir`
@@ -392,6 +371,7 @@ create table contact (
 
 alter table `contact` add column `updated_at` Datetime;
 alter table `contact` add column `created_at` Datetime;
+
 // ===================================creation table partenaire======================================
 
 create table partenaire (
@@ -437,48 +417,66 @@ CREATE TRIGGER updatedatedebutcontrat
 DELIMITER ;
 
 
-// ===================================creation de la table des offre à archiver======================================
 
-create table archiOffre (
-    idarchioffre int(5) not null auto_increment,
-    titrearchioffre varchar (100) not null ,
-    descarchioffre varchar (250) not null,
-    remunerationarchioffre varchar (20),
-	datedebutcontratarchioffre varchar (20) null,
-    dureecontratarchioffre varchar (20) not null,
-    statutarchioffre varchar (50) not null,
-    typearchioffre varchar (50) not null,
-    primary key (idarchioffre)
-)engine=innodb;
+// ===================================creation des tables d''archivages======================================
 
-alter table `archiOffre` add column `updated_at` Datetime;
-alter table `archiOffre` add column `created_at` Datetime;
+create table archioffre
+as select * from offre
+where 2=0;
 
-alter table `archiOffre` add column `numrosiret` varchar (20);
 
-/*// ===================================TRIGGER archivage offre expiree/traitee======================================
+create table archicandidat
+as select * from candidat
+where 2=0;
 
-drop trigger if exists archive_offre;
-delimiter //
-create trigger archive_offre
-    before delete
-    on offre
-    for each row
-begin
+create table archientreprise
+as select * from entreprise
+where 2=0;
+// ===================================TRIGGER archivage offre expiree/traitee======================================
 
- insert into offre_traitee values ((select * from offre where IDOffre=old.IDOffre));
-
-    end //
-delimiter ;
 
 drop trigger if exists archiverOffre;
 delimiter //
 create trigger archiverOffre
-before delete on offre
-for each row
+    before delete
+    on offre
+    for each row
 begin
-insert into archiOffre values(
-	(select * from offre where statutOffre='expiree')
-	);
+    if old.statutoffre!='expiree'
+    then
+        signal
+            SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Votre offre est pas encore traitee';
+    else
+        insert into
+        archioffre select * from offre where IDOffre=old.IDOffre;
+
+    end if;
 end //
-delimiter ;*/
+delimiter ;
+
+
+
+drop trigger if exists archiverEntreprise;
+delimiter //
+create trigger archiverEntreprise
+    before delete
+    on entreprise
+    for each row
+begin
+        insert into
+        archientreprise select * from entreprise where numeroSiret=old.numeroSiret;
+end //
+delimiter ;
+
+drop trigger if exists archiverCandidat;
+delimiter //
+create trigger archiverCandidat
+    before delete
+    on candidat
+    for each row
+begin
+        insert into
+        archicandidat select * from candidat where IDCandidat=old.IDCandidat;
+end //
+delimiter ;

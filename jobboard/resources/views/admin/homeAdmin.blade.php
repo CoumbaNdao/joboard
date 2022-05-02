@@ -158,17 +158,18 @@
                 <th>État</th>
                 <th>Action</th>
             </tr>
-            @foreach($offresExpire as $offre)
-                <tr>
-                    <td>{{$offre->titreOffre}}</td>
-                    <td>{{$offre->descOffre}}</td>
-                    <td>{{$offre->entreprise->raisonSociale}}</td>
-                    <td>{{number_format($offre->remuneration, 2, ',', ' ')}} €</td>
-                    <td>{{ $offre->dateDebutContrat}}</td>
-                    <td>{{ $offre->dureeContrat}}</td>
-                    <td>{{ $offre->statutOffre}}</td>
+            @foreach($offresExpire as $archioffre)
 
-                    <td><a class="btn btn-danger" href="{{route('admin.offre', [$offre->IDOffre])}}">Supprimer</a></td>
+                <tr>
+                    <td>{{$archioffre->titreOffre}}</td>
+                    <td>{{$archioffre->descOffre}}</td>
+                    <td>{{$archioffre->entreprise->raisonSociale}}</td>
+                    <td>{{number_format($archioffre->remuneration, 2, ',', ' ')}} €</td>
+                    <td>{{ $archioffre->dateDebutContrat}}</td>
+                    <td>{{ $archioffre->dureeContrat}}</td>
+                    <td>{{ $archioffre->statutOffre}}</td>
+
+                    <td><a class="btn btn-danger" href="{{route('admin.archioffre', [$archioffre->IDOffre])}}">Supprimer</a></td>
                 </tr>
             @endforeach
         </table>

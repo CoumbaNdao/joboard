@@ -123,6 +123,7 @@
                     </div>
 
                     <input class="inscpBouton" type="submit" value="Modifier">
+                    <a href="{{route('candidat.delete', [$candidat->IDCandidat])}}" type="submit" class="btn btn-danger inscpBouton" > Supprimer mon compte </a>
                 </form>
                 <br>
                 <br>

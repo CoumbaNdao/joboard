@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminControlleur;
-use App\Http\Controllers\CandidatControlleur;
+use App\Http\Controllers\CandidatController;
 use App\Http\Controllers\PasswordManagerController;
 use App\Http\Controllers\TestControlleur;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +31,7 @@ Route::prefix('/offre')->name('offre.')->group(static function() {
 
 Route::prefix('/entreprise')->name('entreprise.')->group(static function() {
     Route::get('/', [EntrepriseController::class, 'index'])->name('index');
+    Route::get('/delete/{entreprise}', [EntrepriseController::class, 'delete'])->name('delete');
     Route::post('/login', [EntrepriseController::class, 'login'])->name('login');
     Route::get('/deconnexion', [EntrepriseController::class, 'deconnexion'])->name('deconnexion');
     Route::get('/inscription', [EntrepriseController::class, 'inscription'])->name('inscription');
@@ -49,23 +50,25 @@ Route::prefix('/')->name('')->group(static function() {
 });
 
 Route::prefix('/candidat')->name('candidat.')->group(static function() {
-    Route::get('/', [CandidatControlleur::class, 'index'])->name('index');
-    Route::post('/login', [CandidatControlleur::class, 'login'])->name('login');
-    Route::get('/deconnexion', [CandidatControlleur::class, 'deconnexion'])->name('deconnexion');
-    Route::get('/inscription', [CandidatControlleur::class, 'inscription'])->name('inscription');
-    Route::post('/create', [CandidatControlleur::class, 'create'])->name('create');
-    Route::get('/postuler/{offre}', [CandidatControlleur::class, 'postuler'])->name('postuler');
-    Route::post('/send/{offre}', [CandidatControlleur::class, 'send'])->name('send');
-    Route::get('/cancel/{offre}', [CandidatControlleur::class, 'cancel'])->name('cancel');
-    Route::get('/edit', [CandidatControlleur::class, 'edit'])->name('edit');
-    Route::post('update', [CandidatControlleur::class, 'update'])->name('update');
-    Route::match(['get', 'post'],'/ressetPassWordC/{loginCandidat?}', [CandidatControlleur::class, 'recoverPassword'])->name('recoverPassword');
+    Route::get('/', [CandidatController::class, 'index'])->name('index');
+    Route::post('/login', [CandidatController::class, 'login'])->name('login');
+    Route::get('/delete/{candidat}', [CandidatController::class, 'delete'])->name('delete');
+    Route::get('/deconnexion', [CandidatController::class, 'deconnexion'])->name('deconnexion');
+    Route::get('/inscription', [CandidatController::class, 'inscription'])->name('inscription');
+    Route::post('/create', [CandidatController::class, 'create'])->name('create');
+    Route::get('/postuler/{offre}', [CandidatController::class, 'postuler'])->name('postuler');
+    Route::post('/send/{offre}', [CandidatController::class, 'send'])->name('send');
+    Route::get('/cancel/{offre}', [CandidatController::class, 'cancel'])->name('cancel');
+    Route::get('/edit', [CandidatController::class, 'edit'])->name('edit');
+    Route::post('update', [CandidatController::class, 'update'])->name('update');
+    Route::match(['get', 'post'],'/ressetPassWordC/{loginCandidat?}', [CandidatController::class, 'recoverPassword'])->name('recoverPassword');
 
 });
 
 Route::prefix('/admin')->name('admin.')->group(static function() {
     Route::get('/', [AdminControlleur::class, 'index'])->name('index');
     Route::get('/offre/{offre}', [AdminControlleur::class, 'offre'])->name('offre');
+    Route::get('/archioffre/{archioffre}', [AdminControlleur::class, 'archioffre'])->name('archioffre');
     Route::get('/entreprise/{entreprise}', [AdminControlleur::class, 'entreprise'])->name('entreprise');
     Route::get('/candidat/{candidat}', [AdminControlleur::class, 'candidat'])->name('candidat');
     Route::post('/typeoffre/{typeOffre?}', [AdminControlleur::class, 'typeOffre'])->name('typeOffre');

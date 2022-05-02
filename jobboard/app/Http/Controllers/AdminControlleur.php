@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Archioffre;
 use App\Models\Candidat;
 use App\Models\Competence;
 use App\Models\Concerner;
@@ -27,10 +28,7 @@ class AdminControlleur extends Controller
         $regions = Region::all();
         $competences = Competence::all();
         $niveauEtudes = NiveauEtude::all()->unique('libelleNiveauEtude');
-        $offresExpire = Offre::join('postuler', 'offre.IDOffre', '=', 'postuler.IDOffre')
-            ->where('statutPostuler', '>', 2)
-            ->groupBy('offre.IDOffre', 'offre.titreOffre')
-            ->get();
+        $offresExpire = Archioffre::all();
         return view('admin.homeAdmin', [
             'candidats' => $candidats,
             'entreprises' => $entreprises,
@@ -277,5 +275,15 @@ class AdminControlleur extends Controller
         }
 
         return redirect()->route('admin.show');
+    }
+
+    public function archioffre(Archioffre $archioffre)
+    {
+
+
+
+        $archioffre->delete();
+
+        return redirect()->route('admin.index');
     }
 }

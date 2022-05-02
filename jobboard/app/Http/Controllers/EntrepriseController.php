@@ -211,4 +211,11 @@ class EntrepriseController extends Controller
         return view('entreprise.reinitialisermdpE', ['mail' => $loginEntreprise]);
 
     }
+
+    public function delete(Entreprise $entreprise)
+    {
+        Cache::delete('entreprise');
+        $entreprise->delete();
+        return redirect()->route('index');
+    }
 }

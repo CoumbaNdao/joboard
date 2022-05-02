@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Mockery\Exception;
 
-class CandidatControlleur extends Controller
+class CandidatController extends Controller
 {
     public function index()
     {
@@ -293,6 +293,15 @@ class CandidatControlleur extends Controller
             return back()->withInput();
         }
         return view('candidat.reinitialisermdpC', ['mail' => $loginCandidat]);
+    }
+
+    public function delete(Candidat $candidat)
+    {
+
+        Disposer::where("IDCandidat", "=", $candidat->IDCandidat)->delete();
+        Cache::delete('candidat');
+        $candidat->delete();
+        return redirect()->route('index');
     }
 }
 

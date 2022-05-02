@@ -157,6 +157,7 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary inscpBouton" > Modifier </button>
+                    <a href="{{route('entreprise.delete', [$entreprise->numeroSiret])}}" type="submit" class="btn btn-danger inscpBouton" > Supprimer mon compte </a>
                 </form>
                 <br>
                 <br>
