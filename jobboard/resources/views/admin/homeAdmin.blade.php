@@ -13,19 +13,14 @@
 <body>
 <div class="container text-center">
     <h1> Espace Admin</h1>
-    <a href="homeAdmin.html">
-        <img src="{{asset('images/homeadmin.png')}}" height="100" width="100">
+    <a href="{{route('admin.index')}}">
+        <img src="{{asset('images/homeadmin.png')}}" alt="l" height="100" width="100">
     </a>
-    <a href="gestionCandidat.html">
-        <img src="{{asset('images/iconcandidat.png')}}" height="100" width="100">
+    <a href="{{route('admin.show')}}">
+        <img src="{{asset('images/iconcandidat.png')}}" alt="p" height="100" width="100">
     </a>
 
-    <a href="gestionEntreprise.html">
-        <img src="{{asset('images/iconentreprise.jpg')}}" height="100" width="100">
-    </a>
-    <a href="gestionOffre.html">
-        <img src="{{asset('images/iconjob.jpg')}}" height="100" width="100">
-    </a>
+
 
     <br/>
 
@@ -85,6 +80,36 @@
     </div>
 
     <div class="row d-flex justify-content-center mb-5 mt-5">
+        <h2>Entreprise Expiré</h2>
+
+        <table class="table table-striped table-info">
+            <tr>
+                <th> Raison Sociale</th>
+                <th> Description</th>
+                <th>Émail</th>
+                <th>adresse</th>
+                <th>ville</th>
+
+
+                <th>Action</th>
+            </tr>
+            @foreach($entreprisesArcho as $entreprise)
+                <tr>
+                    <td>{{$entreprise->raisonSociale}}</td>
+                    <td>{{$entreprise->descEntreprise}}</td>
+
+                    <td>{{$entreprise->emailEntreprise}}</td>
+                    <td>{{$entreprise->adresseEntreprise}}</td>
+                    <td>{{$entreprise->villeEntreprise}}</td>
+
+                    <td><a class="btn btn-danger" href="{{route('admin.archiEntreprise', [$entreprise->numeroSiret])}}">Supprimer</a>
+                    </td>
+                </tr>
+            @endforeach
+        </table>
+    </div>
+
+    <div class="row d-flex justify-content-center mb-5 mt-5">
         <h2>Gestion candidat</h2>
 
         <table class="table table-striped table-success">
@@ -107,6 +132,34 @@
 
                     <td><a class="btn btn-danger"
                            href="{{route('admin.candidat', [$candidat->IDCandidat])}}">Supprimer</a></td>
+                </tr>
+            @endforeach
+        </table>
+    </div>
+
+    <div class="row d-flex justify-content-center mb-5 mt-5">
+        <h2>Candidat Expiré</h2>
+
+        <table class="table table-striped table-success">
+            <tr>
+                <th> Nom</th>
+                <th> Prénom</th>
+                <th> Émail</th>
+                <th> Adresse</th>
+                <th> Ville</th>
+                <th> Action</th>
+            </tr>
+
+            @foreach($candidatsArchi as $candidat)
+                <tr>
+                    <td>{{$candidat->nomCandidat}}</td>
+                    <td>{{$candidat->prenomCandidat}}</td>
+                    <td>{{$candidat->emailCandidat}}</td>
+                    <td>{{$candidat->adresseCandidat}}</td>
+                    <td>{{$candidat->villeCandidat}}</td>
+
+                    <td><a class="btn btn-danger"
+                           href="{{route('admin.archiCandidat', [$candidat->IDCandidat])}}">Supprimer</a></td>
                 </tr>
             @endforeach
         </table>

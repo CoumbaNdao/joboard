@@ -13,20 +13,12 @@
 <body>
 <div class="container text-center">
     <h1> Espace Admin</h1>
-    <a href="homeAdmin.html">
-        <img src="{{asset('images/homeadmin.png')}}" height="100" width="100">
+    <a href="{{route('admin.index')}}">
+        <img src="{{asset('images/homeadmin.png')}}" alt="l" height="100" width="100">
     </a>
-    <a href="gestionCandidat.html">
-        <img src="{{asset('images/iconcandidat.png')}}" height="100" width="100">
+    <a href="{{route('admin.show')}}">
+        <img src="{{asset('images/iconcandidat.png')}}" alt="p" height="100" width="100">
     </a>
-
-    <a href="gestionEntreprise.html">
-        <img src="{{asset('images/iconentreprise.jpg')}}" height="100" width="100">
-    </a>
-    <a href="gestionOffre.html">
-        <img src="{{asset('images/iconjob.jpg')}}" height="100" width="100">
-    </a>
-
     <br/>
 
     <hr>

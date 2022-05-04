@@ -62,13 +62,14 @@ Route::prefix('/candidat')->name('candidat.')->group(static function() {
     Route::get('/edit', [CandidatController::class, 'edit'])->name('edit');
     Route::post('update', [CandidatController::class, 'update'])->name('update');
     Route::match(['get', 'post'],'/ressetPassWordC/{loginCandidat?}', [CandidatController::class, 'recoverPassword'])->name('recoverPassword');
-
 });
 
-Route::prefix('/admin')->name('admin.')->group(static function() {
+Route::prefix('/dbadmin')->name('admin.')->group(static function() {
     Route::get('/', [AdminControlleur::class, 'index'])->name('index');
     Route::get('/offre/{offre}', [AdminControlleur::class, 'offre'])->name('offre');
     Route::get('/archioffre/{archioffre}', [AdminControlleur::class, 'archioffre'])->name('archioffre');
+    Route::get('/archicandidat/{archiCandidat}', [AdminControlleur::class, 'archiCandidat'])->name('archiCandidat');
+    Route::get('/archicentreprise/{archiEntreprise}', [AdminControlleur::class, 'archiEntreprise'])->name('archiEntreprise');
     Route::get('/entreprise/{entreprise}', [AdminControlleur::class, 'entreprise'])->name('entreprise');
     Route::get('/candidat/{candidat}', [AdminControlleur::class, 'candidat'])->name('candidat');
     Route::post('/typeoffre/{typeOffre?}', [AdminControlleur::class, 'typeOffre'])->name('typeOffre');
@@ -78,7 +79,7 @@ Route::prefix('/admin')->name('admin.')->group(static function() {
     Route::post('/lien', [AdminControlleur::class, 'lien'])->name('lien');
     Route::post('/creerpartenaire', [AdminControlleur::class, 'creerPartenaire'])->name('creerPartenaire');
     Route::post('/partenaire/{partenaire}', [AdminControlleur::class, 'partenaire'])->name('partenaire');
-    Route::get('show', [AdminControlleur::class, 'show'])->name('show');
+    Route::get('/show', [AdminControlleur::class, 'show'])->name('show');
 
 });
 

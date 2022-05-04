@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ArchiCandidat;
+use App\Models\ArchiEntreprise;
 use App\Models\Archioffre;
 use App\Models\Candidat;
 use App\Models\Competence;
@@ -29,6 +31,8 @@ class AdminControlleur extends Controller
         $competences = Competence::all();
         $niveauEtudes = NiveauEtude::all()->unique('libelleNiveauEtude');
         $offresExpire = Archioffre::all();
+        $entreprisesArcho = ArchiEntreprise::all();
+        $candidatsArchi = ArchiCandidat::all();
         return view('admin.homeAdmin', [
             'candidats' => $candidats,
             'entreprises' => $entreprises,
@@ -36,7 +40,9 @@ class AdminControlleur extends Controller
             'regions' => $regions,
             'competences' => $competences,
             'niveauEtudes' => $niveauEtudes,
-            'offresExpire' => $offresExpire
+            'offresExpire' => $offresExpire,
+            'entreprisesArcho' => $entreprisesArcho,
+            'candidatsArchi' => $candidatsArchi
         ]);
     }
 
@@ -90,8 +96,6 @@ class AdminControlleur extends Controller
         ]);
     }
 
-
-
     public function typeOffre(Request $request, TypeOffre $typeOffre=null)
     {
 
@@ -127,8 +131,6 @@ class AdminControlleur extends Controller
 
         return redirect()->route('admin.show');
     }
-
-
 
     public function TypeCompetence(Request $request, TypeCompetence $typeCompetence=null)
     {
@@ -178,7 +180,6 @@ class AdminControlleur extends Controller
         return redirect()->route('admin.show');
     }
 
-
     public function region(Request $request, Region $region=null)
     {
 
@@ -206,7 +207,6 @@ class AdminControlleur extends Controller
 
         return redirect()->route('admin.show');
     }
-
 
     public function lien(Request $request)
     {
@@ -280,9 +280,24 @@ class AdminControlleur extends Controller
     public function archioffre(Archioffre $archioffre)
     {
 
-
-
         $archioffre->delete();
+
+        return redirect()->route('admin.index');
+    }
+
+    public function archiCandidat(ArchiCandidat $archiCandidat)
+    {
+
+        $archiCandidat->delete();
+
+        return redirect()->route('admin.index');
+    }
+
+
+    public function archiEntreprise(ArchiEntreprise $archiEntreprise)
+    {
+
+        $archiEntreprise->delete();
 
         return redirect()->route('admin.index');
     }
