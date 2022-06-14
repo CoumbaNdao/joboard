@@ -32,4 +32,20 @@ class Competence extends Model
         ) ;
     }
 
+    public function delete_disposer()
+    {
+        Disposer::where('IDCompetence', '=', $this->IDCompetence)
+            ->delete();
+    }
+
+    public function scopecompetencePlusRecherche($querry)
+    {
+        return $querry->selectRaw("libelleCompetence as Competences, count(IDOffre) as nb_demande")
+            ->leftJoin('requerir', 'requerir.IDCompetence', '=', 'competence.IDCompetence')
+            ->groupBy('competence.IDCompetence')
+            ->orderBy('nb_demande', 'desc')
+            ->limit(6)
+            ->get()
+            ;
+}
 }

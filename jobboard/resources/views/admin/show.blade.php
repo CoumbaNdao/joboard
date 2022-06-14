@@ -179,6 +179,7 @@
 
             @endforeach
 
+
             <form method="post" action="{{route('admin.typeOffre')}}">
                 @csrf
                 <tr>
@@ -193,8 +194,57 @@
 
         </table>
     </div>
+<div class="row d-flex justify-content-center mb-5 mt-5">
+    <table class="table table-striped table-secondary">
+        <tr>
+            <th> Libellé</th>
+            <th> Diplome</th>
+            <th>Action</th>
 
+        </tr>
+    @foreach($niveauEtudes as $niveauEtude)
 
+        <form method="post" action="{{route('admin.niveauEtude', [$niveauEtude->IDNiveauEtude ])}}">
+            @csrf
+            <tr>
+                <td>
+                    <input type="text" name="libelleNiveauEtude" value="{{$niveauEtude->libelleNiveauEtude}}"
+                           class="form-control">
+                </td>
+
+                <td>
+                    <input type="text" name="diplomeObtenu" value="{{$niveauEtude->diplomeObtenu}}"
+                           class="form-control">
+                </td>
+                <td>
+                    <input type="submit" name="Supprimer" value="Supprimer" class="btn btn-danger">
+                    <input type="submit" name="Valider" value="Valider" class="btn btn-success">
+                </td>
+            </tr>
+        </form>
+
+    @endforeach
+
+        <form method="post" action="{{route('admin.creerNiveauEtude')}}">
+            @csrf
+            <tr>
+                <td>
+                    <input type="text" name="libelleNiveauEtude"
+                           class="form-control">
+                </td>
+
+                <td>
+                    <input type="text" name="diplomeObtenu"
+                           class="form-control">
+                </td>
+                <td>
+
+                    <input type="submit" name="Valider" value="Créer" class="btn btn-success">
+                </td>
+            </tr>
+        </form>
+    </table>
+</div>
     <div class="row d-flex justify-content-center mb-5 mt-5">
         <h2>Gestion Type Compétence</h2>
 

@@ -15,5 +15,8 @@ class Archioffre extends Model
     public function entreprise():hasOne{
         return  $this->hasOne(Entreprise::class, 'numeroSiret', 'numeroSiret');
     }
+    public function archientreprise():hasOne{
+        return $this->hasOne(ArchiEntreprise::class, 'numeroSiret', 'numeroSiret' );
+    }
 
 }

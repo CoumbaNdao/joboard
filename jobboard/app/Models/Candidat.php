@@ -21,6 +21,10 @@ class Candidat extends Model
     {
         return $this->hasOne(NiveauEtude::class, 'IDNiveauEtude', 'IDNiveauEtude');
     }
+    public function diposer(): hasMany
+    {
+        return $this->hasMany(Competence::class, 'IDCompetence', 'IDCompetence');
+    }
 
     public function competences()
     {

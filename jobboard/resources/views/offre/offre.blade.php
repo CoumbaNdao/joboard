@@ -40,7 +40,7 @@
                     </li>
                 @else
                     <li class="nav-item">
-                        <a class="nav-link page-scroll" href="{{route('candidat.index')}}">Accès étudiant</a>
+                        <a class="nav-link page-scroll" href="{{route('candidat.index')}}">Accès Candidat</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link page-scroll" href="{{route('entreprise.index')}}">Accès entreprise</a>
@@ -77,10 +77,11 @@
                     <div class="row">
                         <div class="col-sm-2">
                             <img src="{{asset('images/iconProfile.png')}}"
-                                 style="height: 30px;"/>
+                                 style="height: 30px; margin-left: -40px"/>
                         </div>
                         <div class="col-sm-12">
-                            <h5 class="card-title">@if(isset($candidat)){{$candidat->nomCandidat. ' ' . $candidat->prenomCandidat}}@else
+                            <h5 class="card-title"
+                                style="margin-top: -25px; margin-right: -45px">@if(isset($candidat)){{$candidat->nomCandidat. ' ' . $candidat->prenomCandidat}}@else
                                     <a href="{{route('candidat.index')}}"
                                        Styles="text-decoration: none; font-weight: boldæ">Inscription</a> @endif</h5>
                             <form method="get" action="{{route('offre.search')}}">
@@ -100,7 +101,7 @@
                                         <label for="region" class="form-label">Lieu de travail</label>
                                         <select id="region" name="region" class="form-control select">
 
-                                            <option value="{{null}}">Peu import</option>
+                                            <option value="{{null}}">Toute la France</option>
                                             @foreach($regions as $region)
                                                 <option value="{{$region->codePostalRegion}}"
                                                         @if(request('region') == $region->codePostalRegion) selected @endif>
@@ -112,45 +113,18 @@
 
                                     <div class="mb-3">
                                         <label for="disabledSelect" class="form-label">Type de contrat</label>
+                                        @foreach($typeOffres as $typeOffre)
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="stage"
-                                                   id="disabledFieldsetCheck" @if(request('stage')) value="on" @endif
-                                            >
+                                            <input class="form-check-input" type="checkbox" name="typeOffre[]"
+                                                   id="disabledFieldsetCheck"  value="{{$typeOffre->IDTypeOffre}}">
                                             <label class="form-check-label" for="disabledFieldsetCheck">
-                                                Stage
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="disabledFieldsetCheck"
-                                                   name="alternance"
-                                            >
-                                            <label class="form-check-label" for="disabledFieldsetCheck">
-                                                Alternance/Apprentissage
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="disabledFieldsetCheck"
-                                                   name="cdi">
-                                            <label class="form-check-label" for="disabledFieldsetCheck">
-                                                CDI
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="disabledFieldsetCheck"
-                                                   name="cdd">
-                                            <label class="form-check-label" for="disabledFieldsetCheck">
-                                                CDD
+                                                {{$typeOffre->libelleTypeOffre}}
                                             </label>
                                         </div>
 
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="disabledFieldsetCheck"
-                                                   name="interim">
-                                            <label class="form-check-label" for="disabledFieldsetCheck">
-                                                Interim
-                                            </label>
-                                        </div>
+                                        @endforeach
                                     </div>
+
                                     <button type="submit" class="btn btn-primary">Rechercher</button>
                                 </fieldset>
                             </form>
@@ -164,7 +138,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-4">
-                            <h5 class="card-title">Offres Disponibles</h5>
+                            <h5 class="card-title">Offres Disponibles {{count($offres)}}</h5>
                         </div>
                         <div class="col-sm-2">
                             <h5 class="card-title"></h5>
@@ -184,7 +158,8 @@
                                              style="height: 30px;"/>
                                     </div>
                                     <div class="col-sm-10">
-                                        <h5 class="card-title">{{$offre->entreprise->raisonSociale}}</h5>
+                                        <h5 class="card-title"
+                                            style="margin-top: 5px; text-align: -moz-right;">{{$offre->entreprise->raisonSociale}}</h5>
                                     </div>
                                     <div class="col-sm-10">
                                         <h5 class="card-title">{{$offre->titreOffre}}</h5>
@@ -192,12 +167,25 @@
                                 </div>
                                 <p class="card-text">{{$offre->descOffre}}</p>
                                 <br>
-                                <p class="card-text">Remuneration : {{$offre->remuneration}}€</p>
 
-                                <p class="card-text">Type de contrat : {{$offre->type_offre->libelleTypeOffre}}</p>
-                                <p class="card-text">Date de debut du contrat : {{$offre->dateDebutContrat}}</p>
-                                <p class="card-text">Duree du contrat : {{$offre->dureeContrat}}</p>
-                                <a href="{{route('candidat.postuler', [$offre->IDOffre])}}}" class="btn btn-primary">Postuler</a>
+                                <p class="card-text">Compétence Requise :
+                                @foreach($offre->requerirs as $competence)
+                                    <ul>
+                                        <li style="text-decoration: none;">
+                                            {{optional($competence->competences)->libelleCompetence}}
+                                        </li>
+                                    </ul>
+                                    @endforeach
+                                    </p>
+                                    <p class="card-text">Diplome Requis : {{$offre->niveau_etude->diplomeObtenu}}</p>
+                                    <p class="card-text">Type de contrat : {{$offre->type_offre->libelleTypeOffre}}</p>
+                                    <p class="card-text">Date de début du contrat : {{$offre->dateDebutContrat}}</p>
+                                    <p class="card-text">Durée du contrat : {{$offre->dureeContrat}}</p>
+                                    <p class="card-text">Région : {{$offre->entreprise->region->nomRegion}}</p>
+                                    <p class="card-text">Rémuneration : {{$offre->remuneration}}€</p>
+
+                                    <a href="{{route('candidat.postuler', [$offre->IDOffre])}}}"
+                                       class="btn btn-primary">Postuler</a>
                             </div>
                         </div>
                     </div>
@@ -270,7 +258,7 @@
                             JobAge
                         </h6>
                         <p>
-                         Plateforme de recherche d'emploi !
+                            Plateforme de recherche d'emploi !
                         </p>
                     </div>
                     <!-- Grid column -->

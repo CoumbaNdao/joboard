@@ -20,26 +20,32 @@
         <img src="{{asset('images/iconcandidat.png')}}" alt="p" height="100" width="100">
     </a>
 
-
-
     <br/>
-
     <hr>
-
-
     <div class="row d-flex justify-content-center mb-5 mt-5">
         <h2> Tableau de bord </h2>
 
         <table class="table table-striped table-primary">
             <tr>
-                <th> NB Candidat</th>
-                <th> NB Entreprise</th>
-                <th> NB Offre</th>
+                <th> NB Candidats</th>
+                <th> NB Entreprises</th>
+                <th> NB Offres</th>
+                <th> NB Compétences</th>
+                <th> NB Régions</th>
+
+
+{{--                <th> NB Candidature</th>--}}
+
             </tr>
             <tr>
                 <td>{{count($candidats)}}</td>
                 <td>{{count($entreprises)}}</td>
                 <td>{{count($offres)}}</td>
+                <td>{{count($competences)}}</td>
+                <td>{{count($regions)}}</td>
+
+{{--                <td>{{count($postuler)}}</td>--}}
+
 
             </tr>
         </table>
@@ -90,14 +96,12 @@
                 <th>adresse</th>
                 <th>ville</th>
 
-
                 <th>Action</th>
             </tr>
             @foreach($entreprisesArcho as $entreprise)
                 <tr>
                     <td>{{$entreprise->raisonSociale}}</td>
                     <td>{{$entreprise->descEntreprise}}</td>
-
                     <td>{{$entreprise->emailEntreprise}}</td>
                     <td>{{$entreprise->adresseEntreprise}}</td>
                     <td>{{$entreprise->villeEntreprise}}</td>
@@ -177,9 +181,9 @@
                 <th>Debut Contrat</th>
                 <th>Durée Contrat</th>
                 <th>État</th>
+                <th>NB Candidatures</th>
                 <th>Action</th>
             </tr>
-
 
             @foreach($offres as $offre)
                 <tr>
@@ -190,6 +194,9 @@
                     <td>{{ $offre->dateDebutContrat}}</td>
                     <td>{{ $offre->dureeContrat}}</td>
                     <td>{{ $offre->statutOffre}}</td>
+                    <td>{{count($offre->postuler)}}</td>
+
+
 
                     <td><a class="btn btn-danger" href="{{route('admin.offre', [$offre->IDOffre])}}">Supprimer</a></td>
                 </tr>
@@ -216,7 +223,7 @@
                 <tr>
                     <td>{{$archioffre->titreOffre}}</td>
                     <td>{{$archioffre->descOffre}}</td>
-                    <td>{{$archioffre->entreprise->raisonSociale}}</td>
+                    <td>{{optional($archioffre->entreprise)->raisonSociale ? $archioffre->entreprise->raisonSociale : optional($archioffre->archientreprise)->raisonSociale}}</td>
                     <td>{{number_format($archioffre->remuneration, 2, ',', ' ')}} €</td>
                     <td>{{ $archioffre->dateDebutContrat}}</td>
                     <td>{{ $archioffre->dureeContrat}}</td>
@@ -307,7 +314,77 @@
         </table>
     </div>
 
+    <div class="row d-flex justify-content-center mb-5 mt-5">
+        <h2> Les six compétences demandées </h2>
+
+        <table class="table table-striped table-secondary" aria-describedby="etude">
+            <tr>
+                <th> Libellé</th>
+                <th> Nb Demande</th>
+
+            </tr>
+            @foreach(competencePlusRecherche() as $competencePlusRecherche)
+                <tr>
+                    <td>
+                        {{$competencePlusRecherche->Competences}}
+                    </td>
+                    <td>
+                        {{$competencePlusRecherche->nb_demande}}
+                    </td>
+                </tr>
+            @endforeach
+        </table>
+    </div>
+
+
+
 </div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<canvas id="myChart" width="200" height="50"></canvas>
+<script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['NB Candidats', 'NB Entreprises', 'NB Offres', 'NB Compétences', 'NB Régions'],
+            datasets: [{
+                label: 'Statistiques',
+                data: [{{count($candidats)}},{{count($entreprises)}},{{count($offres)}},{{count($competences)}}, {{count($regions)}}],
+                backgroundColor: [
+                    'rgb(0, 128, 128)',
+                    'rgba(128, 0, 128)',
+                    'rgba(240, 166, 202)',
+                    'rgba(75, 192, 192)',
+                    'rgba(174, 214, 241)'
+                ],
+                borderColor: [
+                    'rgba(0, 0, 0, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 176, 38, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+
+
+
+
+
+
 
 </body>
 </html>

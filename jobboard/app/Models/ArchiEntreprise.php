@@ -15,8 +15,6 @@ class ArchiEntreprise extends Model
     protected $keyType = 'integer';
     protected $guarded = [];
 
-
-
     public function region():hasOne
     {
         return $this->hasOne(Region::class, 'codePostalRegion', 'codePostalRegion');

@@ -26,7 +26,7 @@
             <div class="col-10 emplacementForminsc">
                 <h6 class="text-uppercase mb-4 font-weight-bold titreInsc">Inscription</h6>
 
-                <form class="Inscform" id="postE" method="post" action="{{route('entreprise.create')}}" enctype="multipart/form-data">
+                <form class="Inscform" id="postE" style="margin-left: -5vw" method="post" action="{{route('entreprise.create')}}" enctype="multipart/form-data">
 
                     @csrf
                     <div class="form-group row champPlacement ">
@@ -35,6 +35,7 @@
                                    placeholder="Numéro Siret">
                         </div>
                     </div>
+
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
                             <input type="text" class="form-control" name="raisonSociale" id="inputPrenom"
@@ -42,6 +43,7 @@
                                    placeholder="Raison Sociale">
                         </div>
                     </div>
+
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
                             <input type="email" class="form-control" name="emailEntreprise" id="inputRaisonSociale"
@@ -58,9 +60,6 @@
                         </div>
                     </div>
 
-
-
-
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
                             <input class="form-control"  id="logoEntreprise"
@@ -70,10 +69,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
 
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
@@ -99,7 +94,6 @@
                         </div>
                     </div>
 
-
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
                             <input type="text" class="form-control" name="villeEntreprise" id="inputLieu"
@@ -110,17 +104,14 @@
 
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
-                            <input type="text" list="listLieu" name="codePostalRegion" class="form-control"
-                                   id="inputLieu" required="required"
-                                   placeholder="Région">
-                            <datalist id="listLieu">
+                            <select class="form-control" name="codePostalRegion" id="inputNom" required="required">
                                 @foreach($regions as $region)
                                     <option value="{{$region->codePostalRegion}}">{{$region->nomRegion}}</option>
                                 @endforeach
-                            </datalist>
-
+                            </select>
                         </div>
                     </div>
+
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
                             <input type="text" class="form-control" name="url" id="inputLieu" required="required"
@@ -134,7 +125,6 @@
                                    placeholder="Login si différent du mail">
                         </div>
                     </div>
-
 
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
@@ -165,10 +155,9 @@
                         </div>
                     </div>
 
-
-                    <input class="inscpBouton btn btn-primary" role="button" type="button" onclick="validateMdp()"  value="S'inscrire">
-
+                    <input class="inscpBouton btn btn-primary" style="margin-left: 5vw"  onclick="validateMdp()"  value="S'inscrire">
                 </form>
+
                 <br>
                 <br>
             </div>
@@ -176,11 +165,9 @@
     </div>
 </header>
 
-
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script>
-
 
     function sec() {
 
@@ -219,7 +206,6 @@
 
         document.getElementById('msg').innerHTML = msg
     }
-
 
     function validateMdp() {
         let mdp = document.getElementById('inputMotDePasse').value;

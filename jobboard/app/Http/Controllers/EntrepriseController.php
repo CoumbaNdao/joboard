@@ -103,7 +103,7 @@ class EntrepriseController extends Controller
     }
 
     /**
-     * @method deconnexion() permet la déconnexion d'un utilisateur romain
+     * @method deconnexion() permet la déconnexion d'un utilisateur
      * @return \Illuminate\Http\RedirectResponse
      */
     public function deconnexion()

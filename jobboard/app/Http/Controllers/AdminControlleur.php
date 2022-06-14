@@ -58,9 +58,11 @@ class AdminControlleur extends Controller
 
     public function offre(Offre $offre)
     {
-        Requerir::where('IDOffre', '=', $offre->IDOffre)
-            ->delete();
-
+       // Requerir::where('IDOffre', '=', $offre->IDOffre)->delete();
+      // Postuler::where('IDOffre', '=', $offre->IDOffre)->delete();
+       // Offre::where('IDOffre', '=', $offre->IDOffre)->delete();
+        $offre->delete_postuler();
+        $offre->delete_requerir();
         $offre->delete();
 
         return redirect()->route('admin.index');
@@ -86,13 +88,16 @@ class AdminControlleur extends Controller
         $regions = Region::all();
         $competences = Competence::all();
         $partenaires = Partenaire::all();
+        $niveauEtudes = NiveauEtude::all()->unique('libelleNiveauEtude');
 
         return view('admin.show', [
+
             'typeOffres' => $typeOffres,
             'typeCompetences' => $typeCompetences,
             'regions' => $regions,
             'competences' => $competences,
-            'partenaires' => $partenaires
+            'partenaires' => $partenaires,
+            'niveauEtudes' => $niveauEtudes
         ]);
     }
 
@@ -132,29 +137,6 @@ class AdminControlleur extends Controller
         return redirect()->route('admin.show');
     }
 
-    public function TypeCompetence(Request $request, TypeCompetence $typeCompetence=null)
-    {
-        if ($request->Valider) {
-
-            $typeCompetence->update([
-                'libelleTypeCompetence' => $request->libelleTypeCompetence
-            ]);
-        }
-
-        if ($request->Supprimer) {
-
-            $typeCompetence->delete();
-        }
-
-
-        if ($request->Creer) {
-            typeCompetence::create([
-                'libelleTypeCompetence' => $request->libelleTypeCompetence
-            ]);
-        }
-        return redirect()->route('admin.show');
-    }
-
     public function Competence(Request $request, Competence $competence=null)
     {
 
@@ -168,8 +150,8 @@ class AdminControlleur extends Controller
         if ($request->Supprimer) {
 
             $competence->delete();
+            $competence->delete_disposer();
         }
-
 
         if ($request->Creer) {
             Competence::create([
@@ -293,7 +275,6 @@ class AdminControlleur extends Controller
         return redirect()->route('admin.index');
     }
 
-
     public function archiEntreprise(ArchiEntreprise $archiEntreprise)
     {
 
@@ -301,4 +282,38 @@ class AdminControlleur extends Controller
 
         return redirect()->route('admin.index');
     }
+
+    public function creerNiveauEtude(Request $request)
+    {
+        try {
+            NiveauEtude::create([
+                'libelleNiveauEtude' => $request->libelleNiveauEtude,
+                'diplomeObtenu' => $request->diplomeObtenu,
+            ]);
+        } catch (Exception $e) {
+            return back()->withInput();
+        }
+        return redirect()->route('admin.show');
+
+    }
+
+    public function niveauEtude(Request $request, NiveauEtude $niveauEtude)
+    {
+        if ($request->Valider) {
+            try {
+                $niveauEtude->update([
+                    'libelleNiveauEtude' => $request->libelleNiveauEtude,
+                    'diplomeObtenu' => $request->diplomeObtenu,
+                ]);
+            } catch (Exception $e) {
+                return back()->withInput();
+            }
+        }elseif($request->Supprimer)
+        {
+            $niveauEtude->delete();
+        }
+
+        return redirect()->route('admin.show');
+    }
+
 }

@@ -25,18 +25,15 @@ class Offre extends Model
             ->delete();
     }
 
-
-    public function requerirs()
+    public function requerirs():hasMany
     {
         return $this->hasMany(Requerir::class, 'IDOffre', 'IDOffre');
     }
-
 
     public function entreprise():hasOne
     {
         return $this->hasOne(entreprise::class, 'numeroSiret', 'numeroSiret');
     }
-
 
     public function postuler()
     {
@@ -47,5 +44,8 @@ class Offre extends Model
         return $this->hasOne(TypeOffre::class, 'IDTypeOffre', 'IDTypeOffre');
     }
 
+    public function niveau_etude(){
+        return $this->hasOne(NiveauEtude::class, 'IDNiveauEtude', 'IDNiveauEtude');
+    }
 
 }

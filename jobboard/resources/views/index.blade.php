@@ -59,12 +59,14 @@
             <div class="row d-flex justify-content-center">
 
                 <input type="text" id="disabledTextInput" name="poste" class="col-lg-3 form-control custo"
-                       placeholder="emploi recherché">
+                       placeholder="Emploi recherché">
+                <input type="text" id="disabledTextInput" name="poste" class="col-lg-3 form-control custo"
+                       placeholder="Région">
                 <button type="submit" class="custo col-lg-0 btn btn-primary rechercheBoutton"><i
                         class="fas fa-search"></i></button>
-
-
             </div>
+
+
         </form>
     </div>
 </header>

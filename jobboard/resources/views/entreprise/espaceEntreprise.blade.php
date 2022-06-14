@@ -44,8 +44,7 @@
                 </form>
                 <br>
                 <p><a class=" font-weight-bold lienInscription " href="{{route('entreprise.recoverPassword')}}">Mot de passe oublié ?</a></p>
-                <p>Pas encore de compte ? <a class=" font-weight-bold lienInscription "
-                                             href="{{route('entreprise.inscription')}}">Inscription</a></p>
+                <p>Pas encore de compte ? <a class=" font-weight-bold lienInscription " href="{{route('entreprise.inscription')}}">Inscription</a></p>
                 <br>
             </div>
         </div>

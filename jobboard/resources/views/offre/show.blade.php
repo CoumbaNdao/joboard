@@ -6,11 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Webpage Title -->
     <title>Offre</title>
+
+
     <!-- Styles -->
     <link href="{{asset('css/bootstrap.css')}}" rel="stylesheet">
     <link href="{{asset('css/fontawesome-all.css')}}" rel="stylesheet">
     <link href="{{asset('css/styles.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+
+
     <!-- Favicon  -->
     <link rel="icon" href="{{asset('images/CoumbAnneFavicon.png')}}">
 </head>
@@ -67,19 +71,16 @@
                     <div class="row">
                         <div class="col-sm-2">
                             <img src="{{asset($entreprise->logoEntreprise)}}"
-                                 style="height: 30px;"/>
-
-
+                                 style="height: 30px;" alt="logo entreprise"/>
                         </div>
                         <div class="col-sm-12">
-                            <h5 class="card-title">{{$entreprise->raisonSociale}}</h5>
+                            <h5 class="card-title" style=" margin-top:-20px">{{$entreprise->raisonSociale}}</h5>
                             <p>{{$entreprise->descEntreprise}}</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
 
         <div class="col-9 col-sm-9">
             <div class="card col-sm-12 offremarget">
@@ -119,41 +120,37 @@
                                            name="dateDebutContrat"></td>
                             </tr>
                             <tr>
-                                <td><label for="dureeContrat"> Duree du contrat</label></td>
+                                <td><label for="dureeContrat"> Durée du contrat</label></td>
                                 <td><input class="form-control" id="dureeContrat" type="text"
                                            name="dureeContrat"></td>
                             </tr>
 
-
                             <tr>
-                                <td><label for="IDCompetence">compétence requise</label></td>
+                                <td><label for="IDCompetence">Compétence requises</label></td>
                                 <td>
-                                    <select id="IDCompetence" name="IDCompetence" class="form-control">
+                                    <select id="IDCompetence" name="IDCompetence[]" multiple class="form-control">
                                         @foreach($competences as $competence)
                                             <option
-                                                value="{{$competence->IDCompetence}}">{{$competence->libelleCompetence}} </option>
+                                                value="{{$competence->IDCompetence}}">{{$competence->libelleCompetence}}
+                                            </option>
                                         @endforeach
                                     </select>
-
-
                                 </td>
                             </tr>
+
                             <tr>
-                                <td><label for="statutOffre">statut de l'offre</label></td>
+                                <td><label for="statutOffre">Statut de l'offre</label></td>
                                 <td>
                                     <select id="statutOffre" name="statutOffre" class="form-control">
-                                        <option value="expiree">Expirée</option>
+
                                         <option value="publiee">Publiée</option>
                                         <option value="en attente de publication">En attente de publication</option>
                                     </select>
-
-
                                 </td>
                             </tr>
 
-
                             <tr>
-                                <td><label for="IDNiveauEtude">niveau d'étude</label></td>
+                                <td><label for="IDNiveauEtude">Niveau d'étude</label></td>
                                 <td>
                                     <select id="IDNiveauEtude" name="IDNiveauEtude" class="form-control">
                                         @foreach($niveauetudes as $niveauetude)
@@ -164,7 +161,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><label for="IDTypeOffre">type d'offre</label></td>
+                                <td><label for="IDTypeOffre">Type d'offre</label></td>
                                 <td>
                                     <select id="IDTypeOffre" name="IDTypeOffre" class="form-control">
                                         @foreach($typeOffres as $typeOffre)
@@ -175,12 +172,10 @@
                                 </td>
                             </tr>
 
-
                             <tr>
                                 <td><input type="reset" class="btn btn-danger"></td>
                                 <td><input type="submit" class="btn btn-primary" value="Publier"></td>
                             </tr>
-
 
                         </table>
                     </form>
@@ -192,7 +187,6 @@
                         <input type="submit" name="Rechercher" value="Rechercher">
                     </form>
                 </div>
-
                 @foreach($offres as $offre)
                     <div class="col-sm-6 offremarge">
                         <div class="card colorCard">
@@ -202,8 +196,10 @@
                                         <img src="{{asset($offre->entreprise->logoEntreprise)}}"
                                              style="height: 30px;"/>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <h5 class="card-title"></h5>
+                                    <div class="col-sm-12">
+                                        <h5 class="card-title"
+                                            style=" margin-top:-20px">{{$entreprise->raisonSociale}}</h5>
+
                                     </div>
                                 </div>
                                 <form method="post" action="{{route('offre.update', [$offre->IDOffre])}}">
@@ -227,7 +223,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><label for="remuneration2"> Remuneration</label></td>
+                                            <td><label for="remuneration2"> Rémunération</label></td>
                                             <td><input type="text" name="remuneration" value="{{$offre->remuneration}}"
                                                        id="remuneration2" class="form-control">
                                             </td>
@@ -240,14 +236,14 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><label for="dureeContrat2"> Duree du contrat</label></td>
+                                            <td><label for="dureeContrat2"> Durée du contrat</label></td>
                                             <td><input type="text" name="dureeContrat" value="{{$offre->dureeContrat}}"
                                                        id="dureeContrat2" class="form-control">
                                             </td>
                                         </tr>
 
                                         <tr>
-                                            <td><label for="statutOffre2">statut de l'offre</label></td>
+                                            <td><label for="statutOffre2">Statut de l'offre</label></td>
                                             <td>
                                                 <select id="statutOffre2" required name="statutOffre"
                                                         class="form-control">
@@ -257,30 +253,54 @@
                                                     </option>
                                                     <option value="publiee"
                                                             @if ($offre->statutOffre === "publiee" ) selected @endif>
-                                                        Publiée
+                                                       Publiée
                                                     </option>
                                                     <option value="en attente de publication"
                                                             @if ($offre->statutOffre === "en attente de publication" ) selected @endif>
-                                                        En attente de publication
+                                                         En attente de publication
                                                     </option>
                                                 </select>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td> Compétences requise</td>
-                                            <td>
 
-                                                @foreach($offre->requerirs as $competence)
-                                                    {{$competence->competences->libelleCompetence}}
-                                                @endforeach
+                                        <tr>
+                                            <td><label for="IDCompetence2"> Compétences requises</label></td>
+                                            <td>
+                                                <select id="IDCompetence2" name="IDCompetence[]" multiple
+                                                        class="form-control">
+
+                                                    @foreach($competences as $competence)
+                                                        <option
+                                                            value="{{$competence->IDCompetence}}" {{in_array($competence->IDCompetence, $offre->requerirs->pluck('IDCompetence')->toArray()) ? 'selected' : ''}} >
+                                                            {{$competence->libelleCompetence}}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </td>
                                         </tr>
 
                                         <tr>
-                                            <td><label for="IDTypeOffre2">type d'offre</label></td>
-                                            <td><input type="text" name="libelleTypeOffre"
-                                                       value="{{$offre->type_offre->libelleTypeOffre}}"
-                                                       id="typeOffre2" class="form-control">
+                                            <td><label for="IDNiveauEtude2">Niveau d'étude</label></td>
+                                            <td>
+                                                <select id="IDNiveauEtude2" name="IDNiveauEtude" class="form-control">
+                                                    @foreach($niveauetudes as $niveauetude)
+                                                        <option
+                                                            value="{{$niveauetude->IDNiveauEtude}}" {{$niveauetude->IDNiveauEtude === $offre->IDNiveauEtude ?'selected':''}}>{{$niveauetude->diplomeObtenu}} </option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><label for="IDTypeOffre2">Contrat</label></td>
+                                            <td>
+                                                <select id="IDTypeOffre2" name="IDTypeOffre" class="form-control">
+                                                    @foreach($typeOffres as $typeOffre)
+                                                        <option
+                                                            value="{{$typeOffre->IDTypeOffre}}" {{$offre->IDTypeOffre === $typeOffre->IDTypeOffre ? 'selected':''}} >{{$typeOffre->libelleTypeOffre}} </option>
+                                                    @endforeach
+                                                </select>
+
 
                                             </td>
                                         </tr>
@@ -295,7 +315,6 @@
                         </div>
                     </div>
                 @endforeach
-
             </div>
         </div>
 
@@ -303,57 +322,121 @@
             <div class="card col-sm-12 offremarget">
                 <div class="card-body">
                     <div class="row">
-                        <h5 class="card-title">Gestion des Candidature</h5>
+                        <h5 class="card-title">Gestion des Candidatures {{count($candidatures) + count($candidaturesT)}}</h5>
                     </div>
                 </div>
             </div>
-            <div class="row">
 
+            @if(count($candidatures) > 0)
+                <div class="row">
 
-                <table class="table table-striped table-primary">
-                    <tr>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Offre</th>
-
-                        <th>Date de candidature</th>
-                        <th>Cv</th>
-                        <th>Action</th>
-                    </tr>
-                    @foreach($candidatures as $candidature)
+                    <table class="table table-striped table-primary">
                         <tr>
-                            <td>{{$candidature->nomCandidat}}</td>
-                            <td>{{$candidature->prenomCandidat}}</td>
-                            <td>{{$candidature->titreOffre}}</td>
-                            <td>{{$candidature->date}}</td>
-
-                            <td><a href="{{$candidature->pathCv}}" download target="_blank">{{$candidature->nomCv}}</a>
-                                <em class="fa fa-print btn " data-name="{{$candidature->pathCv}}" role="button"></em>
-                            </td>
-                            <td>
-                                @if($candidature->statutPostuler === 2)
-                                    <a class="btn btn-danger"
-                                       href="{{route('offre.valider', [$candidature->IDCandidat, 'offre' => $candidature->IDOffre, 'etat'=>1])}}">Refuser</a>
-                                    <a class="btn btn-success"
-                                       href="{{route('offre.valider', [$candidature->IDCandidat, 'offre' => $candidature->IDOffre, 'etat' =>2])}}">Recruter</a>
-                                @elseif($candidature->statutPostuler === 3)
-                                    <p class="text-success">
-                                        ACCEPTÉ
-                                    </p>
-                                @else
-                                    <p class="text-danger">
-                                        REFUSÉ
-                                    </p>
-                                @endif
-                            </td>
+                            <td>CANDIDATURES A TRAITER</td>
+                            <td colspan="5" class="text-right">{{count($candidatures)}}</td>
                         </tr>
-                    @endforeach
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Offre</th>
+                            <th>Date de candidature</th>
+                            <th>Cv</th>
+
+                            <th>Action</th>
+                        </tr>
+                        @foreach($candidatures as $candidature)
+                            <tr>
+                                <td>{{$candidature->nomCandidat}}</td>
+                                <td>{{$candidature->prenomCandidat}}</td>
+                                <td>{{$candidature->titreOffre}}</td>
+
+                                <td>{{$candidature->date}}</td>
 
 
-                </table>
+                                <td><a href="{{$candidature->pathCv}}" download
+                                       target="_blank">{{$candidature->nomCv}}</a>
+                                    <em class="fa fa-print btn " data-name="{{$candidature->pathCv}}"
+                                        role="button"></em>
+                                </td>
+
+                                <td>
+                                    @if($candidature->statutPostuler === 2)
+                                        <a class="btn btn-danger"
+                                           href="{{route('offre.valider', [$candidature->IDCandidat, 'offre' => $candidature->IDOffre, 'etat'=>1])}}">Refuser</a>
+                                        <a class="btn btn-success"
+                                           href="{{route('offre.valider', [$candidature->IDCandidat, 'offre' => $candidature->IDOffre, 'etat' =>2])}}">Recruter</a>
+                                    @elseif($candidature->statutPostuler === 3)
+                                        <p class="text-success">
+                                            ACCEPTÉ
+                                        </p>
+                                    @else
+                                        <p class="text-danger">
+                                            REFUSÉ
+                                        </p>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
 
 
-            </div>
+                    </table>
+                </div>
+            @endif
+            @if(count($candidaturesT) > 0)
+                <div class="row">
+
+                    <table class="table table-striped table-primary">
+                        <tr>
+                            <td>CANDIDATURES TRAITEES</td>
+                            <td colspan="5" class="text-right">{{count($candidaturesT)}}</td>
+                        </tr>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Offre</th>
+                            <th>Date de candidature</th>
+                            <th>Cv</th>
+
+                            <th>Action</th>
+                        </tr>
+                        @foreach($candidaturesT as $candidature)
+                            <tr>
+                                <td>{{$candidature->nomCandidat}}</td>
+                                <td>{{$candidature->prenomCandidat}}</td>
+                                <td>{{$candidature->titreOffre}}</td>
+
+                                <td>{{$candidature->date}}</td>
+
+
+                                <td><a href="{{$candidature->pathCv}}" download
+                                       target="_blank">{{$candidature->nomCv}}</a>
+                                    <em class="fa fa-print btn " data-name="{{$candidature->pathCv}}"
+                                        role="button"></em>
+                                </td>
+
+                                <td>
+                                    @if($candidature->statutPostuler === 2)
+                                        <a class="btn btn-danger"
+                                           href="{{route('offre.valider', [$candidature->IDCandidat, 'offre' => $candidature->IDOffre, 'etat'=>1])}}">Refuser</a>
+                                        <a class="btn btn-success"
+                                           href="{{route('offre.valider', [$candidature->IDCandidat, 'offre' => $candidature->IDOffre, 'etat' =>2])}}">Recruter</a>
+                                    @elseif($candidature->statutPostuler === 3)
+                                        <p class="text-success">
+                                            ACCEPTÉ
+                                        </p>
+                                    @else
+                                        <p class="text-danger">
+                                            REFUSÉ
+                                        </p>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+
+
+                    </table>
+                </div>
+            @endif
         </div>
     </div>
 </div>
@@ -500,7 +583,9 @@
 <script src="{{asset('js/bootstrap.min.js')}}"></script> <!-- Bootstrap framework -->
 <script src="{{asset('js/jquery.easing.min.js')}}"></script> <!-- jQuery Easing for smooth scrolling between anchors -->
 <script src="{{asset('js/scripts.js')}}"></script>
-<-- Custom scripts -->
+
+
+{{--<-- Custom scripts -->--}}
 
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script type="text/javascript">

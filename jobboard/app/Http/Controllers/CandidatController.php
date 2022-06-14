@@ -151,29 +151,23 @@ class CandidatController extends Controller
         $pathEntrepriseCandidat = $pathEntreprise . "\\" . $candidat->prenomCandidat . $candidat->nomCandidat;
         $pathEntrepriseOffre = $pathEntrepriseCandidat . "\\" . $offre->titreOffre;*/
 
-        if (!is_dir($pathCandidat)) {
+       /* if (!is_dir($pathCandidat)) {
             mkdir($pathCandidat);
         }
         if (!is_dir($pathCandidatOffre)) {
             mkdir($pathCandidatOffre);
-        }
-
+        }*/
 
         $cv = $request->file('CVCandidat');
 
-
         $cv->move($pathCandidatOffre, $cv->getClientOriginalName());
 
-
-
         // copy($pathCandidatOffre . "\\" . $cv->getClientOriginalName(), $pathEntrepriseOffre . "\\_" . $cv->getClientOriginalName());
-
 
        $cv =  CvCandidat::create([
            'nomCv' => $cv->getClientOriginalName(),
             'pathCv' => $pathC . "\\" . $cv->getClientOriginalName(),
         ]);
-
 
         Postuler::create([
             'IDCandidat' => $candidat->IDCandidat,
@@ -253,7 +247,6 @@ class CandidatController extends Controller
                    'loginCandidat' => $request->loginCandidat ?? $candidat->loginCandidat,
                    'mdpCandidat' => Hash::make($request->mdpCandidat)
                ]);
-
                Cache::delete('candidat');
                return redirect()->route('candidat.index');
            }catch (Exception $e)
@@ -266,7 +259,6 @@ class CandidatController extends Controller
 
     }
 
-
     public function recoverPassword(Request $request, $loginCandidat=null)
     {
         if ($request->loginCandidat &&  !isset($loginCandidat)) {
@@ -275,8 +267,6 @@ class CandidatController extends Controller
                 return redirect()->route('offre.show');
             }
             $candidat = Candidat::where('loginCandidat', '=', $request->loginCandidat)->get()->first();
-            // dd($entreprise, $request->all());
-
             if ($request->mdpCandidat == $request->validationMdp) {
                 try {
                     $candidat->update([
@@ -301,6 +291,7 @@ class CandidatController extends Controller
         Disposer::where("IDCandidat", "=", $candidat->IDCandidat)->delete();
         Cache::delete('candidat');
         $candidat->delete();
+
         return redirect()->route('index');
     }
 }

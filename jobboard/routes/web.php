@@ -78,7 +78,9 @@ Route::prefix('/dbadmin')->name('admin.')->group(static function() {
     Route::post('/region/{region?}', [AdminControlleur::class, 'region'])->name('region');
     Route::post('/lien', [AdminControlleur::class, 'lien'])->name('lien');
     Route::post('/creerpartenaire', [AdminControlleur::class, 'creerPartenaire'])->name('creerPartenaire');
+    Route::post('/creerniveauetude', [AdminControlleur::class, 'creerNiveauEtude'])->name('creerNiveauEtude');
     Route::post('/partenaire/{partenaire}', [AdminControlleur::class, 'partenaire'])->name('partenaire');
+    Route::post('/niveauetude/{niveauEtude}', [AdminControlleur::class, 'niveauEtude'])->name('niveauEtude');
     Route::get('/show', [AdminControlleur::class, 'show'])->name('show');
 
 });

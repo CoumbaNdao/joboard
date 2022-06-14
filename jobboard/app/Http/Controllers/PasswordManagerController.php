@@ -37,6 +37,7 @@ class PasswordManagerController extends Controller
         $data = ['loginCandidat' => $request->loginCandidat ];
         Mail::send('candidat.resetMailC', $data, function ($message) use ( $to_email) {
             $message->to($to_email)
+
                 ->subject('Demande de réinitialisation de mot de passe');
         });
 

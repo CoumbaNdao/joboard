@@ -236,7 +236,7 @@ insert into region (codePostalRegion, nomRegion) values
 
 (null, 'ains'),
 (null, 'haut de france'),
-(null, 'Guyane')
+(null, 'Guyane'),
 (null, 'Martinique');
 
 insert into typeoffre (`IDTypeOffre`, `libelleTypeOffre`) values
@@ -244,16 +244,16 @@ insert into typeoffre (`IDTypeOffre`, `libelleTypeOffre`) values
 
 (null, 'alternance'),
 (null, 'CDI'),
-(null, 'CDD')
+(null, 'CDD'),
 (null, 'interim');
 
 
 insert into entreprise (`numeroSiret`, `raisonSociale`, `descEntreprise`, `adresseEntreprise`, `cpEntreprise`,`villeEntreprise`,`telEntreprise`, `emailEntreprise`, `loginEntreprise`, `mdpEntreprise`,`urlEntreprise`, `codePostalRegion` )
  values
-(12345, 'Orange', 'vente de téléphone', '2 avenue de segur', '75007', 'Paris', '0123456789', 'orange@orange.com', 'orange@orange.com', 'orange', 'www.orange.com', 9),
+(12345, 'Orange', 'vente de téléphone', '2 avenue de Ségur', '75007', 'Paris', '0123456789', 'orange@orange.com', 'orange@orange.com', 'orange', 'www.orange.com', 9),
 (22345, 'ODIGO', 'Editeur de logiciel', '40 rue camille desmoulins', '92130', 'Issy-les-moulineaux', '0123456790', 'odigo@odigo.com', 'odigo@odigo.com', 'odigo', 'www.odigo.com', 8),
 (32345, 'Accenture', 'Entreprise de logiciel', '6 rue de segura', '20000', 'Sainte Anne', '0123456779', 'accenture@accenture.com', 'accenture@accenture.com', 'accenture', 'www.accenture.net', 11),
-(42345, 'PrefNord', 'Service  public', '5 boulevar victor', '59000', 'Lille', '0152456789', 'pref@pref.com', 'pref@pref.com', 'pref', 'www.pref.com', 8)
+(42345, 'PrefNord', 'Service  public', '5 boulevar victor', '59000', 'Lille', '0152456789', 'pref@pref.com', 'pref@pref.com', 'pref', 'www.pref.com', 8),
 (52345, 'Arrow', 'Pharmacologie', '5 avenue de la marne', '69007', 'Lyon', '0156456789', 'arrow@arrow.com', 'arrow@arrow.com', 'arrow', 'www.arrow.net', 2);
 
 
@@ -261,26 +261,25 @@ insert into niveauetude ('IDNiveauEtude', 'libelleNiveauEtude', 'diplomeObtenu')
 (null, 'Bac+1', 'BAC'),
 (null, 'Bac+2', 'BTS'),
 (null, 'Bac+3', 'Licence'),
-(null, 'Bac+4', 'M1')
+(null, 'Bac+4', 'M1'),
 (null, 'Bac+5', 'M2');
 
 
 insert into offre (`IDOffre`, `titreOffre`, `descOffre`, `datePubOffre`, `remuneration`,`dateDebutContrat`,`dureeContrat`, `statutOffre`, `IDTypeOffre`, `numeroSiret`,`IDNiveauEtude`)
  values
 (null, 'Stage developpeur', 'Offre de stage developpeur ', '2022/02/01', '600.59', '2022/03/01', '6 mois', 'en attente de publication', 1, 1234, 1),
-
 (null, 'Support systeme en alternance', 'Recherche profil support systeme ', '2021/02/01', '1200.0','2021/03/05', '1 ans', 'expiree', null, 2234, null),
 (null , 'Administrateur de base de donnees', 'Recherche DBA confirme', '2022/02/01', '3200','2022/04/05', '1 ans', 'publiee', null, 3234, null),
-(null ,  'Devops junior', 'Devenez Devops junior', '2020/02/01', '3000','2021/02/05', '6 mois', 'expiree', null, 4234, null)
+(null ,  'Devops junior', 'Devenez Devops junior', '2020/02/01', '3000','2021/02/05', '6 mois', 'expiree', null, 4234, null),
 (null , 'Ingenieur Securite', 'Offre ingenieur sécurite', '2021/02/01', '5000','2021/03/05', 'null', 'expiree', null, 5234, null);
 
 
 
 insert into candidat (`IDCandidat`, `nomCandidat`, `prenomCandidat`, `adresseCandidat`, `cpCandidat`, `villeCandidat`, `loginCandidat`, `mdpCandidat`, `codePostalRegion`,`IDNiveauEtude`, `telephoneCandidat`,`emailCandidat`)
-values (null, 'DIAZ', 'Paco ', '12 rue de la belle feuille', '69500', 'Lyon', 'paco@paco.com', 'paco', 1, 1 , '0650084988', 'paco@gmail.com'),
+values (null, 'DIAZ', 'Paco ', '12 rue de la belle feuille', '69500', 'Lyon', 'paco@paco.com', 'paco', 1, 1 , '0750074988', 'paco@gmail.com'),
        (null, 'TOTO', 'Coumba ', '5 avenue de la marne', '59800', 'Lille', 'coumba@coumba.com', 'coumba', 2, 5, '0650078988', 'coumba@gmail.com'),
        (null, 'BEN', 'Ahmed ', '68 rue glaciale', '92130', 'Issy-les-moulineaux', 'ahmed@ahmed.com', 'ahmed', 4, 3, '0659584988', 'ahmed@gmail.com'),
-       (null, 'CHOUAKY', 'Abder ', '12 rue de la belle feuille', '69500', 'Lyon', 'abder@abder.com', 'abder', 3, 1, '0655084988', 'abder@gmail.com')
+       (null, 'CHOUAKY', 'Abder ', '12 rue de la belle feuille', '69500', 'Lyon', 'abder@abder.com', 'abder', 3, 1, '0655084988', 'abder@gmail.com'),
        (null, 'TCHEN', 'Anne', '28 boulevard victor', '92600', 'Asnieres', 'anne@anne.com', 'anne', 1, 2,'0658284988', 'anne@gmail.com' );
 
 
@@ -291,7 +290,7 @@ values (1, 1) ,
 
         (28, 12),
         (29, 13),
-        (30, 14)
+        (30, 14),
         (26, 15);
 
 
@@ -299,7 +298,7 @@ insert into competence (`IDCompetence`, `libelleCompetence`)
 values (null, 'Programmation'),
 (null, 'Support informatique'),
 (null, 'Gestion de donnees'),
-(null, 'Gestion de projet')
+(null, 'Gestion de projet'),
 (null, 'Administration systeme');
 
 
@@ -307,7 +306,7 @@ insert into typecompetence (`IDTypeCompetence`, `libelleTypeCompetence`)
 values (null, 'Technique'),
 (null, 'Fonctionnel'),
 (null, 'Technico_fonctonnel'),
-(null, 'Suivi KPI')
+(null, 'Suivi KPI'),
 (null, 'Solution reseaux');
 
 
@@ -317,7 +316,7 @@ values (1, 1) ,
 
         (13, 7),
         (14, 8),
-        (15, 9)
+        (15, 9),
         (11, 10);
 
 
@@ -327,7 +326,7 @@ values (1, 1) ,
 
         (28, 7),
         (29, 8),
-        (30, 9)
+        (30, 9),
         (26, 10);
 
 
@@ -354,7 +353,7 @@ insert into avis
 values (null,'Paco', 'Jo', 'jai trouver facilement un emploi', 'C:\Users\MameCoumbaNDAO\Desktop\jobsearch\jobboard\public\images\man3'),
 values (null, 'Thenang','Anne','Contente de mon experience sur jobage', 'C:\Users\MameCoumbaNDAO\Desktop\jobsearch\jobboard\public\images\woman2'),
 values (null, 'Chiche', 'Mehdi', 'Je recommande', 'C:\Users\MameCoumbaNDAO\Desktop\jobsearch\jobboard\public\images\man2'),
-values (null,'YU', 'Kelly', 'Bravo Jobage', 'C:\Users\MameCoumbaNDAO\Desktop\jobsearch\jobboard\public\images\woman3')
+values (null,'YU', 'Kelly', 'Bravo Jobage', 'C:\Users\MameCoumbaNDAO\Desktop\jobsearch\jobboard\public\images\woman3'),
 values (null,'Bregger', 'Amandine', 'Belle experience', 'C:\Users\MameCoumbaNDAO\Desktop\jobsearch\jobboard\public\images\woman1');
 
 
@@ -405,15 +404,19 @@ CREATE TRIGGER insertdatedebutcontrat
 
 
 
+
+DROP TRIGGER IF EXISTS expirerOffre;
 DELIMITER //
-DROP TRIGGER IF EXISTS updatedatedebutcontrat;
-CREATE TRIGGER updatedatedebutcontrat
-    BEFORE UPDATE
+CREATE TRIGGER expirerOffre
+    after insert
     ON offre
     FOR EACH ROW
-    IF NEW.dateDebutContrat < now() Then SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'la date saisie incorrecte!';
-    End IF //
+    begin
+    IF dateDebutContrat < now()
+    Then update offre
+        SET statutOffre = 'expiree';
+    End IF ;
+    end //
 DELIMITER ;
 
 
@@ -431,6 +434,10 @@ where 2=0;
 
 create table archientreprise
 as select * from entreprise
+where 2=0;
+
+create table archipostuler
+as select * from postuler
 where 2=0;
 // ===================================TRIGGER archivage offre expiree/traitee======================================
 
@@ -456,7 +463,6 @@ end //
 delimiter ;
 
 
-
 drop trigger if exists archiverEntreprise;
 delimiter //
 create trigger archiverEntreprise
@@ -480,3 +486,81 @@ begin
         archicandidat select * from candidat where IDCandidat=old.IDCandidat;
 end //
 delimiter ;
+
+
+drop trigger if exists archiverPostuler;
+delimiter //
+create trigger archiverPostuler
+    before delete
+    on postuler
+    for each row
+begin
+    insert into
+        archipostuler select * from postuler where IDOffre=old.IDOffre and IDCandidat=old.IDCandidat and IDCv=old.IDCv;
+end //
+delimiter ;
+
+
+drop trigger if exists supprimerEntreprise;
+delimiter //
+create trigger supprimerEntreprise
+    before delete
+    on entreprise
+    for each row
+begin
+    delete from offre where offre.numeroSiret=old.numeroSiret;
+end //
+delimiter ;
+
+
+drop trigger if exists supprimerOffre;
+delimiter //
+create trigger supprimerOffre
+    before delete
+    on offre
+    for each row
+begin
+    delete from postuler where postuler.IDOffre=old.IDOffre;
+end //
+delimiter ;
+
+drop trigger if exists supprimerCompetence;
+delimiter //
+create trigger supprimerCompetence
+    before delete
+    on competence
+    for each row
+begin
+    delete from requerir where requerir.IDCompetence=old.IDCompetence;
+end //
+delimiter ;
+
+
+drop trigger if exists supprimerCandidat;
+delimiter //
+create trigger supprimerCandidat
+    before delete
+    on candidat
+    for each row
+begin
+    delete from postuler where postuler.IDCandidat=old.IDCandidat;
+end //
+delimiter ;
+
+
+# Les competences les 6 plus recherchéés demandées
+
+create or replace view competencePlusRecherche as
+select libelleCompetence as Competences, count(IDOffre) as nb_demande
+from competence
+left join requerir on requerir.IDCompetence  = competence.IDCompetence
+group by  competence.IDCompetence
+order by nb_demande desc limit 6
+;
+
+create table userlog (
+loginuser varchar(50),
+nomuser varchar (50),
+datelog datetime
+);
+

@@ -25,7 +25,7 @@
         <div class="row ">
             <div class="col-10 emplacementForminsc">
                 <h6 class="text-uppercase mb-4 font-weight-bold titreInsc">Inscription</h6>
-                <form class="Inscform" method="post" id="candidatInscriptionForm"
+                <form class="Inscform" method="post" id="candidatInscriptionForm" style="margin-left: -5vw"
                       action="{{route('candidat.create')}} ">
                     @csrf
                     <div class="form-group row champPlacement ">
@@ -34,6 +34,7 @@
                                    placeholder="Nom">
                         </div>
                     </div>
+
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
                             <input type="text" class="form-control" name="prenomCandidat" id="inputPrenom"
@@ -54,7 +55,6 @@
                                    required="required" placeholder="Téléphone">
                         </div>
                     </div>
-
 
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
@@ -80,14 +80,12 @@
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
                             <select class="form-control" name="codePostalRegion" id="inputNom" required="required">
-
                                 @foreach($regions as $region)
                                     <option value="{{$region->codePostalRegion}}">{{$region->nomRegion}}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
-
 
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
@@ -123,7 +121,6 @@
                         </div>
                     </div>
 
-
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
                             <input type="email" class="form-control" name="loginCandidat" id="inputEmail"
@@ -155,7 +152,7 @@
                         </div>
                     </div>
 
-                    <input class="inscpBouton btn btn-primary" onclick="validateMdp()" value="S'inscrire">
+                    <input class="inscpBouton btn btn-primary" style="margin-left: 5vw" onclick="validateMdp()" value="S'inscrire">
                 </form>
                 <br>
                 <br>
@@ -171,31 +168,26 @@
 
 
     function sec() {
-
-
         let mdp = document.getElementById('mdpCandidat').value;
         let msg = "";
 
         console.log(this);
-
 
         if (mdp.length > 20) {
             msg = msg + "<li class='text-danger'> mot de pass trop long"
         }
 
         if (mdp.length < 8) {
-            msg = msg + "<li class='text-danger'> mot de pass trop court"
+            msg = msg + "<li class='text-danger'> Doit contenir au moins 8 carracateres"
         }
 
         if (!mdp.match(/[0-9]/g)) {
             msg = msg + "<li class='text-danger'> mot de pass doit contenir un chiffre"
         }
 
-
         if (!mdp.match(/[a-z]/g)) {
             msg = msg + "<li class='text-danger'> mot de pass doit contenir un caractère en minuscule"
         }
-
 
         if (!mdp.match(/[A-Z]/g)) {
             msg = msg + "<li class='text-danger'> mot de pass doit contenir un caractère en Majuscule"
@@ -207,7 +199,6 @@
 
         document.getElementById('msg').innerHTML = msg
     }
-
 
     function validateMdp() {
         let mdp = document.getElementById('mdpCandidat').value;
@@ -222,7 +213,11 @@
         ) {
             document.getElementById("candidatInscriptionForm").submit();
         } else {
-            alert('Votre mot de passe doit respecter les critères suivants : Compris entre 8 et 12 caractères, au moins un chiffre, une lettre majuscule et miniscule et un caractère spécial' + mdp);
+            alert('Votre mot de passe doit respecter les critères suivants : ' +
+                'Entre 8 et 12 caractères,' +
+                ' au moins un chiffre,' +
+                ' une lettre majuscule et miniscule' +
+                ' et un caractère spécial' + mdp);
         }
 
 

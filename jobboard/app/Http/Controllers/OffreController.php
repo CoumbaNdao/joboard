@@ -50,12 +50,13 @@ class OffreController extends Controller
             ->get();
 
         $regions = Region::all();
-
+        $typeOffres = TypeOffre::all();
         return view('offre.offre', [
             'offres' => $offres ?? [],
             'regions' => $regions,
             'candidat' => $candidat ?? null,
-            'candidatures' => $candidatures ?? null
+            'candidatures' => $candidatures ?? null,
+            'typeOffres' => $typeOffres->unique('libelleTypeOffre')
         ]);
     }
 
@@ -64,7 +65,6 @@ class OffreController extends Controller
 
         if (Cache::get('candidat')) {
             //return redirect()->route('candidat.index');
-
             $candidat = Candidat::find(Cache::get('candidat'));
             $candidatures = Offre::join('postuler', 'offre.IDOffre', '=', 'postuler.IDOffre')
                 ->where('IDCandidat', '=', $candidat->IDCandidat)
@@ -75,24 +75,6 @@ class OffreController extends Controller
         } else {
             $candidaturesId = null;
         }
-
-
-        $table [] = $request->stage ? 6 : null;
-        $table [] = $request->alternance ? 7 : null;
-        $table [] = $request->cdi ? 8 : null;
-        $table [] = $request->cdd ? 9 : null;
-        $table [] = $request->interim ? 10 : null;
-
-        $a = 0;
-
-        foreach ($table as $tab) {
-            $a = $a + ($tab > 0);
-        }
-
-        if ($a === 0) {
-            $table = null;
-        }
-
 
         $offres = Offre::
         when(isset($candidaturesId), static function ($q) use ($candidaturesId) {
@@ -105,33 +87,43 @@ class OffreController extends Controller
             ->when($request->poste, static function ($q) use ($request) {
                 return $q->where('titreOffre', 'like', '%' . $request->poste . '%');
             })
-            ->when($table, static function ($q) use ($table) {
-                return $q->whereIn('IDTypeOffre', $table);
+            ->when($request->typeOffre, static function ($q) use ($request) {
+                return $q->whereIn('IDTypeOffre', $request->typeOffre);
             })
             ->where('statutOffre', '=', 'publiee')
             ->orderBy('offre.created_at')
             ->get();
 
         $regions = Region::all();
-
+        $typeOffres = TypeOffre::all();
         return view('offre.offre', [
             'offres' => $offres,
             'regions' => $regions,
             'candidat' => $candidat ?? null,
-            'candidatures' => $candidatures ?? null
+            'candidatures' => $candidatures ?? null,
+            'typeOffres' => $typeOffres->unique('libelleTypeOffre'),
         ]);
 
     }
 
     public function update(Request $request, Offre $offre)
     {
+        $offre->delete_requerir();
+        foreach ($request->IDCompetence as $competence) {
+            Requerir::create([
+                'IDCompetence' => $competence,
+                'IDOffre' => $offre->IDOffre
+            ]);
+        }
         $offre->update([
             'titreOffre' => $request->titreOffre,
             'descOffre' => $request->descOffre,
             'statutOffre' => $request->statutOffre,
             'remuneration' => $request->remuneration,
             'dureeContrat' => $request->dureeContrat,
-            'datePubOffre' => $request->datePubOffre
+            'datePubOffre' => $request->datePubOffre,
+            'IDNiveauEtude' => $request->IDNiveauEtude,
+            'IDTypeOffre' => $request->IDTypeOffre
         ]);
 
         return redirect()->route('offre.show', [Cache::get('entreprise')]);
@@ -177,8 +169,19 @@ class OffreController extends Controller
             ->join('candidat', 'candidat.IDCandidat', '=', 'postuler.IDCandidat')
             ->join('cvcandidat', 'postuler.IDCv', '=', 'cvcandidat.IDCv')
             ->where('numeroSiret', '=', $entreprise->numeroSiret)
+            ->where('statutPostuler', '=', 2)
             ->groupBy('candidat.IDCandidat', 'offre.IDOffre')
             ->get();
+
+        $candidaturesT = Offre::select(['nomCandidat', 'prenomCandidat', 'titreOffre', 'postuler.created_at as date', 'candidat.IDCandidat', 'offre.IDOffre', 'statutPostuler', 'pathCv', 'nomCv'])
+            ->join('postuler', 'offre.IDOffre', '=', 'postuler.IDOffre')
+            ->join('candidat', 'candidat.IDCandidat', '=', 'postuler.IDCandidat')
+            ->join('cvcandidat', 'postuler.IDCv', '=', 'cvcandidat.IDCv')
+            ->where('numeroSiret', '=', $entreprise->numeroSiret)
+            ->where('statutPostuler', '<>', 2)
+            ->groupBy('candidat.IDCandidat', 'offre.IDOffre')
+            ->get();
+
 
 
         return view('offre.show', [
@@ -187,7 +190,8 @@ class OffreController extends Controller
             'niveauetudes' => $niveauetudes->unique('libelleNiveauEtude'),
             'typeOffres' => $typeOffres->unique('libelleTypeOffre'),
             'competences' => $competences,
-            'candidatures' => $candidatures
+            'candidatures' => $candidatures,
+            'candidaturesT' => $candidaturesT
         ]);
     }
 
@@ -223,6 +227,7 @@ class OffreController extends Controller
     {
         $entreprise = Entreprise::find(Cache::get('entreprise'));
 
+
         try {
             $offre = Offre::create([
                 'numeroSiret' => $entreprise->numeroSiret,
@@ -238,12 +243,14 @@ class OffreController extends Controller
 
             ]);
 
-            Requerir::create([
-                'IDCompetence' => $request->IDCompetence,
-                'IDOffre' => $offre->IDOffre
-            ]);
+            foreach ($request->IDCompetence as $competence) {
+                Requerir::create([
+                    'IDCompetence' => $competence,
+                    'IDOffre' => $offre->IDOffre
+                ]);
+            }
 
-        } catch (Exception) {
+        } catch (Exception $e) {
             return back()->withInput();
         }
 
