@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activite;
+use App\Models\Admin;
 use App\Models\ArchiCandidat;
 use App\Models\ArchiEntreprise;
 use App\Models\Archioffre;
@@ -13,20 +15,29 @@ use App\Models\Entreprise;
 use App\Models\NiveauEtude;
 use App\Models\Offre;
 use App\Models\Partenaire;
+use App\Models\Postuler;
 use App\Models\Region;
 use App\Models\Requerir;
 use App\Models\TypeCompetence;
 use App\Models\TypeOffre;
+use App\Models\UserLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Mockery\Exception;
 
 class AdminControlleur extends Controller
 {
     public function index()
     {
+
+        if (!Cache::get('adminbdd')) {
+            return view('admin.connexionAdmin');
+        }
+        $userlogs = UserLog::all();
         $candidats = Candidat::all();
         $entreprises = Entreprise::all();
         $offres = Offre::all();
+        $postulers = Postuler::all();
         $regions = Region::all();
         $competences = Competence::all();
         $niveauEtudes = NiveauEtude::all()->unique('libelleNiveauEtude');
@@ -34,6 +45,7 @@ class AdminControlleur extends Controller
         $entreprisesArcho = ArchiEntreprise::all();
         $candidatsArchi = ArchiCandidat::all();
         return view('admin.homeAdmin', [
+            'userlogs' => $userlogs,
             'candidats' => $candidats,
             'entreprises' => $entreprises,
             'offres' => $offres,
@@ -42,9 +54,35 @@ class AdminControlleur extends Controller
             'niveauEtudes' => $niveauEtudes,
             'offresExpire' => $offresExpire,
             'entreprisesArcho' => $entreprisesArcho,
-            'candidatsArchi' => $candidatsArchi
+            'candidatsArchi' => $candidatsArchi,
+            'postulers' => $postulers
         ]);
     }
+
+    // CONNEXION
+    public function login(Request $request)
+    {
+
+        $adminbdd = Admin::where('loginadmin', '=', $request->loginadmin)
+            ->get()->first();
+
+        if (isset($adminbdd) && $request->mdpadmin != $adminbdd->mdpadmin) {
+            $adminbdd = null;
+        }
+        if (isset($adminbdd)) {
+            Cache::put('adminbdd', $adminbdd->idadmin, 900);
+
+            return redirect()->route('admin.index');
+        }
+        return back()->withInput();
+    }
+// DECONNEXION
+//    public function deconnexion()
+//    {
+//        Cache::delete('candidat');
+//        return redirect()->route('candidat.index');
+//    }
+
 
     public function candidat(Candidat $candidat)
     {
@@ -83,13 +121,16 @@ class AdminControlleur extends Controller
 
     public function show()
     {
+        if (!Cache::get('adminbdd')) {
+            return view('admin.connexionAdmin');
+        }
         $typeOffres = TypeOffre::all();
         $typeCompetences = TypeCompetence::all();
         $regions = Region::all();
         $competences = Competence::all();
         $partenaires = Partenaire::all();
         $niveauEtudes = NiveauEtude::all()->unique('libelleNiveauEtude');
-
+        $activites = Activite::all();
         return view('admin.show', [
 
             'typeOffres' => $typeOffres,
@@ -97,7 +138,8 @@ class AdminControlleur extends Controller
             'regions' => $regions,
             'competences' => $competences,
             'partenaires' => $partenaires,
-            'niveauEtudes' => $niveauEtudes
+            'niveauEtudes' => $niveauEtudes,
+            'activites' => $activites
         ]);
     }
 
@@ -189,7 +231,35 @@ class AdminControlleur extends Controller
 
         return redirect()->route('admin.show');
     }
+    public function activite(Request $request, Activite $activite=null)
+    {
 
+        if ($request->Valider) {
+
+            $activite->update([
+                'codeape' => $request->codeape,
+                'nomactivite' => $request->nomactivite
+            ]);
+        }
+
+        if ($request->Supprimer) {
+            try {
+                $activite->delete();
+            } catch (\Exception $e) {
+                return back()->withInput();
+            }
+
+        }
+
+        if ($request->Creer) {
+            Activite::create([
+                'codeape' => $request->codeape,
+                'nomactivite' => $request->nomactivite
+            ]);
+        }
+
+        return redirect()->route('admin.show');
+    }
     public function lien(Request $request)
     {
 

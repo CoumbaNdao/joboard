@@ -23,7 +23,6 @@
 
     <hr>
 
-
     <div class="row d-flex justify-content-center mb-5 mt-5">
         <h2> Tableau de bord </h2>
 
@@ -45,7 +44,6 @@
             </tr>
         </table>
     </div>
-
 
     <div class="row d-flex justify-content-center mb-5 mt-5">
         <h2>Gestion des Partenaire</h2>
@@ -152,7 +150,6 @@
             </tbody>
         </table>
     </div>
-
 
     <div class="row d-flex justify-content-center mb-5 mt-5">
         <h2>Gestion Type Offre</h2>
@@ -368,6 +365,62 @@
     </div>
 
     <div class="row d-flex justify-content-center mb-5 mt-5">
+        <h2> Gestion Activite </h2>
+
+        <table class="table table-striped table-warning">
+            <tr>
+                <th> Code APE</th>
+                <th> Libellé</th>
+                <th>Action</th>
+
+            </tr>
+            @foreach($activites as $activite)
+
+
+
+                <form method="post" action="{{route('admin.activite', [$activite->codeape])}}">
+                    @csrf
+                    <tr>
+
+                        <td><input type="text" name="codeape" value="{{$activite->codeape}}" class="form-control">
+                        </td>
+                        <td><input type="text" name="nomactivite" value="{{$activite->nomactivite}}" class="form-control">
+                        </td>
+                        <td>
+                            <input type="submit" name="Supprimer" value="Supprimer" class="btn btn-danger">
+                            <input type="submit" name="Valider" value="Valider" class="btn btn-success">
+                        </td>
+                    </tr>
+                </form>
+
+            @endforeach
+
+            <form method="post" action="{{route('admin.activite')}}">
+                @csrf
+                <tr>
+                    <td><input type="text" name="codeape" required placeholder="Entrer votre Code APE"
+                               class="form-control"></td>
+
+                    <td><input type="text" name="nomactivite" required placeholder="Entrer votre activité"
+                               class="form-control"></td>
+                    <td>
+                        <input type="submit" name="Creer" value="Créer" class="btn btn-success">
+                    </td>
+                </tr>
+            </form>
+
+        </table>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="row d-flex justify-content-center mb-5 mt-5">
         <h2> Gestion Type Compétence</h2>
 
         <table class="table table-striped table-danger">
@@ -419,11 +472,230 @@
         </table>
 
     </div>
+    <div class="row d-flex justify-content-center mb-5 mt-5">
+        <h2> Les connexions journaliers </h2>
 
+        <table class="table table-striped table-secondary" aria-describedby="etude">
+            <tr>
+                <th> Jour</th>
+                <th> NB Connexions</th>
+
+            </tr>
+            @foreach(nbconnexionparjour() as $nbconnexionparjour)
+                <tr>
+                    <td>
+                        {{$nbconnexionparjour->jour}}
+                    </td>
+                    <td>
+                        {{$nbconnexionparjour->nbconnexion}}
+                    </td>
+                </tr>
+            @endforeach
+{{--            @dd(nbconnexionparjour()->pluck('jour'))--}}
+        </table>
+    </div>
+
+
+    <div id="nbV"  data-val="{{nbconnexionparjour()->pluck('nbconnexion')}}"  data-val1="{{nbconnexionparjour()->pluck('jour')}}"></div>
 </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<canvas id="myChart" width="200" height="50"></canvas>
+<script>
+    let div = document.getElementById('nbV');
+
+    let nb = div.getAttribute('data-val');
+    let jour = div.getAttribute('data-val1');
+
+
+   nb = nb.replaceAll('"', '').replace('[', '').replaceAll('\\', '').replace(']', '').split(',');
+jour = jour.replaceAll('"', '').replace('[', '').replaceAll('\\', '').replace(']', '').split(',')
+
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            {{--labels: {{nbconnexionparjour()->pluck('jour')}},--}}
+            labels: jour,
+            datasets: [{
+                label: 'Nombre de connexions des 6 derniers',
+                {{--data: [{{nbconnexionparjour()->pluck('nbconnexion')}}],--}}
+                data: nb,
+                backgroundColor: [
+                    'rgb(0, 128, 128)',
+                    'rgba(128, 0, 128)',
+                    'rgba(240, 166, 202)',
+                    'rgba(75, 192, 192)',
+                    'rgba(174, 214, 241)'
+                ],
+                borderColor: [
+                    'rgba(0, 0, 0, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 176, 38, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 
 </body>
 </html>
 
 
 
+
+
+<!-- Styles -->
+<style>
+#chartdiv {
+  width: 100%;
+  height: 500px;
+  overflow-y: hidden;
+}
+</style>
+
+<!-- Resources -->
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+
+<!-- Chart code -->
+<script>
+am5.ready(function() {
+
+// Create root element
+// https://www.amcharts.com/docs/v5/getting-started/#Root_element
+var root = am5.Root.new("chartdiv");
+
+
+// Set themes
+// https://www.amcharts.com/docs/v5/concepts/themes/
+root.setThemes([
+  am5themes_Animated.new(root)
+]);
+
+
+// Create chart
+// https://www.amcharts.com/docs/v5/charts/xy-chart/
+var chart = root.container.children.push(am5xy.XYChart.new(root, {
+  panX: false,
+  panY: false,
+  wheelX: "panX",
+  wheelY: "zoomX",
+  layout: root.verticalLayout
+}));
+
+
+// Add legend
+// https://www.amcharts.com/docs/v5/charts/xy-chart/legend-xy-series/
+var legend = chart.children.push(am5.Legend.new(root, {
+  centerX: am5.p50,
+  x: am5.p50
+}));
+
+var data = [{
+  "year": "Lundi",
+  "europe": 2.5,
+  "namerica": 2.5,
+}, {
+  "year": "Mardi",
+  "europe": 2.6,
+  "namerica": 2.7,
+}, {
+  "year": "Mercredi",
+  "europe": 2.6,
+  "namerica": 2.7,
+
+}, {
+  "year": "Jeudi",
+  "europe": 2.8,
+  "namerica": 2.9,
+
+},  {
+  "year": "Vendredi",
+  "europe": 2.6,
+  "namerica": 2.7,
+
+}];
+
+
+// Create axes
+// https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+var xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
+  categoryField: "year",
+  renderer: am5xy.AxisRendererX.new(root, {
+    cellStartLocation: 0.1,
+    cellEndLocation: 0.9
+  }),
+  tooltip: am5.Tooltip.new(root, {})
+}));
+
+xAxis.data.setAll(data);
+
+var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+  min: 0,
+  renderer: am5xy.AxisRendererY.new(root, {})
+}));
+
+
+// Add series
+// https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+function makeSeries(name, fieldName, stacked) {
+  var series = chart.series.push(am5xy.ColumnSeries.new(root, {
+    stacked: stacked,
+    name: name,
+    xAxis: xAxis,
+    yAxis: yAxis,
+    valueYField: fieldName,
+    categoryXField: "year"
+  }));
+
+  series.columns.template.setAll({
+    tooltipText: "{name}, {categoryX}:{valueY}",
+    width: am5.percent(90),
+    tooltipY: am5.percent(10)
+  });
+  series.data.setAll(data);
+
+  // Make stuff animate on load
+  // https://www.amcharts.com/docs/v5/concepts/animations/
+  series.appear();
+
+  series.bullets.push(function () {
+    return am5.Bullet.new(root, {
+      locationY: 0.5,
+      sprite: am5.Label.new(root, {
+        text: "{valueY}",
+        fill: root.interfaceColors.get("alternativeText"),
+        centerY: am5.percent(50),
+        centerX: am5.percent(50),
+        populateText: true
+      })
+    });
+  });
+
+  legend.data.push(series);
+}
+
+makeSeries("Europe", "europe", false);
+makeSeries("North America", "namerica", true);
+
+// Make stuff animate on load
+// https://www.amcharts.com/docs/v5/concepts/animations/
+chart.appear(1000, 100);
+
+}); // end am5.ready()
+</script>
+
+<!-- HTML -->
+<div id="chartdiv"></div>

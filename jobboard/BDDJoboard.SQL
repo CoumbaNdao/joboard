@@ -558,9 +558,33 @@ group by  competence.IDCompetence
 order by nb_demande desc limit 6
 ;
 
+drop table if exists userlog;
 create table userlog (
+id  int(14),
 loginuser varchar(50),
-nomuser varchar (50),
-datelog datetime
+nomuser varchar (100),
+datelog datetime,
+statut int(1),
+primary key (id)
 );
 
+create or replace view nbconnexionparjour as
+select count(id) as nbconnexion, distinct datelog, distinct loginuser
+group by nbconnexion;
+
+create table adminbdd (
+idadmin auto_increment not null,
+loginadmin varchar (50) not null,
+mdpadmin varchar (50) not null
+);
+
+
+create table activite (
+codeape int (10) not null unique,
+nomactivite varchar (50) not null,
+primary key (codeape)
+) engine = innodb;
+
+
+alter table entreprise
+add foreign key (codeape) references activite (codeape) on delete no action on update cascade;

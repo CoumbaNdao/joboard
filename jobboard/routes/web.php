@@ -66,6 +66,7 @@ Route::prefix('/candidat')->name('candidat.')->group(static function() {
 
 Route::prefix('/dbadmin')->name('admin.')->group(static function() {
     Route::get('/', [AdminControlleur::class, 'index'])->name('index');
+    Route::post('/login', [AdminControlleur::class, 'login'])->name('login');
     Route::get('/offre/{offre}', [AdminControlleur::class, 'offre'])->name('offre');
     Route::get('/archioffre/{archioffre}', [AdminControlleur::class, 'archioffre'])->name('archioffre');
     Route::get('/archicandidat/{archiCandidat}', [AdminControlleur::class, 'archiCandidat'])->name('archiCandidat');
@@ -76,6 +77,7 @@ Route::prefix('/dbadmin')->name('admin.')->group(static function() {
     Route::post('/typecompetence/{typeCompetence?}', [AdminControlleur::class, 'typeCompetence'])->name('typeCompetence');
     Route::post('/competence/{competence?}', [AdminControlleur::class, 'competence'])->name('competence');
     Route::post('/region/{region?}', [AdminControlleur::class, 'region'])->name('region');
+    Route::post('/activite/{activite?}', [AdminControlleur::class, 'activite'])->name('activite');
     Route::post('/lien', [AdminControlleur::class, 'lien'])->name('lien');
     Route::post('/creerpartenaire', [AdminControlleur::class, 'creerPartenaire'])->name('creerPartenaire');
     Route::post('/creerniveauetude', [AdminControlleur::class, 'creerNiveauEtude'])->name('creerNiveauEtude');

@@ -37,6 +37,7 @@
                 <li class="nav-item">
                     <a class="nav-link page-scroll" href="{{route('entreprise.index')}}">Accès entreprise</a>
                 </li>
+
             </ul>
         </div>
     </div>

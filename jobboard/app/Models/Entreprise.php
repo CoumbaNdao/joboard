@@ -33,4 +33,10 @@ class Entreprise extends Model
         return $this->hasOne(Region::class, 'codePostalRegion', 'codePostalRegion');
     }
 
+
+    public function activite():hasOne
+    {
+        return $this->hasOne(Activite::class, 'codeape', 'codeape');
+    }
+
 }

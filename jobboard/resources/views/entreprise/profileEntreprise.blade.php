@@ -113,6 +113,21 @@
 
                         </div>
                     </div>
+
+
+                    <div class="form-group row champPlacement">
+                        <div class="col-sm-12">
+                            <input type="text" list="listLieu" name="codeape" value="{{$entreprise->activite->nomactivite}}" class="form-control"
+                                   id="inputActivite" required="required"
+                                   placeholder="Activite">
+                            <datalist id="listactivite">
+                                @foreach($activites as $activite)
+                                    <option value="{{$activite->nomactivite}}"></option>
+                                @endforeach
+                            </datalist>
+                        </div>
+                    </div>
+
                     <div class="form-group row champPlacement">
                         <div class="col-sm-12">
                             <input type="text" class="form-control" name="urlEntreprise" id="inputLieu" required="required" value="{{$entreprise->urlEntreprise}}"

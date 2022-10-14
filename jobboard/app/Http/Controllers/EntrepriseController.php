@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Entreprise;
 use App\Models\Region;
+use App\Models\Activite;
+use App\Models\UserLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
@@ -21,22 +23,23 @@ class EntrepriseController extends Controller
     {
 
         $regions = Region::all();
+        $activites = Activite::all();
+
         if (Cache::get('message')) {
             $message = Cache::get('message');
             Cache::delete('message');
         }
 
+
         return view('entreprise.inscriptionEntreprise', [
             'regions' => $regions,
-            'message' => $message ?? ''
+            'message' => $message ?? '',
+            'activites' => $activites
         ]);
     }
 
     public function create(Request $request)
     {
-
-
-
         if ($request->validationMdp !== $request->mdpEntreprise) {
             Cache::set('message', "Veuillez saisir le meme mot de passe !");
             return redirect()->route('entreprise.inscription');
@@ -66,6 +69,7 @@ class EntrepriseController extends Controller
                 'urlEntreprise' => $request->url,
                 'mdpEntreprise' => Hash::make($request->mdpEntreprise),
                 'codePostalRegion' => $request->codePostalRegion,
+                'codeape' => $request->codeape,
                 'logoEntreprise' => $logo
             ]);
         } catch (\Exception $e) {
@@ -97,6 +101,17 @@ class EntrepriseController extends Controller
 
         if (isset($entreprise)) {
             Cache::set('entreprise', $entreprise->numeroSiret);
+
+            UserLog::create([
+                'id' =>  $entreprise->numeroSiret,
+                'loginuser' =>  $entreprise->loginEntreprise,
+                'nomuser' =>  $entreprise->raisonSociale,
+                'datelog' => now(),
+                'statut' =>  4,
+            ]);
+
+//            dd(count(UserLog::nbConnexionEntreprise()));
+
             return redirect()->route('offre.show');
         }
         return back()->withInput();
@@ -117,11 +132,13 @@ class EntrepriseController extends Controller
     {
         $entreprise = Entreprise::find(Cache::get('entreprise'));
         $regions = Region::all();
+        $activites = Activite::all();
 
 
         return view('entreprise.profileEntreprise', [
             'entreprise' => $entreprise,
             'regions' => $regions,
+            'activites' => $activites,
             'message' => ''
         ]);
     }
@@ -130,6 +147,7 @@ class EntrepriseController extends Controller
     {
         $entreprise = Entreprise::find(Cache::get('entreprise'));
         $region = Region::where('nomRegion', '=', $request->codePostalRegion)->get()->first();
+       // $activite = Activite::where('nomactivite', '=', $request->codeape)->get()->first();
 
         if ($request->logoEntreprise) {
             $pathEntreprise = "images\logo\\";
@@ -154,6 +172,7 @@ class EntrepriseController extends Controller
                 'logoEntreprise' => $logo ?? $entreprise->logoEntreprise,
                 'urlEntreprise' => $request->urlEntreprise ?? $entreprise->urlEntreprise,
                 'codePostalRegion' => $region->codePostalRegion ?? $entreprise->codePostalRegion,
+                'codeape' => $activite->codeape ?? $activite->codeape
 
             ]);
 

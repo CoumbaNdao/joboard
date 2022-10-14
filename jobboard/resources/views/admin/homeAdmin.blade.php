@@ -32,10 +32,8 @@
                 <th> NB Offres</th>
                 <th> NB Compétences</th>
                 <th> NB Régions</th>
-
-
-{{--                <th> NB Candidature</th>--}}
-
+                <th> NB Candidatures</th>
+                <th> NB Connexions Entreprises</th>
             </tr>
             <tr>
                 <td>{{count($candidats)}}</td>
@@ -43,15 +41,34 @@
                 <td>{{count($offres)}}</td>
                 <td>{{count($competences)}}</td>
                 <td>{{count($regions)}}</td>
-
-{{--                <td>{{count($postuler)}}</td>--}}
-
+                <td>{{count($postulers)}}</td>
+                <td>{{count($userlogs)}}</td>
 
             </tr>
         </table>
     </div>
 
+    <div class="row d-flex justify-content-center mb-5 mt-5">
+        <h2> Les connexions journaliers </h2>
 
+        <table class="table table-striped table-secondary" aria-describedby="etude">
+            <tr>
+                <th> Jour</th>
+                <th> NB Connexions</th>
+
+            </tr>
+            @foreach(nbconnexionparjour() as $nbconnexionparjour)
+                <tr>
+                    <td>
+                        {{$nbconnexionparjour->jour}}
+                    </td>
+                    <td>
+                        {{$nbconnexionparjour->nbconnexion}}
+                    </td>
+                </tr>
+            @endforeach
+        </table>
+    </div>
     <div class="row d-flex justify-content-center mb-5 mt-5">
         <h2>Gestion Entreprise</h2>
 
@@ -62,9 +79,10 @@
                 <th>Émail</th>
                 <th>adresse</th>
                 <th>ville</th>
+                <th>Activite</th>
+
                 <th>nombre d'offres</th>
                 <th>nombre de candidatures</th>
-
                 <th>Action</th>
             </tr>
             @foreach($entreprises as $entreprise)
@@ -75,6 +93,7 @@
                     <td>{{$entreprise->emailEntreprise}}</td>
                     <td>{{$entreprise->adresseEntreprise}}</td>
                     <td>{{$entreprise->villeEntreprise}}</td>
+                    <td>{{$entreprise->activite->nomactivite}}</td>
                     <td>{{count($entreprise->offres)}}</td>
                     <td>{{$entreprise->nb_candidat()}}</td>
 
@@ -305,7 +324,6 @@
                         {{count($niveauEtude->offres)}}
                     </td>
 
-
                     <td>
                         {{count($niveauEtude->candidats)}}
                     </td>
@@ -336,11 +354,29 @@
         </table>
     </div>
 
+    <div class="row d-flex justify-content-center mb-5 mt-5">
+        <h2> NB Entreprise par activité </h2>
 
+        <table class="table table-striped table-secondary" aria-describedby="etude">
+            <tr>
+                <th> Libellé</th>
+                <th> Nb Entreprise</th>
+
+            </tr>
+            @foreach(nbentrepriseparactivite() as $nbentrepriseparactivite)
+                <tr>
+                    <td>
+                        {{$nbentrepriseparactivite->nomactivite}}
+                    </td>
+                    <td>
+                        {{$nbentrepriseparactivite->nbentreprise}}
+                    </td>
+                </tr>
+            @endforeach
+        </table>
+    </div>
 
 </div>
-
-
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <canvas id="myChart" width="200" height="50"></canvas>
@@ -349,10 +385,10 @@
     const myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['NB Candidats', 'NB Entreprises', 'NB Offres', 'NB Compétences', 'NB Régions'],
+            labels: ['NB Candidats', 'NB Entreprises', 'NB Offres', 'NB Compétences', 'NB Régions', 'NB Candidatures'],
             datasets: [{
                 label: 'Statistiques',
-                data: [{{count($candidats)}},{{count($entreprises)}},{{count($offres)}},{{count($competences)}}, {{count($regions)}}],
+                data: [{{count($candidats)}},{{count($entreprises)}},{{count($offres)}},{{count($competences)}}, {{count($regions)}}, {{count($postulers)}}],
                 backgroundColor: [
                     'rgb(0, 128, 128)',
                     'rgba(128, 0, 128)',
@@ -378,13 +414,6 @@
         }
     });
 </script>
-
-
-
-
-
-
-
 
 </body>
 </html>

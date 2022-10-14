@@ -11,6 +11,7 @@ use App\Models\NiveauEtude;
 use App\Models\Offre;
 use App\Models\Postuler;
 use App\Models\Region;
+use App\Models\UserLog;
 use Faker\Core\File;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -37,6 +38,15 @@ class CandidatController extends Controller
         }
         if (isset($candidat)) {
             Cache::set('candidat', $candidat->IDCandidat);
+
+            UserLog::create([
+                'id' =>  $candidat->IDCandidat,
+                'loginuser' =>  $candidat->loginCandidat,
+                'nomuser' =>  $candidat->nomCandidat.' '.$candidat->prenomCandidat,
+                'datelog' => now(),
+                'statut' =>  3,
+            ]);
+          //  dd(count(UserLog::nbConnexionCandidat()));
             return redirect()->route('offre.index');
         }
         return back()->withInput();
