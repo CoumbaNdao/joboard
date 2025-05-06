@@ -2,7 +2,7 @@ drop database if exists jobage;
 create database jobage;
 use jobage;
 
-// ===================================TABLE COMPETENCE======================================
+
 create table typecompetence
 (
     IDTypeCompetence int(5)  NOT NULL auto_increment,
@@ -14,7 +14,7 @@ alter table `typecompetence`
 alter table `typecompetence`
     add column `created_at` Datetime;
 
-// ===================================TABLE COMPETENCE======================================
+
 create table competence
 (
     IDCompetence      int(5)      NOT NULL auto_increment,
@@ -29,9 +29,6 @@ alter table `competence`
 
 
 
-// ===================================*******TABLE CONCERNER======================================
-drop table concerner;
-
 create table concerner
 (
     IDTypeCompetence int(5) not null,
@@ -44,7 +41,7 @@ alter table `concerner`
     add column `updated_at` Datetime;
 alter table `concerner`
     add column `created_at` Datetime;
-// ===================================TABLE REGION======================================
+
 create table region
 (
     codePostalRegion int(5)      NOT NULL auto_increment,
@@ -56,7 +53,7 @@ alter table `region`
 alter table `region`
     add column `created_at` Datetime;
 
-// ===================================TABLE TYPEOFFRE======================================
+
 create table typeOffre
 (
     IDTypeOffre      int(5)      NOT NULL auto_increment,
@@ -68,7 +65,7 @@ alter table `typeOffre`
 alter table `typeOffre`
     add column `created_at` Datetime;
 
-// ===================================**********TABLE ENTREPRISE======================================
+
 create table entreprise
 (
     numeroSiret       int(14)       not null unique,
@@ -95,7 +92,7 @@ alter table `entreprise`
     add column `logoEntreprise` varchar(500);
 
 
-// ===================================TABLE NIVEAUETUDE======================================
+
 create table niveauetude
 (
     IDNiveauEtude        int(5)      NOT NULL auto_increment,
@@ -109,7 +106,7 @@ alter table `niveauetude`
 alter table `niveauetude`
     add column `created_at` Datetime;
 
-// ===================================*********TABLE OFFRE======================================
+
 
 create table offre
 (
@@ -134,7 +131,7 @@ alter table `offre`
 alter table `offre`
     add column `created_at` Datetime;
 
-// ===================================**********TABLE CANDIDAT======================================
+
 
 create table candidat
 (
@@ -162,7 +159,7 @@ alter table `candidat`
     add column `created_at` Datetime;
 
 
-// ===================================TABLE CV======================================
+
 
 CREATE TABLE cvcandidat
 (
@@ -175,7 +172,7 @@ CREATE TABLE cvcandidat
 ) ENGINE = InnoDB;
 
 
-// ===================================***********TABLE POSTULER======================================
+
 
 create table postuler
 (
@@ -198,7 +195,7 @@ alter table `postuler`
 
 
 
-// ===================================************TABLE DISPOSER======================================
+
 create table disposer
 (
     IDCandidat   int(5) not null,
@@ -213,7 +210,7 @@ alter table `disposer`
 alter table `disposer`
     add column `created_at` Datetime;
 
-// ===================================***********TABLE REQUERIR======================================
+
 create table requerir
 (
     IDOffre      int(5) not null,
@@ -229,7 +226,7 @@ alter table `requerir`
     add column `created_at` Datetime;
 
 
-// ===================================INSERTION======================================
+
 
 insert into region (codePostalRegion, nomRegion) values
 (null, 'ile de france'),
@@ -250,14 +247,14 @@ insert into typeoffre (`IDTypeOffre`, `libelleTypeOffre`) values
 
 insert into entreprise (`numeroSiret`, `raisonSociale`, `descEntreprise`, `adresseEntreprise`, `cpEntreprise`,`villeEntreprise`,`telEntreprise`, `emailEntreprise`, `loginEntreprise`, `mdpEntreprise`,`urlEntreprise`, `codePostalRegion` )
  values
-(12345, 'Orange', 'vente de téléphone', '2 avenue de Ségur', '75007', 'Paris', '0123456789', 'orange@orange.com', 'orange@orange.com', 'orange', 'www.orange.com', 9),
-(22345, 'ODIGO', 'Editeur de logiciel', '40 rue camille desmoulins', '92130', 'Issy-les-moulineaux', '0123456790', 'odigo@odigo.com', 'odigo@odigo.com', 'odigo', 'www.odigo.com', 8),
-(32345, 'Accenture', 'Entreprise de logiciel', '6 rue de segura', '20000', 'Sainte Anne', '0123456779', 'accenture@accenture.com', 'accenture@accenture.com', 'accenture', 'www.accenture.net', 11),
-(42345, 'PrefNord', 'Service  public', '5 boulevar victor', '59000', 'Lille', '0152456789', 'pref@pref.com', 'pref@pref.com', 'pref', 'www.pref.com', 8),
-(52345, 'Arrow', 'Pharmacologie', '5 avenue de la marne', '69007', 'Lyon', '0156456789', 'arrow@arrow.com', 'arrow@arrow.com', 'arrow', 'www.arrow.net', 2);
+(12345, 'Orange', 'vente de téléphone', '2 avenue de Ségur', '75007', 'Paris', '0123456789', 'orange@orange.com', 'orange@orange.com', 'orange', 'www.orange.com', 5),
+(22345, 'ODIGO', 'Editeur de logiciel', '40 rue camille desmoulins', '92130', 'Issy-les-moulineaux', '0123456790', 'odigo@odigo.com', 'odigo@odigo.com', 'odigo', 'www.odigo.com', 4),
+(32345, 'Accenture', 'Entreprise de logiciel', '6 rue de segura', '20000', 'Sainte Anne', '0123456779', 'accenture@accenture.com', 'accenture@accenture.com', 'accenture', 'www.accenture.net', 2),
+(42345, 'PrefNord', 'Service  public', '5 boulevar victor', '59000', 'Lille', '0152456789', 'pref@pref.com', 'pref@pref.com', 'pref', 'www.pref.com', 1),
+(52345, 'Arrow', 'Pharmacologie', '5 avenue de la marne', '69007', 'Lyon', '0156456789', 'arrow@arrow.com', 'arrow@arrow.com', 'arrow', 'www.arrow.net', 3);
 
 
-insert into niveauetude ('IDNiveauEtude', 'libelleNiveauEtude', 'diplomeObtenu') values
+insert into niveauetude (IDNiveauEtude, libelleNiveauEtude, diplomeObtenu) values
 (null, 'Bac+1', 'BAC'),
 (null, 'Bac+2', 'BTS'),
 (null, 'Bac+3', 'Licence'),
@@ -267,11 +264,11 @@ insert into niveauetude ('IDNiveauEtude', 'libelleNiveauEtude', 'diplomeObtenu')
 
 insert into offre (`IDOffre`, `titreOffre`, `descOffre`, `datePubOffre`, `remuneration`,`dateDebutContrat`,`dureeContrat`, `statutOffre`, `IDTypeOffre`, `numeroSiret`,`IDNiveauEtude`)
  values
-(null, 'Stage developpeur', 'Offre de stage developpeur ', '2022/02/01', '600.59', '2022/03/01', '6 mois', 'en attente de publication', 1, 1234, 1),
-(null, 'Support systeme en alternance', 'Recherche profil support systeme ', '2021/02/01', '1200.0','2021/03/05', '1 ans', 'expiree', null, 2234, null),
-(null , 'Administrateur de base de donnees', 'Recherche DBA confirme', '2022/02/01', '3200','2022/04/05', '1 ans', 'publiee', null, 3234, null),
-(null ,  'Devops junior', 'Devenez Devops junior', '2020/02/01', '3000','2021/02/05', '6 mois', 'expiree', null, 4234, null),
-(null , 'Ingenieur Securite', 'Offre ingenieur sécurite', '2021/02/01', '5000','2021/03/05', 'null', 'expiree', null, 5234, null);
+(null, 'Stage developpeur', 'Offre de stage developpeur ', '2022/02/01', '600.59', '2022/03/01', '6 mois', 'en attente de publication', 1, 12345, 1),
+(null, 'Support systeme en alternance', 'Recherche profil support systeme ', '2021/02/01', '1200.0','2021/03/05', '1 ans', 'expiree', null, 22345, null),
+(null , 'Administrateur de base de donnees', 'Recherche DBA confirme', '2022/02/01', '3200','2022/04/05', '1 ans', 'publiee', null, 32345, null),
+(null ,  'Devops junior', 'Devenez Devops junior', '2020/02/01', '3000','2021/02/05', '6 mois', 'expiree', null, 42345, null),
+(null , 'Ingenieur Securite', 'Offre ingenieur sécurite', '2021/02/01', '5000','2021/03/05', 'null', 'expiree', null, 52345, null);
 
 
 
@@ -282,16 +279,6 @@ values (null, 'DIAZ', 'Paco ', '12 rue de la belle feuille', '69500', 'Lyon', 'p
        (null, 'CHOUAKY', 'Abder ', '12 rue de la belle feuille', '69500', 'Lyon', 'abder@abder.com', 'abder', 3, 1, '0655084988', 'abder@gmail.com'),
        (null, 'TCHEN', 'Anne', '28 boulevard victor', '92600', 'Asnieres', 'anne@anne.com', 'anne', 1, 2,'0658284988', 'anne@gmail.com' );
 
-
-
-
-insert into postuler (`IDCandidat`, `IDOffre`)
-values (1, 1) ,
-
-        (28, 12),
-        (29, 13),
-        (30, 14),
-        (26, 15);
 
 
 insert into competence (`IDCompetence`, `libelleCompetence`)
@@ -314,23 +301,23 @@ values (null, 'Technique'),
 insert into disposer (`IDCandidat`, `IDCompetence`)
 values (1, 1) ,
 
-        (13, 7),
-        (14, 8),
-        (15, 9),
-        (11, 10);
+        (3, 4),
+        (4, 2),
+        (5, 5),
+        (2, 3);
 
 
 insert into requerir (`IDOffre`, `IDCompetence`)
 values (1, 1) ,
 
 
-        (28, 7),
-        (29, 8),
-        (30, 9),
-        (26, 10);
+        (2, 4),
+        (5, 2),
+        (4, 5),
+        (3, 3);
 
 
-// ===================================TABLE AVIS======================================
+
 
 
 create table avis (
@@ -349,15 +336,15 @@ alter table `avis` add column `created_at` Datetime;
 
 
 
-insert into avis
-values (null,'Paco', 'Jo', 'jai trouver facilement un emploi', 'C:\Users\MameCoumbaNDAO\Desktop\jobsearch\jobboard\public\images\man3'),
-values (null, 'Thenang','Anne','Contente de mon experience sur jobage', 'C:\Users\MameCoumbaNDAO\Desktop\jobsearch\jobboard\public\images\woman2'),
-values (null, 'Chiche', 'Mehdi', 'Je recommande', 'C:\Users\MameCoumbaNDAO\Desktop\jobsearch\jobboard\public\images\man2'),
-values (null,'YU', 'Kelly', 'Bravo Jobage', 'C:\Users\MameCoumbaNDAO\Desktop\jobsearch\jobboard\public\images\woman3'),
-values (null,'Bregger', 'Amandine', 'Belle experience', 'C:\Users\MameCoumbaNDAO\Desktop\jobsearch\jobboard\public\images\woman1');
+insert into avis (IDAvis, nomUser, prenomUser, descAvis, imageAvis, rate)
+values (null,'Paco', 'Jo', 'jai trouver facilement un emploi', 'images/avis/man3.png', 5),
+(null, 'Thenang','Anne','Contente de mon experience sur jobage', 'images/avis/woman2.png', 4),
+(null, 'Chiche', 'Mehdi', 'Je recommande', 'images/avis/man2.png', 4),
+(null,'YU', 'Kelly', 'Bravo Jobage', 'images/avis/woman3.png', 5),
+(null,'Bregger', 'Amandine', 'Belle experience', 'images/avis/woman1.png', 3);
 
 
-// ===================================TABLE CONTACT======================================
+
 create table contact (
 	IDContact int(5) not null auto_increment,
    nomContact varchar(50) not null,
@@ -371,7 +358,7 @@ create table contact (
 alter table `contact` add column `updated_at` Datetime;
 alter table `contact` add column `created_at` Datetime;
 
-// ===================================creation table partenaire======================================
+
 
 create table partenaire (
 	SiretPartenaire int(5) not null auto_increment,
@@ -389,7 +376,7 @@ alter table `partenaire` add column `updated_at` Datetime;
 alter table `partenaire` add column `created_at` Datetime;
 
 
-// ===================================TRIGGER saisie date debut de contrat correcte======================================
+
 
 DELIMITER //
 DROP TRIGGER IF EXISTS insertdatedebutcontrat;
@@ -421,7 +408,7 @@ DELIMITER ;
 
 
 
-// ===================================creation des tables d''archivages======================================
+
 
 create table archioffre
 as select * from offre
@@ -439,7 +426,7 @@ where 2=0;
 create table archipostuler
 as select * from postuler
 where 2=0;
-// ===================================TRIGGER archivage offre expiree/traitee======================================
+
 
 
 drop trigger if exists archiverOffre;
@@ -568,12 +555,22 @@ statut int(1),
 primary key (id)
 );
 
-create or replace view nbconnexionparjour as
-select count(id) as nbconnexion, distinct datelog, distinct loginuser
-group by nbconnexion;
+CREATE TABLE connexion (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    loginuser VARCHAR(100),
+    datelog DATE
+);
+
+CREATE OR REPLACE VIEW nbconnexionparjour AS
+SELECT 
+    loginuser, 
+    datelog, 
+    COUNT(id) AS nbconnexion
+FROM connexion
+GROUP BY loginuser, datelog;
 
 create table adminbdd (
-idadmin auto_increment not null,
+idadmin int auto_increment primary key,
 loginadmin varchar (50) not null,
 mdpadmin varchar (50) not null
 );
@@ -584,6 +581,15 @@ codeape int (10) not null unique,
 nomactivite varchar (50) not null,
 primary key (codeape)
 ) engine = innodb;
+
+ALTER TABLE entreprise
+ADD codeape int not null; -- adapte le type selon ta table activite
+
+INSERT INTO activite (codeape, nomactivite)
+VALUES 
+    (1234, 'Informatique');
+
+UPDATE entreprise SET codeape = 1234 WHERE codeape = 0 ; -- adapte la condition
 
 
 alter table entreprise
